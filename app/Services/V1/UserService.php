@@ -4,12 +4,12 @@ namespace App\Services\V1;
 
 use App\Enums\Role;
 use App\Http\Resources\V1\UserResource;
-use App\Models\User;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserInfoRepository;
 use App\Repositories\UserRepository;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class UserService
@@ -37,7 +37,13 @@ class UserService
 
     private function assignRole(array $payload): array
     {
-        $role = !empty($payload['role']) ? $payload['role'] : $this->roleRepository->findByRole(Role::User->value);
+        if (! empty($payload['role_id'])) return $payload;
+
+        $role = Cache::rememberForever(
+            'user_role_id',
+            fn () => $this->roleRepository->findByRole(Role::User->value)
+        );
+
         return [...$payload, 'role_id' => $role];
     }
 }
