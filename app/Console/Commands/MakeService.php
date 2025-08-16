@@ -19,10 +19,9 @@ class MakeService extends Command
             $name = $this->ask("What should the service be named?");
         }
 
-        // Handle nested folders from the name
         $name = Str::studly($name);
         $segments = explode("/", $name);
-        $className = array_pop($segments); // last segment is the class
+        $className = array_pop($segments);
         $subfolder = implode("/", $segments);
 
         $defaultPath = app_path("Services" . (!empty($subfolder) ? "/{$subfolder}" : ""));
@@ -30,7 +29,7 @@ class MakeService extends Command
         $path = "{$defaultPath}/{$filename}";
 
         if (! File::exists($defaultPath)) {
-            File::makeDirectory($defaultPath, 0755, true); // recursive dirs
+            File::makeDirectory($defaultPath, 0755, true);
         }
 
         if (File::exists($path)) {
@@ -61,8 +60,6 @@ class MakeService extends Command
 
         use App\Repositories\\{$repository};
         use App\Utils\Response;
-        use Exception;
-        use Illuminate\Database\Eloquent\ModelNotFoundException;
         use Illuminate\Http\JsonResponse;
 
         class {$className}Service
