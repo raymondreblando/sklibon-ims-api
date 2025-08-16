@@ -81,7 +81,7 @@ class MakeRepository extends Command
         {
             public function get(): Collection;
             public function create(array \$data): {$model};
-            public function findById({$model} {$modelVariable}): ?{$model};
+            public function find({$model} {$modelVariable}): ?{$model};
             public function update({$model} {$modelVariable}, array \$data): ?{$model};
             public function delete({$model} {$modelVariable}): bool;
         }
@@ -106,7 +106,7 @@ class MakeRepository extends Command
         class Eloquent{$name}Repository implements {$name}Repository
         {
             protected array \$relations = [];
-            
+
             public function get(): Collection
             {
                 return {$model}::all()->sortByDesc("primary");
