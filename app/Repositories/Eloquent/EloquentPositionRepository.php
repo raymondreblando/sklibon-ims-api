@@ -27,7 +27,7 @@ class EloquentPositionRepository implements PositionRepository
         return Position::create($data);
     }
 
-    public function findById(Position $position, array $relations = []): ?Position
+    public function find(Position $position, array $relations = []): ?Position
     {
         return $position->load($relations ?: $this->relations);
     }

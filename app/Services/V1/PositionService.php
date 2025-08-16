@@ -34,7 +34,7 @@ class PositionService
 
     public function find(Position $position): JsonResponse
     {
-        $position = $this->positionRepository->findById($position);
+        $position = $this->positionRepository->find($position);
 
         return Response::success(
             new PositionResource($position),
