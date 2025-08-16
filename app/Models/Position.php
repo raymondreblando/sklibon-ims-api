@@ -19,6 +19,11 @@ class Position extends Model
         'status',
     ];
 
+    protected $hidden = [
+        'updated_at',
+        'deleted_at',
+    ];
+
     public function userInfos(): HasMany
     {
         return $this->hasMany(UserInfo::class, 'position_id', 'id');
