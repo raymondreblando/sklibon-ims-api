@@ -8,54 +8,51 @@ use Illuminate\Support\Str;
 
 class MakeService extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = "make:service {name?} {--repository=} {--folder=}";
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    protected $signature = "make:service {name?} {--repository=}";
     protected $description = "Create a new service class";
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $name = $this->argument("name");
-        $folder = $this->option("folder");
 
-        if (! isset($name) || empty($name)) $this->ask("What should the service be named?");
+        if (! $name) {
+            $name = $this->ask("What should the service be named?");
+        }
 
-        $defaultPath = app_path(empty($folder) ? "Services" : "Services/{$folder}");
-        $filename = "{$this->argument("name")}Service.php";
+        // Handle nested folders from the name
+        $name = Str::studly($name);
+        $segments = explode("/", $name);
+        $className = array_pop($segments); // last segment is the class
+        $subfolder = implode("/", $segments);
 
+        $defaultPath = app_path("Services" . (!empty($subfolder) ? "/{$subfolder}" : ""));
+        $filename = "{$className}Service.php";
         $path = "{$defaultPath}/{$filename}";
 
-        if (! File::exists($defaultPath)) File::makeDirectory($defaultPath);
+        if (! File::exists($defaultPath)) {
+            File::makeDirectory($defaultPath, 0755, true); // recursive dirs
+        }
 
-        if (File::exists($path)) return $this->error("Service class already exist");
+        if (File::exists($path)) {
+            return $this->error("Service class already exists");
+        }
 
-        $content = $this->generate();
+        $content = $this->generate($className, $subfolder);
         File::put($path, $content);
+
         $messagePath = str_replace(app_path() . "/", "", $path);
         $this->components->info("Service [{$messagePath}] created successfully.");
     }
 
-    private function generate(): string
+    private function generate(string $className, string $subfolder): string
     {
-        $name = $this->argument("name");
-        $folder = $this->option("folder");
         $repository = $this->option("repository");
-        $repositoryVariable = "$". Str::camel($repository);
+        $repositoryVariable = $repository ? "$" . Str::camel($repository) : '';
 
         $defaultNamespace = "App\Services";
-        $namespace = empty($folder) ? $defaultNamespace : "{$defaultNamespace}\\{$folder}";
+        $namespace = empty($subfolder)
+            ? $defaultNamespace
+            : $defaultNamespace . "\\" . str_replace("/", "\\", $subfolder);
 
         return <<<PHP
         <?php
@@ -68,7 +65,7 @@ class MakeService extends Command
         use Illuminate\Database\Eloquent\ModelNotFoundException;
         use Illuminate\Http\JsonResponse;
 
-        class {$name}Service
+        class {$className}Service
         {
             public function __construct(
                 private {$repository} {$repositoryVariable}
