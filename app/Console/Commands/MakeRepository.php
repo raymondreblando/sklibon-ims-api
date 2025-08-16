@@ -67,6 +67,7 @@ class MakeRepository extends Command
     {
         $name = $this->argument("name");
         $model = $this->option("model");
+        $modelVariable = "$". Str::camel($model);
 
         return <<<PHP
         <?php
@@ -80,9 +81,9 @@ class MakeRepository extends Command
         {
             public function get(): Collection;
             public function create(array \$data): {$model};
-            public function findById(string \$id): ?{$model};
-            public function update(string \$id, array \$data): ?{$model};
-            public function delete(string \$id): bool;
+            public function findById({$model} {$modelVariable}): ?{$model};
+            public function update({$model} {$modelVariable}, array \$data): ?{$model};
+            public function delete({$model} {$modelVariable}): bool;
         }
         PHP;
     }
@@ -104,6 +105,8 @@ class MakeRepository extends Command
 
         class Eloquent{$name}Repository implements {$name}Repository
         {
+            protected array \$relations = [];
+            
             public function get(): Collection
             {
                 return {$model}::all()->sortByDesc("primary");
@@ -114,21 +117,19 @@ class MakeRepository extends Command
                 return {$model}::create(\$data);
             }
 
-            public function findById(string \$id): ?{$model}
+            public function findById({$model} {$modelVariable}): ?{$model}
             {
-                return {$model}::findOrFail(\$id);
+                return {$modelVariable};
             }
 
-            public function update(string \$id, array \$data): ?{$model}
+            public function update({$model} {$modelVariable}, array \$data): ?{$model}
             {
-                {$modelVariable} = {$model}::findOrFail(\$id);
                 {$modelVariable}->update(\$data);
                 return {$modelVariable};
             }
 
-            public function delete(string \$id): bool
+            public function delete({$model} {$modelVariable}): bool
             {
-                {$modelVariable} = {$model}::findOrFail(\$id);
                 return {$modelVariable}->delete();
             }
         }
