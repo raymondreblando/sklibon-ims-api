@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Policies\PositionPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[UsePolicy(PositionPolicy::class)]
 class Position extends Model
 {
     use HasUlids, SoftDeletes;

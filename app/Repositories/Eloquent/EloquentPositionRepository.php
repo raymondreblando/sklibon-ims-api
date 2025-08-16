@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Collection;
 class EloquentPositionRepository implements PositionRepository
 {
     protected array $relations = [
-        'userInfos:id,firstname,middlename,lastname',
-        'userInfos.province:id,name',
-        'userInfos.municipality:id,name',
-        'userInfos.barangay:id,name',
+        'userInfos:id,position_id,firstname,middlename,lastname,province_code,municipality_code,barangay_code',
+        'userInfos.province:code,name',
+        'userInfos.municipality:code,name',
+        'userInfos.barangay:code,name',
     ];
 
     public function get(array $relations = []): Collection
@@ -27,22 +27,19 @@ class EloquentPositionRepository implements PositionRepository
         return Position::create($data);
     }
 
-    public function findById(string $id, array $relations = []): ?Position
+    public function findById(Position $position, array $relations = []): ?Position
     {
-        return Position::with($relations ?: $this->relations)
-            ->findOrFail($id);
+        return $position->load($relations ?: $this->relations);
     }
 
-    public function update(string $id, array $data): ?Position
+    public function update(Position $position, array $data): ?Position
     {
-        $position = Position::findOrFail($id);
         $position->update($data);
         return $position;
     }
 
-    public function delete(string $id): bool
+    public function delete(Position $position): bool
     {
-        $position = Position::findOrFail($id);
         return $position->delete();
     }
 }
