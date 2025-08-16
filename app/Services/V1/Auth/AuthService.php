@@ -4,6 +4,7 @@ namespace App\Services\V1\Auth;
 
 use App\Exceptions\InvalidUserCredentialsException;
 use App\Models\User;
+use App\Services\V1\UserService;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -13,8 +14,14 @@ class AuthService
     protected string $authMessage = 'Authentication successful.';
 
     public function __construct(
-        private RefreshTokenService $refreshTokenService
+        private RefreshTokenService $refreshTokenService,
+        private UserService $userService
     ){}
+
+    public function register(array $data): JsonResponse
+    {
+        return $this->userService->save($data);
+    }
 
     public function authenticate(array $data, ?string $clientType): JsonResponse
     {
