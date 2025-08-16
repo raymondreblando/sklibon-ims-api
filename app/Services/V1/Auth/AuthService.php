@@ -49,6 +49,15 @@ class AuthService
         ], $this->authMessage)->withCookie($cookie);
     }
 
+    public function logout(): JsonResponse
+    {
+        $user = Auth::user();
+        $user->tokens()->delete();
+        $user->refreshTokens()->delete();
+
+        return Response::success(null, 'Logout successful.');
+    }
+
     private function generateUserToken(User $user): array
     {
         $token = $user->createToken(env('API_TOKEN_NAME'))->plainTextToken;
