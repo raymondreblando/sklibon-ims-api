@@ -4,6 +4,7 @@ namespace App\Services\V1\Auth;
 
 use App\Exceptions\InvalidUserCredentialsException;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use App\Services\V1\UserService;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +16,8 @@ class AuthService
 
     public function __construct(
         private RefreshTokenService $refreshTokenService,
-        private UserService $userService
+        private UserService $userService,
+        private UserRepository $userRepository
     ){}
 
     public function register(array $data): JsonResponse
@@ -30,8 +32,7 @@ class AuthService
         if (! Auth::attempt($credentials))
             throw new InvalidUserCredentialsException();
 
-        $user = Auth::user();
-        $user->load('role');
+        $user = $this->userRepository->find(Auth::user());
 
         $user->tokens()->delete();
         $tokens = $this->generateUserToken($user);

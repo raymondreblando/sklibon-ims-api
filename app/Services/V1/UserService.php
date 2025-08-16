@@ -4,6 +4,7 @@ namespace App\Services\V1;
 
 use App\Enums\Role;
 use App\Http\Resources\V1\UserResource;
+use App\Models\User;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserInfoRepository;
 use App\Repositories\UserRepository;
@@ -28,7 +29,7 @@ class UserService
             $this->userInfoRepository->create($user, $data['info']);
 
             return Response::success(
-                new UserResource($this->userRepository->findById($user)),
+                new UserResource($this->userRepository->find($user)),
                 'Account created successfully.'
             );
         });

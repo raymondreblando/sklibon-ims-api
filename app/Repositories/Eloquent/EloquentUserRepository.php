@@ -29,7 +29,7 @@ class EloquentUserRepository implements UserRepository
         return User::create($data);
     }
 
-    public function findById(User $user, array $relations = []): ?User
+    public function find(User $user, array $relations = []): ?User
     {
         return $user->load($relations ?: $this->relations);
     }
