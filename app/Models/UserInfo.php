@@ -50,4 +50,19 @@ class UserInfo extends Model
     {
         return $this->belongsTo(Position::class, 'position_id', 'id');
     }
+
+    public function province(): BelongsTo
+    {
+        return $this->belongsTo(Province::class, 'province_code', 'code');
+    }
+
+    public function municipality(): BelongsTo
+    {
+        return $this->belongsTo(Municipality::class, 'municipality_code', 'code');
+    }
+
+    public function barangay(): BelongsTo
+    {
+        return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
+    }
 }
