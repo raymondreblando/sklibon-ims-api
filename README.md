@@ -2,6 +2,11 @@
 
 This is the backend API for the Information Management System for the SK Federation of Libon, Albay.
 
+## Features
+
+*   **Authentication:** User authentication and authorization using Laravel Sanctum.
+*   **Position Management:** CRUD operations for managing positions within the organization.
+
 ## Project Setup
 
 1.  **Clone the repository:**
@@ -42,6 +47,35 @@ This is the backend API for the Information Management System for the SK Federat
     ```bash
     php artisan serve
     ```
+
+## API Endpoints
+
+All API endpoints are prefixed with `/api/v1`.
+
+### Authentication
+
+*   `POST /auth/login`: User login
+
+### Positions
+
+*   `GET /positions`: Get a list of all positions.
+*   `GET /positions/{id}`: Get a specific position by ID.
+*   `POST /positions`: Create a new position.
+*   `PUT /positions/{id}`: Update a position.
+*   `DELETE /positions/{id}`: Delete a position.
+
+## Custom Artisan Commands
+
+*   `php artisan make:repository {name} --model={model}`: Create a new repository and its corresponding eloquent implementation.
+*   `php artisan make:service {name} --repository={repository}`: Create a new service class.
+
+## User Roles
+
+The system has the following user roles:
+
+*   **Super Admin:** Has all permissions.
+*   **Admin:** Has most permissions, but cannot manage other admins.
+*   **User:** Has limited permissions.
 
 ## Important Aspects
 
