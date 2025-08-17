@@ -77,8 +77,14 @@ All API endpoints are prefixed with `/api/v1`.
 
 ### Account
 
-*   `PUT /account/change-password/{id}`: Change the user's password.
-*   `POST /account/change-profile-picture/{id}`: Change the user's profile picture.
+*   `PUT /account/change-password`: Change the user's password.
+*   `POST /account/change-profile-picture`: Change the user's profile picture.
+
+### Locations
+
+*   `GET /locations/provinces`: Get a list of all provinces.
+*   `GET /locations/municipalities/{province_id}`: Get a list of all municipalities in a province.
+*   `GET /locations/barangays/{municipality_id}`: Get a list of all barangays in a municipality.
 
 ## Custom Artisan Commands
 
