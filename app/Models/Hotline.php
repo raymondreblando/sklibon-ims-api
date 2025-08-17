@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Policies\HotlinePolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 
+#[UsePolicy(HotlinePolicy::class)]
 class Hotline extends Model
 {
     use HasUlids;

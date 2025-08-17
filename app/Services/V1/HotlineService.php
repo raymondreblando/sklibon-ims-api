@@ -20,4 +20,14 @@ class HotlineService
             'Hotlines retrieved successfully.'
         );
     }
+
+    public function save(array $data): JsonResponse
+    {
+        $hotline = $this->hotlineRepository->create($data);
+
+        return Response::success(
+            new HotlineResource($hotline),
+            'Hotline created successfully.'
+        );
+    }
 }
