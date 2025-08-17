@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\User\StoreUserRequest;
 use App\Models\User;
 use App\Services\V1\UserService;
 use Illuminate\Http\JsonResponse;
@@ -28,9 +29,12 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request): JsonResponse
     {
-        //
+        Gate::authorize('create', User::class);
+
+        $data = $request->validated();
+        return $this->userService->save($data);
     }
 
     /**
