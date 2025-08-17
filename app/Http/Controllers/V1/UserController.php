@@ -8,7 +8,6 @@ use App\Http\Requests\V1\User\UpdateUserRequest;
 use App\Models\User;
 use App\Services\V1\UserService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
@@ -62,8 +61,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
-        //
+        Gate::authorize('delete', $user);
+
+        return $this->userService->delete($user);
     }
 }

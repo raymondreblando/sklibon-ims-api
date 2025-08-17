@@ -65,6 +65,13 @@ class UserService
         });
     }
 
+    public function delete(User $user): JsonResponse
+    {
+        $this->userRepository->delete($user);
+
+        return Response::success(null, 'User deleted successfully.');
+    }
+
     private function assignRole(array $payload): array
     {
         if (! empty($payload['role_id'])) return $payload;
