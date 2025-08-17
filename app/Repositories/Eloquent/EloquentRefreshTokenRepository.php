@@ -7,8 +7,8 @@ use App\Repositories\RefreshTokenRepository;
 
 class EloquentRefreshTokenRepository implements RefreshTokenRepository
 {
-    public function findById(string $id): ?RefreshToken
+    public function findByToken(string $token): ?RefreshToken
     {
-        return RefreshToken::findOrFail($id);
+        return RefreshToken::where('token', $token)->first();
     }
 }

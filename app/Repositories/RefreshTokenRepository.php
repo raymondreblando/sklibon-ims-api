@@ -6,5 +6,5 @@ use App\Models\RefreshToken;
 
 interface RefreshTokenRepository
 {
-    public function findById(string $id): ?RefreshToken;
+    public function findByToken(string $token): ?RefreshToken;
 }
