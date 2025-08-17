@@ -4,6 +4,7 @@ namespace App\Services\V1;
 
 use App\Enums\Role;
 use App\Http\Resources\V1\UserResource;
+use App\Models\User;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserInfoRepository;
 use App\Repositories\UserRepository;
@@ -41,6 +42,14 @@ class UserService
                 'Account created successfully.'
             );
         });
+    }
+
+    public function find(User $user): JsonResponse
+    {
+        return Response::success(
+            new UserResource($this->userRepository->find($user)),
+            'User retrieved successfully.'
+        );
     }
 
     private function assignRole(array $payload): array
