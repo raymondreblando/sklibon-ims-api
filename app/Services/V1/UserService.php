@@ -4,6 +4,7 @@ namespace App\Services\V1;
 
 use App\Enums\Role;
 use App\Http\Resources\V1\UserResource;
+use App\Models\User;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserInfoRepository;
 use App\Repositories\UserRepository;
@@ -20,6 +21,14 @@ class UserService
         private RoleRepository $roleRepository
     ){}
 
+    public function get(): JsonResponse
+    {
+        return Response::success(
+            UserResource::collection($this->userRepository->get()),
+            'Users retrieved successfully.'
+        );
+    }
+
     public function save(array $data): JsonResponse
     {
         return DB::transaction(function () use ($data) {
@@ -33,6 +42,34 @@ class UserService
                 'Account created successfully.'
             );
         });
+    }
+
+    public function find(User $user): JsonResponse
+    {
+        return Response::success(
+            new UserResource($this->userRepository->find($user)),
+            'User retrieved successfully.'
+        );
+    }
+
+    public function update(User $user, array $data): JsonResponse
+    {
+        return DB::transaction(function () use ($user, $data) {
+            $this->userRepository->update($user, $data['account']);
+            $this->userInfoRepository->update($user, $data['info']);
+
+            return Response::success(
+                new UserResource($this->userRepository->find($user)),
+                'User updated successfully.'
+            );
+        });
+    }
+
+    public function delete(User $user): JsonResponse
+    {
+        $this->userRepository->delete($user);
+
+        return Response::success(null, 'User deleted successfully.');
     }
 
     private function assignRole(array $payload): array

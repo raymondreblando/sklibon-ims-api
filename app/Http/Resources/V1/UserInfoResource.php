@@ -24,7 +24,7 @@ class UserInfoResource extends JsonResource
             'lastname' => $this->resource->lastname,
             'gender' => $this->resource->gender,
             'age' => $this->resource->age,
-            'phone_number' => $this->resource->phone_number,
+            'phoneNumber' => $this->resource->phone_number,
             'birthdate' => $this->resource->birthdate,
             'additionalAddress' => $this->resource->additional_address,
             'position' => $this->whenLoaded('position', fn () => $this->mapFields($this->resource->position)),
