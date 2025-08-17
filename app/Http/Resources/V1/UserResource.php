@@ -19,6 +19,7 @@ class UserResource extends JsonResource
             'username' => $this->resource->username,
             'email' => $this->resource->email,
             'status' => $this->resource->status,
+            'profile' => $this->resource->profile,
             'info' => new UserInfoResource($this->whenLoaded('userInfo'))
         ];
     }
