@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 class EloquentContactRepository implements ContactRepository
 {
     protected array $relations = [
-        'user:id,username,email',
-        'user.userInfo:user_id,firstname,middlename,lastname,phone_number,province_code,municipality_code,baragay_code',
+        'user',
+        'user.userInfo',
         'user.userInfo.position:id,name',
         'user.userInfo.province:code,name',
         'user.userInfo.municipality:code,name',

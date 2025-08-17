@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Services\V1;
+
+use App\Http\Resources\V1\ContactResource;
+use App\Repositories\ContactRepository;
+use App\Utils\Response;
+use Illuminate\Http\JsonResponse;
+
+class ContactService
+{
+    public function __construct(
+        private ContactRepository $contactRepository
+    ){}
+
+    public function get(): JsonResponse
+    {
+        return Response::success(
+            ContactResource::collection($this->contactRepository->get()),
+            'Contacts retrieved successfully.'
+        );
+    }
+}

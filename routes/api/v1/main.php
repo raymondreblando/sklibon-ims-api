@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\AccountController;
+use App\Http\Controllers\V1\ContactController;
 use App\Http\Controllers\V1\HotlineController;
 use App\Http\Controllers\V1\LocationController;
 use App\Http\Controllers\V1\PositionController;
@@ -23,7 +24,8 @@ Route::prefix('v1')->group(function () {
         Route::resources([
             'users' => UserController::class,
             'positions' => PositionController::class,
-            'hotlines' => HotlineController::class
+            'hotlines' => HotlineController::class,
+            'contacts' => ContactController::class,
         ]);
     });
 });

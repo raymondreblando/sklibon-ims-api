@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Policies\ContactPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[UsePolicy(ContactPolicy::class)]
 class Contact extends Model
 {
     use HasUlids, SoftDeletes;
