@@ -2,6 +2,7 @@
 
 namespace App\Traits\Auth;
 
+use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +32,7 @@ trait IssueApiTokens
         $cookie = cookie('refresh_token', $tokens['refresh_token'], 60 * 24 * 7, '/', null, true, true);
 
         return Response::success([
-            'user' => $user,
+            'user' => new UserResource($user),
             'access_token' => $tokens['token']
         ], $this->authMessage)->withCookie($cookie);
     }
