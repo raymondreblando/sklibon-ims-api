@@ -42,21 +42,15 @@ class HotlineController extends Controller
      */
     public function show(Hotline $hotline)
     {
-        //
+        Gate::authorize('view', $hotline);
+
+        return $this->hotlineService->find($hotline);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Hotline $hotline)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Hotline $hotline)
     {
         //
     }

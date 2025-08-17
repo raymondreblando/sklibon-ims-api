@@ -3,6 +3,7 @@
 namespace App\Services\V1;
 
 use App\Http\Resources\V1\HotlineResource;
+use App\Models\Hotline;
 use App\Repositories\HotlineRepository;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,14 @@ class HotlineService
         return Response::success(
             new HotlineResource($hotline),
             'Hotline created successfully.'
+        );
+    }
+
+    public function find(Hotline $hotline): JsonResponse
+    {
+        return Response::success(
+            new HotlineResource($hotline),
+            'Hotline retrieved successfully.'
         );
     }
 }
