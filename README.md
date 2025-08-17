@@ -54,7 +54,10 @@ All API endpoints are prefixed with `/api/v1`.
 
 ### Authentication
 
+*   `POST /auth/register`: Register a new user
 *   `POST /auth/login`: User login
+*   `POST /auth/logout`: User logout
+*   `POST /auth/refresh-token`: Refresh an expired access token
 
 ### Positions
 
