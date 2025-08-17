@@ -67,6 +67,19 @@ All API endpoints are prefixed with `/api/v1`.
 *   `PUT /positions/{id}`: Update a position.
 *   `DELETE /positions/{id}`: Delete a position.
 
+### Users
+
+*   `GET /users`: Get a list of all users.
+*   `GET /users/{id}`: Get a specific user by ID.
+*   `POST /users`: Create a new user.
+*   `PUT /users/{id}`: Update a user.
+*   `DELETE /users/{id}`: Delete a user.
+
+### Account
+
+*   `PUT /account/change-password/{id}`: Change the user's password.
+*   `POST /account/change-profile-picture/{id}`: Change the user's profile picture.
+
 ## Custom Artisan Commands
 
 *   `php artisan make:repository {name} --model={model}`: Create a new repository and its corresponding eloquent implementation.
