@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\StoreHotlineRequest;
+use App\Http\Requests\V1\Hotline\StoreHotlineRequest;
 use App\Models\Hotline;
 use App\Services\V1\HotlineService;
 use Illuminate\Http\JsonResponse;
