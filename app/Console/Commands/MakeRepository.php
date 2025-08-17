@@ -117,7 +117,7 @@ class MakeRepository extends Command
                 return {$model}::create(\$data);
             }
 
-            public function findById({$model} {$modelVariable}): ?{$model}
+            public function find({$model} {$modelVariable}): ?{$model}
             {
                 return {$modelVariable};
             }
