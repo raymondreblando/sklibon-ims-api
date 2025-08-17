@@ -193,6 +193,18 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'position_id' => 'position',
+        'barangay_code' => 'barangay',
+        'account.username' => 'username',
+        'account.email' => 'email',
+        'account.password' => 'password',
+        'info.firstname' => 'firstname',
+        'info.middlename' => 'middlename',
+        'info.lastname' => 'lastname',
+        'info.gender' => 'gender',
+        'info.position_id' => 'position',
+        'info.barangay_code' => 'barangay',
+    ],
 
 ];
