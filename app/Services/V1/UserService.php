@@ -20,6 +20,14 @@ class UserService
         private RoleRepository $roleRepository
     ){}
 
+    public function get(): JsonResponse
+    {
+        return Response::success(
+            UserResource::collection($this->userRepository->get()),
+            'Users retrieved successfully.'
+        );
+    }
+
     public function save(array $data): JsonResponse
     {
         return DB::transaction(function () use ($data) {
