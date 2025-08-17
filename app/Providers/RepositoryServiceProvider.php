@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\ContactRepository;
+use App\Repositories\Eloquent\EloquentContactRepository;
 use App\Repositories\Eloquent\EloquentHotlineRepository;
 use App\Repositories\Eloquent\EloquentLocationRepository;
 use App\Repositories\Eloquent\EloquentPositionRepository;
@@ -27,6 +29,7 @@ class RepositoryServiceProvider extends ServiceProvider
         UserInfoRepository::class => EloquentUserInfoRepository::class,
         PositionRepository::class => EloquentPositionRepository::class,
         HotlineRepository::class => EloquentHotlineRepository::class,
+        ContactRepository::class => EloquentContactRepository::class,
         LocationRepository::class => EloquentLocationRepository::class,
     ];
 
