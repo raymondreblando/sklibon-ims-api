@@ -34,6 +34,12 @@ class EloquentUserRepository implements UserRepository
         return $user->load($relations ?: $this->relations);
     }
 
+    public function findById(string $id, array $relations = []): ?User
+    {
+        return User::with($relations ?: $this->relations)
+            ->findOrFail($id);
+    }
+
     public function update(User $user, array $data): ?User
     {
         $user->update($data);
