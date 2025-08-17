@@ -200,6 +200,7 @@ return [
         'account.email' => 'email',
         'account.password' => 'password',
         'account.role_id' => 'role',
+        'account.status' => 'status',
         'info.firstname' => 'firstname',
         'info.middlename' => 'middlename',
         'info.lastname' => 'lastname',

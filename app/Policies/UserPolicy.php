@@ -37,7 +37,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $this->viewAny($user);
+        return $user->role->role === Role::SuperAdmin->value || $model->id === $user->id;
     }
 
     /**

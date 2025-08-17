@@ -52,6 +52,19 @@ class UserService
         );
     }
 
+    public function update(User $user, array $data): JsonResponse
+    {
+        return DB::transaction(function () use ($user, $data) {
+            $this->userRepository->update($user, $data['account']);
+            $this->userInfoRepository->update($user, $data['info']);
+
+            return Response::success(
+                new UserResource($this->userRepository->find($user)),
+                'User updated successfully.'
+            );
+        });
+    }
+
     private function assignRole(array $payload): array
     {
         if (! empty($payload['role_id'])) return $payload;

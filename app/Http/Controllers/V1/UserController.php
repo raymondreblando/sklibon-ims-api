@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\StoreUserRequest;
+use App\Http\Requests\V1\User\UpdateUserRequest;
 use App\Models\User;
 use App\Services\V1\UserService;
 use Illuminate\Http\JsonResponse;
@@ -50,9 +51,12 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        Gate::authorize('update', $user);
+
+        $data = $request->validated();
+        return $this->userService->update($user, $data);
     }
 
     /**
