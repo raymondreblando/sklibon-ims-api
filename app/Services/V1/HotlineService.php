@@ -39,4 +39,14 @@ class HotlineService
             'Hotline retrieved successfully.'
         );
     }
+
+    public function update(Hotline $hotline, array $data): JsonResponse
+    {
+        $hotline = $this->hotlineRepository->update($hotline, $data);
+
+        return Response::success(
+            new HotlineResource($hotline),
+            'Hotline updated successfully.'
+        );
+    }
 }
