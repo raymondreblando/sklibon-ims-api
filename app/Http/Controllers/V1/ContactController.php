@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Contact\StoreContactRequest;
+use App\Http\Requests\V1\Contact\UpdateContactRequest;
 use App\Models\Contact;
 use App\Services\V1\ContactService;
 use Illuminate\Http\JsonResponse;
@@ -50,9 +51,12 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contact $contact)
+    public function update(UpdateContactRequest $request, Contact $contact): JsonResponse
     {
-        //
+        Gate::authorize('update', $contact);
+
+        $data = $request->validated();
+        return $this->contactService->update($contact, $data);
     }
 
     /**

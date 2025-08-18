@@ -39,4 +39,14 @@ class ContactService
             'Contact retrieved successfully.'
         );
     }
+
+    public function update(Contact $contact, array $data): JsonResponse
+    {
+        $contact = $this->contactRepository->update($contact, $data);
+
+        return Response::success(
+            new ContactResource($contact),
+            'Contact updated successfully.'
+        );
+    }
 }
