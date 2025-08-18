@@ -49,4 +49,11 @@ class ContactService
             'Contact updated successfully.'
         );
     }
+
+    public function delete(Contact $contact): JsonResponse
+    {
+        $this->contactRepository->delete($contact);
+
+        return Response::success(null, 'Contact deleted successfully.');
+    }
 }

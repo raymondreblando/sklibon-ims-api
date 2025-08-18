@@ -8,7 +8,6 @@ use App\Http\Requests\V1\Contact\UpdateContactRequest;
 use App\Models\Contact;
 use App\Services\V1\ContactService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class ContactController extends Controller
@@ -62,8 +61,10 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Contact $contact)
+    public function destroy(Contact $contact): JsonResponse
     {
-        //
+        Gate::authorize('delete', $contact);
+
+        return $this->contactService->delete($contact);
     }
 }
