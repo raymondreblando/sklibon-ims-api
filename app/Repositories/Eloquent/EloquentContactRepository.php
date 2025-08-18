@@ -29,6 +29,17 @@ class EloquentContactRepository implements ContactRepository
         return Contact::create($data);
     }
 
+    public function find(Contact $contact, array $relations = []): Contact
+    {
+        return $contact->load($relations ?: $this->relations);
+    }
+
+    public function update(Contact $contact, array $data): Contact
+    {
+        $contact->update($data);
+        return $contact;
+    }
+
     public function delete(Contact $contact): bool
     {
         return $contact->delete();
