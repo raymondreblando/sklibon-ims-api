@@ -20,4 +20,14 @@ class ContactService
             'Contacts retrieved successfully.'
         );
     }
+
+    public function save(array $data): JsonResponse
+    {
+        $contact = $this->contactRepository->create($data);
+
+        return Response::success(
+            new ContactResource($contact->load('user')),
+            'Contact created successfully.'
+        );
+    }
 }

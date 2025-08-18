@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\Contact\StoreContactRequest;
 use App\Models\Contact;
 use App\Services\V1\ContactService;
 use Illuminate\Http\JsonResponse;
@@ -28,9 +29,12 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreContactRequest $request): JsonResponse
     {
-        //
+        Gate::authorize('create', Contact::class);
+
+        $data = $request->validated();
+        return $this->contactService->save($data);
     }
 
     /**
