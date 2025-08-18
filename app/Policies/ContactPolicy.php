@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Enums\Role;
 use App\Models\Contact;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ContactPolicy
 {
@@ -32,6 +31,14 @@ class ContactPolicy
      * Determine whether the user can create models.
      */
     public function create(User $user): bool
+    {
+        return $this->viewAny($user);
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Contact $contact): bool
     {
         return $this->viewAny($user);
     }
