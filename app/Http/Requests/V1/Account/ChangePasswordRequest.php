@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1\Account;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeProfilePictureRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class ChangeProfilePictureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile' => ['required', 'image', 'mimes:jpeg,jpg,png,gif', 'max:5120']
+            'current_password' => ['required', 'string', 'max:255', 'current_password'],
+            'new_password' => ['required', 'string', 'min:8', 'max:255', 'confirmed']
         ];
     }
 }
