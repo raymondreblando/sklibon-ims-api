@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('user_id')->constrained('users', 'id');
-            $table->string('contact_number')->unique()->nullable();
+            $table->string('contact_number', 11)->unique()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
