@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers\V1;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\Contact\StoreContactRequest;
+use App\Http\Requests\V1\Contact\UpdateContactRequest;
+use App\Models\Contact;
+use App\Services\V1\ContactService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
+
+class ContactController extends Controller
+{
+    public function __construct(
+        private ContactService $contactService
+    ){}
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): JsonResponse
+    {
+        Gate::authorize('viewAny', Contact::class);
+
+        return $this->contactService->get();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreContactRequest $request): JsonResponse
+    {
+        Gate::authorize('create', Contact::class);
+
+        $data = $request->validated();
+        return $this->contactService->save($data);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Contact $contact): JsonResponse
+    {
+        Gate::authorize('view', $contact);
+
+        return $this->contactService->find($contact);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateContactRequest $request, Contact $contact): JsonResponse
+    {
+        Gate::authorize('update', $contact);
+
+        $data = $request->validated();
+        return $this->contactService->update($contact, $data);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Contact $contact): JsonResponse
+    {
+        Gate::authorize('delete', $contact);
+
+        return $this->contactService->delete($contact);
+    }
+}

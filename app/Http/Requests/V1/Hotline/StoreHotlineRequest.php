@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1\Hotline;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeProfilePictureRequest extends FormRequest
+class StoreHotlineRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->id === $this->route('id');
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class ChangeProfilePictureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile' => ['required', 'image', 'mimes:jpeg,jpg,png,gif', 'max:5120']
+            'name' => ['required', 'string', 'max:150', 'unique:hotlines,name'],
+            'abbreviation' => ['required', 'string', 'max:30', 'unique:hotlines,abbreviation'],
+            'hotline' => ['required', 'string', 'max:30', 'unique:hotlines,hotline'],
         ];
     }
 }

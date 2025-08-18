@@ -6,6 +6,8 @@ This is the backend API for the Information Management System for the SK Federat
 
 *   **Authentication:** User authentication and authorization using Laravel Sanctum.
 *   **Position Management:** CRUD operations for managing positions within the organization.
+*   **Hotline Management:** CRUD operations for managing hotlines.
+*   **Contact Management:** CRUD operations for managing contacts.
 
 ## Project Setup
 
@@ -86,6 +88,21 @@ All API endpoints are prefixed with `/api/v1`.
 *   `GET /locations/municipalities/{province_id}`: Get a list of all municipalities in a province.
 *   `GET /locations/barangays/{municipality_id}`: Get a list of all barangays in a municipality.
 
+### Hotlines
+
+*   `GET /hotlines`: Get a list of all hotlines.
+*   `GET /hotlines/{id}`: Get a specific hotline by ID.
+*   `POST /hotlines`: Create a new hotline.
+*   `PUT /hotlines/{id}`: Update a hotline.
+
+### Contacts
+
+*   `GET /contacts`: Get a list of all contacts.
+*   `GET /contacts/{id}`: Get a specific contact by ID.
+*   `POST /contacts`: Create a new contact.
+*   `PUT /contacts/{id}`: Update a contact.
+*   `DELETE /contacts/{id}`: Delete a contact.
+
 ## Custom Artisan Commands
 
 *   `php artisan make:repository {name} --model={model}`: Create a new repository and its corresponding eloquent implementation.
@@ -106,3 +123,4 @@ The system has the following user roles:
 *   **Database:** The project uses a MySQL database.
 *   **Models:** The database models are located in the `app/Models` directory.
 *   **Controllers:** The API controllers are located in the `app/Http/Controllers` directory.
+*   **Policies:** The authorization policies are located in the `app/Policies` directory.

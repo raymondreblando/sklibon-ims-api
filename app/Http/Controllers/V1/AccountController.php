@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ChangeProfilePictureRequest;
-use App\Http\Requests\V1\User\ChangePasswordRequest;
+use App\Http\Requests\V1\Account\ChangeProfilePictureRequest;
+use App\Http\Requests\V1\Account\ChangePasswordRequest;
 use App\Services\V1\AccountService;
 use Illuminate\Http\JsonResponse;
 
