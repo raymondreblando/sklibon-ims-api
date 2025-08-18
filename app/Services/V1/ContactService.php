@@ -3,6 +3,7 @@
 namespace App\Services\V1;
 
 use App\Http\Resources\V1\ContactResource;
+use App\Models\Contact;
 use App\Repositories\ContactRepository;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,14 @@ class ContactService
         return Response::success(
             new ContactResource($contact->load('user')),
             'Contact created successfully.'
+        );
+    }
+
+    public function find(Contact $contact): JsonResponse
+    {
+        return Response::success(
+            new ContactResource($this->contactRepository->find($contact)),
+            'Contact retrieved successfully.'
         );
     }
 }

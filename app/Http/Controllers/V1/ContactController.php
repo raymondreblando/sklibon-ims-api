@@ -40,9 +40,11 @@ class ContactController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Contact $contact)
+    public function show(Contact $contact): JsonResponse
     {
-        //
+        Gate::authorize('view', $contact);
+
+        return $this->contactService->find($contact);
     }
 
     /**
