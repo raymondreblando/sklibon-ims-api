@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\RequestType\StoreRequestTypeRequest;
 use App\Models\RequestType;
 use App\Services\V1\RequestTypeService;
 use Illuminate\Http\JsonResponse;
@@ -28,9 +29,12 @@ class RequestTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequestTypeRequest $request): JsonResponse
     {
-        //
+        Gate::authorize('create', RequestType::class);
+
+        $data = $request->validated();
+        return $this->requestTypeService->save($data);
     }
 
     /**

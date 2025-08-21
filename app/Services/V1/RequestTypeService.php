@@ -20,4 +20,14 @@ class RequestTypeService
             'Request types retrieved successfully.'
         );
     }
+
+    public function save(array $data): JsonResponse
+    {
+        $requestType = $this->requestTypeRepository->create($data);
+
+        return Response::success(
+            new RequestTypeResource($requestType),
+            'Request type created successfully.'
+        );
+    }
 }
