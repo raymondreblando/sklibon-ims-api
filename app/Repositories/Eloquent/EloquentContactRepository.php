@@ -12,9 +12,9 @@ class EloquentContactRepository implements ContactRepository
         'user',
         'user.userInfo',
         'user.userInfo.position:id,name',
-        'user.userInfo.province:code,name',
-        'user.userInfo.municipality:code,name',
-        'user.userInfo.barangay:code,name',
+        'user.userInfo.province:id,name',
+        'user.userInfo.municipality:id,name',
+        'user.userInfo.barangay:id,name',
     ];
 
     public function get(array $relations = []): Collection

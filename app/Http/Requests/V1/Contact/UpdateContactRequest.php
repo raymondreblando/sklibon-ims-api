@@ -29,7 +29,9 @@ class UpdateContactRequest extends FormRequest
                 'string',
                 'min:11',
                 'max:11',
-                Rule::unique('contacts', 'contact_number')->ignore($this->route('contact'))
+                Rule::unique('contacts', 'contact_number')
+                    ->ignore($this->route('contact'))
+                    ->withoutTrashed()
             ]
         ];
     }
