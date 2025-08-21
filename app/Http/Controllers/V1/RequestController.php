@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Request\StoreRequestRequest;
+use App\Http\Requests\V1\Request\UpdateRequestRequest;
 use App\Models\Request;
 use App\Services\V1\RequestService;
 use Illuminate\Http\JsonResponse;
@@ -53,9 +54,14 @@ class RequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(HttpRequest $httpRequest, Request $request)
+    public function update(UpdateRequestRequest $httpRequest, Request $request)
     {
-        //
+        Gate::authorize('update', $request);
+
+        $data = $httpRequest->validated();
+        $attachment = $httpRequest->file('attachment');
+
+        return $this->requestService->update($request, $data, $attachment);
     }
 
     /**
