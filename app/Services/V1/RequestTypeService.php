@@ -41,4 +41,14 @@ class RequestTypeService
             'Request type retrieved successfully.'
         );
     }
+
+    public function update(RequestType $requestType, array $data): JsonResponse
+    {
+        $requestType = $this->requestTypeRepository->update($requestType, $data);
+
+        return Response::success(
+            new RequestTypeResource($requestType),
+            'Request type updated successfully.'
+        );
+    }
 }

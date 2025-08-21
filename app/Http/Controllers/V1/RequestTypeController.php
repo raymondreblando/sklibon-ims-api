@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\RequestType\StoreRequestTypeRequest;
+use App\Http\Requests\V1\RequestType\UpdateRequestTypeRequest;
 use App\Models\RequestType;
 use App\Services\V1\RequestTypeService;
 use Illuminate\Http\JsonResponse;
@@ -50,9 +51,12 @@ class RequestTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RequestType $requestType)
+    public function update(UpdateRequestTypeRequest $request, RequestType $requestType)
     {
-        //
+        Gate::authorize('update', $requestType);
+
+        $data = $request->validated();
+        return $this->requestTypeService->update($requestType, $data);
     }
 
     /**
