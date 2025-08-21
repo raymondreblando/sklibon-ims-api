@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->foreignUlid('user_id')->constrained('users', 'id');
             $table->foreignUlid('request_type_id')->constrained('request_types', 'id');
             $table->string('name', 250);
             $table->text('description');
