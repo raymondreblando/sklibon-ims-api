@@ -69,6 +69,8 @@ class RequestController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
+        Gate::authorize('delete', $request);
+
+        return $this->requestService->delete($request);
     }
 }

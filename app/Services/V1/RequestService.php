@@ -82,4 +82,11 @@ class RequestService
             );
         });
     }
+
+    public function delete(Request $request): JsonResponse
+    {
+        $this->requestRepository->delete($request);
+
+        return Response::success(null, 'Request deleted successfully.');
+    }
 }
