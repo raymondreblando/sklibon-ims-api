@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Controllers\V1;
+
+use App\Http\Controllers\Controller;
+use App\Models\RequestType;
+use App\Services\V1\RequestTypeService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
+class RequestTypeController extends Controller
+{
+    public function __construct(
+        private RequestTypeService $requestTypeService
+    ){}
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): JsonResponse
+    {
+        Gate::authorize('viewAny', RequestType::class);
+
+        return $this->requestTypeService->get();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(RequestType $requestType)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, RequestType $requestType)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(RequestType $requestType)
+    {
+        //
+    }
+}
