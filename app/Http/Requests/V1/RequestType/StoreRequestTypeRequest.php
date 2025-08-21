@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1\RequestType;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequestTypeRequest extends FormRequest
 {
@@ -22,7 +23,12 @@ class StoreRequestTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:150', 'unique:request_types,name']
+            'name' => [
+                'required',
+                'string',
+                'max:150',
+                Rule::unique('request_types', 'name')->withoutTrashed()
+            ]
         ];
     }
 }

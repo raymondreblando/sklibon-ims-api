@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('request_types', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('name', 150)->unique();
+            $table->string('name', 150);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->softDeletes();
             $table->timestamps();

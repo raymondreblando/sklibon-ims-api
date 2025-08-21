@@ -27,7 +27,7 @@ class UpdateRequestTypeRequest extends FormRequest
                 'required',
                 'string',
                 'max:150',
-                Rule::unique('request_types', 'name')->ignore($this->route('request_type'))
+                Rule::unique('request_types', 'name')->ignore($this->route('request_type'))->withoutTrashed()
             ],
             'status' => ['required', 'string', 'in:active,inactive']
         ];
