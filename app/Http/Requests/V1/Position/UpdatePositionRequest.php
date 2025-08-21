@@ -27,7 +27,9 @@ class UpdatePositionRequest extends FormRequest
                 'required',
                 'string',
                 'max:100',
-                Rule::unique('positions', 'name')->ignore($this->route('position'))
+                Rule::unique('positions', 'name')
+                    ->ignore($this->route('position'))
+                    ->withoutTrashed()
             ],
             'status' => ['required', 'in:active,inactive'],
         ];

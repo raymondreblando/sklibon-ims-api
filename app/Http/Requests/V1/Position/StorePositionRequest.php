@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1\Position;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePositionRequest extends FormRequest
 {
@@ -22,7 +23,12 @@ class StorePositionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100', 'unique:positions,name']
+            'name' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('positions', 'name')->withoutTrashed()
+            ]
         ];
     }
 }
