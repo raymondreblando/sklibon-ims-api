@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Policies\RequestPolicy;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
@@ -63,5 +64,25 @@ class Request extends Model
     public function disapprover(): BelongsTo
     {
         return $this->belongsTo(User::class, 'disapproved_by', 'id');
+    }
+
+    public function scopeWithReceivable(Builder $query): Builder
+    {
+        return $query->with(['receivable' => function (MorphTo $morphTo) {
+            $morphTo->morphWith([
+                User::class => ['id', 'firstname', 'lastname'],
+                Barangay::class => ['id', 'name'],
+            ]);
+        }]);
+    }
+
+    public function loadReceivable(): self
+    {
+        return $this->load(['receivable' => function (MorphTo $morphTo) {
+            $morphTo->morphWith([
+                User::class => ['id', 'firstname', 'lastname'],
+                Barangay::class => ['id', 'name'],
+            ]);
+        }]);
     }
 }

@@ -21,12 +21,7 @@ class EloquentRequestRepository implements RequestRepository
     public function get(array $relations = []): Collection
     {
         return Request::with($relations ?: $this->relations)
-            ->with(['receivable' => function (MorphTo $morphTo) {
-                $morphTo->morphWith([
-                    User::class => ['id', 'firstname', 'lastname'],
-                    Barangay::class => ['id', 'name']
-                ]);
-            }])
+            ->withReceivable()
             ->orderBy('id', 'desc')
             ->get();
     }
@@ -36,12 +31,13 @@ class EloquentRequestRepository implements RequestRepository
         return Request::create($data);
     }
 
-    public function find(Request $request, array $relations = []): ?Request
+    public function find(Request $request, array $relations = []): Request
     {
-        return $request->load($relations ?: $this->relations);
+        $request->load($relations ?: $this->relations);
+        return $request->loadReceivable();
     }
 
-    public function update(Request $request, array $data): ?Request
+    public function update(Request $request, array $data): Request
     {
         $request->update($data);
         return $request;
