@@ -40,9 +40,11 @@ class RequestTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RequestType $requestType)
+    public function show(RequestType $requestType): JsonResponse
     {
-        //
+        Gate::authorize('view', $requestType);
+
+        return $this->requestTypeService->find($requestType);
     }
 
     /**

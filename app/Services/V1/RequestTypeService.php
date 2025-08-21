@@ -3,6 +3,7 @@
 namespace App\Services\V1;
 
 use App\Http\Resources\V1\RequestTypeResource;
+use App\Models\RequestType;
 use App\Repositories\RequestTypeRepository;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,16 @@ class RequestTypeService
         return Response::success(
             new RequestTypeResource($requestType),
             'Request type created successfully.'
+        );
+    }
+
+    public function find(RequestType $requestType): JsonResponse
+    {
+        $requestType = $this->requestTypeRepository->find($requestType);
+
+        return Response::success(
+            new RequestTypeResource($requestType),
+            'Request type retrieved successfully.'
         );
     }
 }
