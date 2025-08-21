@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('municipalities', function (Blueprint $table) {
+        Schema::create('request_types', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('province_id')->constrained('provinces', 'id');
-            $table->string('code')->unique();
-            $table->string('name');
+            $table->string('name', 150);
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('municipalities');
+        Schema::dropIfExists('request_types');
     }
 };

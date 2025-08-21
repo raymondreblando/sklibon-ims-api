@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Municipality;
+use App\Models\Province;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -30,12 +31,14 @@ class MunicipalitiesSeeder extends Seeder
         try {
             $municipalities = $municipalityResponse->json();
 
+            $provinces = Province::pluck('id', 'code')->toArray();
+
             foreach ($municipalities as $municipality) {
                 Municipality::updateOrCreate(
                     ['code' => $municipality['code']],
                     [
                         'name' => $municipality['name'],
-                        'province_code' => $municipality['provinceCode'],
+                        'province_id' => $provinces[$municipality['provinceCode']],
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]
@@ -49,7 +52,7 @@ class MunicipalitiesSeeder extends Seeder
                     ['code' => $city['code']],
                     [
                         'name' => $city['name'],
-                        'province_code' => $city['provinceCode'],
+                        'province_id' => $provinces[$city['provinceCode']],
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]

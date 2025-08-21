@@ -76,10 +76,7 @@ class UserService
     {
         if (! empty($payload['role_id'])) return $payload;
 
-        $role = Cache::rememberForever(
-            'user_role_id',
-            fn () => $this->roleRepository->findByRole(Role::User->value)
-        );
+        $role = $this->roleRepository->findByRole(Role::User->value);
 
         return [...$payload, 'role_id' => $role];
     }

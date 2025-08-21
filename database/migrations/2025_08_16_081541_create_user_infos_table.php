@@ -22,16 +22,12 @@ return new class extends Migration
             $table->integer('age')->nullable();
             $table->string('phone_number', 11)->nullable();
             $table->date('birthdate')->nullable();
-            $table->string('province_code')->nullable();
-            $table->string('municipality_code')->nullable();
-            $table->string('barangay_code')->nullable();
+            $table->foreignUlid('province_id')->nullable()->constrained('provinces', 'id');
+            $table->foreignUlid('municipality_id')->nullable()->constrained('municipalities', 'id');
+            $table->foreignUlid('barangay_id')->nullable()->constrained('barangays', 'id');
             $table->string('addtional_address')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('province_code')->references('code')->on('provinces');
-            $table->foreign('municipality_code')->references('code')->on('municipalities');
-            $table->foreign('barangay_code')->references('code')->on('barangays');
         });
     }
 

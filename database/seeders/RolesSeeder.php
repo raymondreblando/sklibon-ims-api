@@ -41,9 +41,9 @@ class RolesSeeder extends Seeder
                 'password' => env('SUPERADMIN_PASS')
             ]);
 
-            $provinceCode = Province::where('name', 'Albay')->value('code');
-            $municipalityCode = Municipality::where('name', 'Libon')->value('code');
-            $barangayCode = Barangay::where('name', 'Bonbon')->value('code');
+            $provinceId = Province::where('name', 'Albay')->value('id');
+            $municipalityId = Municipality::where('name', 'Libon')->value('id');
+            $barangayId = Barangay::where('name', 'Bonbon')->value('id');
 
             $user->userInfo()->create([
                 'firstname' => 'Sheila Mae',
@@ -52,9 +52,9 @@ class RolesSeeder extends Seeder
                 'age' => 23,
                 'phone_number' => '09123456789',
                 'birthdate' => '2004-01-12',
-                'province_code' => $provinceCode,
-                'municipality_code' => $municipalityCode,
-                'barangay_code' => $barangayCode,
+                'province_id' => $provinceId,
+                'municipality_id' => $municipalityId,
+                'barangay_id' => $barangayId,
                 'addtional_address' => '123 Main St, City',
             ]);
 

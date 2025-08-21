@@ -2,29 +2,28 @@
 
 namespace App\Models;
 
+use App\Policies\RequestTypePolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Province extends Model
+#[UsePolicy(RequestTypePolicy::class)]
+class RequestType extends Model
 {
-    use HasUlids;
+    use HasUlids, SoftDeletes;
 
     protected $keyType = 'string';
     public $incrementing = false;
 
     protected $fillable = [
-        'code',
-        'name'
+        'name',
+        'status'
     ];
 
     protected $hidden = [
+        'deleted_at',
         'created_at',
         'updated_at',
     ];
-
-    public function municipalities(): HasMany
-    {
-        return $this->hasMany(Municipality::class, 'province_id', 'id');
-    }
 }

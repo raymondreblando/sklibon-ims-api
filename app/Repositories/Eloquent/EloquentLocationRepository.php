@@ -12,24 +12,24 @@ class EloquentLocationRepository implements LocationRepository
 {
     public function getProvinces(): Collection
     {
-        return Province::orderBy('name')->get(['code', 'name']);
+        return Province::orderBy('name')->get(['id', 'name']);
     }
 
     public function getMunicipalities(?string $province): Collection
     {
-        $query = Municipality::query();
+        if (empty($province))
+            return Municipality::orderBy('name')->get(['id', 'name']);
 
-        if (! empty($province)) $query->where('province_code', $province);
-
-        return $query->orderBy('name')->get(['code', 'name']);
+        $province = Province::find($province);
+        return $province->municipalities()->orderBy('name')->get(['id', 'name']);
     }
 
     public function getBarangays(?string $municipality): Collection
     {
-        $query = Barangay::query();
+        if (empty($municipality))
+            return Barangay::orderBy('name')->get(['id', 'name']);
 
-        if (! empty($municipality)) $query->where('municipality_code', $municipality);
-
-        return $query->orderBy('name')->get(['code', 'name']);
+        $municipality = Municipality::find($municipality);
+        return $municipality->barangays()->orderBy('name')->get(['id', 'name']);
     }
 }
