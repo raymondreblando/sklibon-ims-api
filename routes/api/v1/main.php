@@ -21,7 +21,7 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::put('/account/change-password/{id}', [AccountController::class, 'changePassword']);
-        Route::post('/account/change-profile-picture/{id}', [AccountController::class, 'changeProfilePicture']);
+        Route::put('/account/change-profile-picture/{id}', [AccountController::class, 'changeProfilePicture']);
 
         Route::resources([
             'contacts' => ContactController::class,
