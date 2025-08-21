@@ -36,7 +36,7 @@ class Barangay extends Model
         return $this->belongsTo(Province::class, 'province_code', 'code');
     }
 
-    public function requests(): MorphMany
+    public function receivables(): MorphMany
     {
         return $this->morphMany(Request::class, 'receivable');
     }

@@ -213,6 +213,9 @@ return [
         'info.municipality_id' => 'municipality',
         'info.barangay_id' => 'barangay',
         'info.additional_address' => 'additional address',
+        'receivable_id' => 'receiver',
+        'receivable_type' => 'receiver type',
+        'date_needed' => 'date needed',
     ],
 
 ];

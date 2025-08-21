@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\Request\StoreRequestRequest;
 use App\Models\Request;
 use App\Services\V1\RequestService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class RequestController extends Controller
@@ -28,9 +30,14 @@ class RequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(HttpRequest $httpRequest)
+    public function store(StoreRequestRequest $request): JsonResponse
     {
-        //
+        Gate::authorize('create', Request::class);
+
+        $data = $request->validated();
+        $attachment = $request->file('attachment');
+
+        return $this->requestService->save(Auth::user(), $data, $attachment);
     }
 
     /**

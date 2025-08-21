@@ -26,9 +26,9 @@ class EloquentRequestRepository implements RequestRepository
             ->get();
     }
 
-    public function create(array $data): Request
+    public function create(User $user, array $data): Request
     {
-        return Request::create($data);
+        return $user->requests()->create($data);
     }
 
     public function find(Request $request, array $relations = []): Request

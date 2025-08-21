@@ -63,7 +63,12 @@ class User extends Authenticatable
         return $this->hasMany(RefreshToken::class, 'user_id', 'id');
     }
 
-    public function requests(): MorphMany
+    public function requests(): HasMany
+    {
+        return $this->hasMany(Request::class, 'user_id', 'id');
+    }
+
+    public function receivables(): MorphMany
     {
         return $this->morphMany(Request::class, 'receivable');
     }
