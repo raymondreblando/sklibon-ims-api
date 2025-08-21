@@ -8,6 +8,8 @@ This is the backend API for the Information Management System for the SK Federat
 *   **Position Management:** CRUD operations for managing positions within the organization.
 *   **Hotline Management:** CRUD operations for managing hotlines.
 *   **Contact Management:** CRUD operations for managing contacts.
+*   **Request Type Management:** CRUD operations for managing request types.
+*   **Request Management:** CRUD operations for managing requests.
 
 ## Project Setup
 
@@ -102,6 +104,23 @@ All API endpoints are prefixed with `/api/v1`.
 *   `POST /contacts`: Create a new contact.
 *   `PUT /contacts/{id}`: Update a contact.
 *   `DELETE /contacts/{id}`: Delete a contact.
+
+### Request Types
+
+*   `GET /request-types`: Get a list of all request types.
+*   `GET /request-types/{id}`: Get a specific request type by ID.
+*   `POST /request-types`: Create a new request type.
+*   `PUT /request-types/{id}`: Update a request type.
+*   `DELETE /request-types/{id}`: Delete a request type.
+
+### Requests
+
+*   `GET /requests`: Get a list of all requests.
+*   `GET /requests/{id}`: Get a specific request by ID.
+*   `POST /requests`: Create a new request.
+*   `PUT /requests/{id}`: Update a request.
+*   `DELETE /requests/{id}`: Delete a request.
+
 
 ## Custom Artisan Commands
 
