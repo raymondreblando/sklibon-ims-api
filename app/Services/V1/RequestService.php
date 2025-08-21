@@ -3,6 +3,7 @@
 namespace App\Services\V1;
 
 use App\Http\Resources\V1\RequestResource;
+use App\Models\Request;
 use App\Models\User;
 use App\Repositories\RequestRepository;
 use App\Services\UploadService;
@@ -49,5 +50,15 @@ class RequestService
                 'Request created successfully.'
             );
         });
+    }
+
+    public function find(Request $request): JsonResponse
+    {
+        $request = $this->requestRepository->find($request);
+
+        return Response::success(
+            new RequestResource($request),
+            'Request retrieved successfully.'
+        );
     }
 }

@@ -80,7 +80,7 @@ class Request extends Model
     {
         return $this->load(['receivable' => function (MorphTo $morphTo) {
             $morphTo->morphWith([
-                User::class => ['userInfo:user_id,firstname,lastname'],
+                User::class => ['userInfo:id,user_id,firstname,lastname'],
                 Barangay::class,
             ]);
         }]);

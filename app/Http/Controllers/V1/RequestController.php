@@ -43,9 +43,11 @@ class RequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Request $request): JsonResponse
     {
-        //
+        Gate::authorize('view', $request);
+
+        return $this->requestService->find($request);
     }
 
     /**
