@@ -209,9 +209,9 @@ return [
         'info.phone_number' => 'phone number',
         'info.birthdate' => 'birthdate',
         'info.position_id' => 'position',
-        'info.province_code' => 'province',
-        'info.municipality_code' => 'municipality',
-        'info.barangay_code' => 'barangay',
+        'info.province_id' => 'province',
+        'info.municipality_id' => 'municipality',
+        'info.barangay_id' => 'barangay',
         'info.additional_address' => 'additional address',
     ],
 

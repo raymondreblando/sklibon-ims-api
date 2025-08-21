@@ -26,13 +26,13 @@ class RegisterRequest extends FormRequest
             'account.username' => ['required', 'string', 'max:100', 'unique:users,username'],
             'account.email' => ['required', 'string', 'email', 'max:100', 'unique:users,email'],
             'account.password' => ['required', 'string', 'min:8', 'confirmed'],
-            'info' => ['array:firstname,middlename,lastname,gender,position_id,barangay_code'],
+            'info' => ['array:firstname,middlename,lastname,gender,position_id,barangay_id'],
             'info.firstname' => ['required', 'string', 'max:100'],
             'info.middlename' => ['required', 'string', 'max:100'],
             'info.lastname' => ['required', 'string', 'max:100'],
             'info.gender' => ['required', 'string', 'in:Male,Female'],
             'info.position_id' => ['required', 'string', 'exists:positions,id'],
-            'info.barangay_code' => ['required', 'string', 'exists:barangays,code'],
+            'info.barangay_id' => ['required', 'string', 'exists:barangays,id'],
         ];
     }
 }

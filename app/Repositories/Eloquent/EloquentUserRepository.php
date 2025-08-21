@@ -12,9 +12,9 @@ class EloquentUserRepository implements UserRepository
         'role:id,role',
         'userInfo',
         'userInfo.position:id,name',
-        'userInfo.province:code,name',
-        'userInfo.municipality:code,name',
-        'userInfo.barangay:code,name',
+        'userInfo.province:id,name',
+        'userInfo.municipality:id,name',
+        'userInfo.barangay:id,name',
     ];
 
     public function get(array $relations = []): Collection
