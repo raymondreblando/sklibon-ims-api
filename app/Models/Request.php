@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Policies\RequestPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[UsePolicy(RequestPolicy::class)]
 class Request extends Model
 {
     use HasUlids, SoftDeletes;
@@ -16,6 +19,7 @@ class Request extends Model
     public $incrementing = false;
 
     protected $fillable = [
+        'user_id',
         'request_type_id',
         'name',
         'description',
@@ -39,6 +43,11 @@ class Request extends Model
     public function receivable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function requester(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function requestType(): BelongsTo

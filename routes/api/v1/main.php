@@ -5,6 +5,7 @@ use App\Http\Controllers\V1\ContactController;
 use App\Http\Controllers\V1\HotlineController;
 use App\Http\Controllers\V1\LocationController;
 use App\Http\Controllers\V1\PositionController;
+use App\Http\Controllers\V1\RequestController;
 use App\Http\Controllers\V1\RequestTypeController;
 use App\Http\Controllers\V1\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::prefix('v1')->group(function () {
             'contacts' => ContactController::class,
             'hotlines' => HotlineController::class,
             'positions' => PositionController::class,
+            'requests' => RequestController::class,
             'request-types' => RequestTypeController::class,
             'users' => UserController::class,
         ]);

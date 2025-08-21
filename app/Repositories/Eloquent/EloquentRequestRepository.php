@@ -12,20 +12,21 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class EloquentRequestRepository implements RequestRepository
 {
     protected array $relations = [
+        'requester.userInfo:id,firstname,lastname',
         'requestType:id,name',
-        'receivable' => function (MorphTo $morphTo) {
-            $morphTo->morphWith([
-                User::class => ['id', 'firstname', 'lastname'],
-                Barangay::class => ['id', 'name']
-            ]);
-        },
-        'approver',
-        'disapprover'
+        'approver.userInfo:id,firstname,lastname',
+        'disapprover.userInfo:id,firstname,lastname'
     ];
 
     public function get(array $relations = []): Collection
     {
         return Request::with($relations ?: $this->relations)
+            ->with(['receivable' => function (MorphTo $morphTo) {
+                $morphTo->morphWith([
+                    User::class => ['id', 'firstname', 'lastname'],
+                    Barangay::class => ['id', 'name']
+                ]);
+            }])
             ->orderBy('id', 'desc')
             ->get();
     }
