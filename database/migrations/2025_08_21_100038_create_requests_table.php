@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 250);
             $table->text('description');
             $table->date('date_needed');
-            $table->text('attachment');
+            $table->text('attachment')->nullable();
             $table->ulidMorphs('receivable');
             $table->enum('status', ['pending', 'approved', 'disapproved', 'completed', 'cancelled'])->default('pending');
             $table->date('approved_date')->nullable();
