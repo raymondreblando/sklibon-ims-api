@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1\Contact;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreContactRequest extends FormRequest
 {
@@ -23,7 +24,13 @@ class StoreContactRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'string', 'exists:users,id'],
-            'contact_number' => ['nullable', 'string', 'min:11', 'max:11', 'unique:contacts,contact_number']
+            'contact_number' => [
+                'nullable',
+                'string',
+                'min:11',
+                'max:11',
+                Rule::unique('contacts', 'contact_number')->withoutTrashed()
+            ]
         ];
     }
 }

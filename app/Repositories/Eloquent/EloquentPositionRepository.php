@@ -9,17 +9,15 @@ use Illuminate\Database\Eloquent\Collection;
 class EloquentPositionRepository implements PositionRepository
 {
     protected array $relations = [
-        'userInfos:id,position_id,firstname,middlename,lastname,province_code,municipality_code,barangay_code',
-        'userInfos.province:code,name',
-        'userInfos.municipality:code,name',
-        'userInfos.barangay:code,name',
+        'userInfos:id,position_id,firstname,middlename,lastname,province_id,municipality_id,barangay_id',
+        'userInfos.province:id,code,name',
+        'userInfos.municipality:id,code,name',
+        'userInfos.barangay:id,code,name',
     ];
 
     public function get(array $relations = []): Collection
     {
-        return Position::with($relations ?: $this->relations)
-            ->orderBy('id', 'desc')
-            ->get();
+        return Position::orderBy('id', 'desc')->get();
     }
 
     public function create(array $data): Position

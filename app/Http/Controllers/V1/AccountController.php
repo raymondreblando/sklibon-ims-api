@@ -22,7 +22,7 @@ class AccountController extends Controller
 
     public function changeProfilePicture(ChangeProfilePictureRequest $request, string $id): JsonResponse
     {
-        $profile = $request->file('profile');
-        return $this->accountService->changeProfilePicture($id, $profile);
+        $data = $request->validated();
+        return $this->accountService->changeProfilePicture($id, $data);
     }
 }

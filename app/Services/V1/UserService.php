@@ -10,7 +10,7 @@ use App\Repositories\UserInfoRepository;
 use App\Repositories\UserRepository;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserService
@@ -24,7 +24,7 @@ class UserService
     public function get(): JsonResponse
     {
         return Response::success(
-            UserResource::collection($this->userRepository->get()),
+            UserResource::collection($this->userRepository->get(Auth::user()->id)),
             'Users retrieved successfully.'
         );
     }

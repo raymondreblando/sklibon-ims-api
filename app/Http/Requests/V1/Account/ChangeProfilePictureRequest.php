@@ -22,7 +22,7 @@ class ChangeProfilePictureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile' => ['required', 'image', 'mimes:jpeg,jpg,png,gif', 'max:5120']
+            'profile' => ['required', 'string', 'url:https']
         ];
     }
 }

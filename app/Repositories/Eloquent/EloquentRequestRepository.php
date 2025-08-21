@@ -7,15 +7,14 @@ use App\Models\Request;
 use App\Models\User;
 use App\Repositories\RequestRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class EloquentRequestRepository implements RequestRepository
 {
     protected array $relations = [
         'requester.userInfo:id,user_id,firstname,lastname',
         'requestType:id,name',
-        'approver.userInfo:id,firstname,lastname',
-        'disapprover.userInfo:id,firstname,lastname'
+        'approver.userInfo:id,user_id,firstname,lastname',
+        'disapprover.userInfo:id,user_id,firstname,lastname'
     ];
 
     public function get(array $relations = []): Collection
