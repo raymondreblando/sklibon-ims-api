@@ -20,8 +20,7 @@ class RequestService
     ];
 
     public function __construct(
-        private RequestRepository $requestRepository,
-        private UploadService $uploadService
+        private RequestRepository $requestRepository
     ){}
 
     public function get(): JsonResponse
@@ -32,24 +31,16 @@ class RequestService
         );
     }
 
-    public function save(User $user, array $data, UploadedFile $attachment): JsonResponse
+    public function save(User $user, array $data): JsonResponse
     {
-        if (! $attachment)
-            return Response::error('Attachment is required.', 422);
+        $data['receivable_type'] = $this->receivableTypes[$data['receivable_type']] ?? null;
 
-            return DB::transaction(function () use ($data, $attachment, $user) {
-                $data['receivable_type'] = $this->receivableTypes[$data['receivable_type']] ?? null;
+        $request = $this->requestRepository->create($user, $data);
 
-                $request = $this->requestRepository->create($user, $data);
-
-                $attachmentPath = $this->uploadService->upload($attachment, $request->id, 'attachments');
-                $this->requestRepository->update($request, ['attachment' => $attachmentPath]);
-
-                return Response::success(
-                    new RequestResource($request),
-                    'Request created successfully.'
-                );
-            });
+        return Response::success(
+            new RequestResource($request),
+            'Request created successfully.'
+        );
     }
 
     public function find(Request $request): JsonResponse
@@ -62,25 +53,16 @@ class RequestService
         );
     }
 
-    public function update(Request $request, array $data, ?UploadedFile $attachment): JsonResponse
+    public function update(Request $request, array $data): JsonResponse
     {
-        return DB::transaction(function () use ($request, $data, $attachment) {
-            $data['receivable_type'] = $this->receivableTypes[$data['receivable_type']] ?? null;
+        $data['receivable_type'] = $this->receivableTypes[$data['receivable_type']] ?? null;
 
-            $payload = [];
+        $this->requestRepository->update($request, $data);
 
-            if (empty($data['status']) && ! empty($attachment)) {
-                $attachmentPath = $this->uploadService->upload($attachment, $request->id, 'attachments');
-                $payload['attachment'] = $attachmentPath;
-            }
-
-            $this->requestRepository->update($request, array_merge($data, $payload));
-
-            return Response::success(
-                new RequestResource($request),
-                'Request updated successfully.'
-            );
-        });
+        return Response::success(
+            new RequestResource($request),
+            'Request updated successfully.'
+        );
     }
 
     public function delete(Request $request): JsonResponse

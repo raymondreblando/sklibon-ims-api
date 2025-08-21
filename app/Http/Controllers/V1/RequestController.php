@@ -36,9 +36,7 @@ class RequestController extends Controller
         Gate::authorize('create', Request::class);
 
         $data = $request->validated();
-        $attachment = $request->file('attachment');
-
-        return $this->requestService->save(Auth::user(), $data, $attachment);
+        return $this->requestService->save(Auth::user(), $data);
     }
 
     /**

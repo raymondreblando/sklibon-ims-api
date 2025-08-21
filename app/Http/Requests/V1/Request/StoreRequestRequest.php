@@ -27,7 +27,7 @@ class StoreRequestRequest extends FormRequest
             'name' => ['required', 'string', 'max:250'],
             'description' => ['required', 'string'],
             'date_needed' => ['required', 'date', 'date_format:Y-m-d'],
-            'attachment' => ['required', 'file', 'mimes:pdf,docx', 'max:2048'],
+            'attachment' => ['required', 'string', 'url:https'],
             'receivable_type' => ['required', 'string', 'in:user,barangay'],
             'receivable_id' => ['required', 'string', new ValidReceivable($this->input('receivable_type'))],
         ];
