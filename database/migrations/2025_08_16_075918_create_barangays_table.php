@@ -12,15 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('barangays', function (Blueprint $table) {
-            $table->id();
-            $table->string('province_code');
-            $table->string('municipality_code');
+            $table->ulid('id')->primary();
+            $table->foreignUlid('province_id')->constrained('provinces', 'id');
+            $table->foreignUlid('municipality_id')->constrained('municipalities', 'id');
             $table->string('code')->unique();
             $table->string('name');
             $table->timestamps();
-
-            $table->foreign('province_code')->references('code')->on('provinces');
-            $table->foreign('municipality_code')->references('code')->on('municipalities');
         });
     }
 

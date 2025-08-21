@@ -14,8 +14,8 @@ Route::prefix('v1')->group(function () {
         Route::prefix('locations')->group(function () {
             Route::controller(LocationController::class)->group(function () {
                 Route::get('/provinces', 'getProvinces');
-                Route::get('/municipalities/{provinceCode?}', 'getMunicipalities');
-                Route::get('/barangays/{municipalityCode?}', 'getBarangays');
+                Route::get('/municipalities/{provinceId?}', 'getMunicipalities');
+                Route::get('/barangays/{municipalityId?}', 'getBarangays');
             });
         });
 

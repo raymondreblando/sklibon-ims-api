@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Barangay;
+use App\Models\Municipality;
+use App\Models\Province;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -24,13 +26,16 @@ class BarangaysSeeder extends Seeder
         try {
             $barangays = $response->json();
 
+            $provinces = Province::pluck('id', 'code')->toArray();
+            $municipalities = Municipality::pluck('id', 'code')->toArray();
+
             foreach ($barangays as $barangay) {
                 Barangay::updateOrCreate(
                     ['code' => $barangay['code']],
                     [
                         'name' => $barangay['name'],
-                        'municipality_code' => $barangay['municipalityCode'] ?: $barangay['cityCode'],
-                        'province_code' => $barangay['provinceCode'],
+                        'municipality_id' => $municipalities[$barangay['municipalityCode'] ?: $barangay['cityCode']],
+                        'province_id' => $provinces[$barangay['provinceCode']],
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]

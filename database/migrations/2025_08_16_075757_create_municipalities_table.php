@@ -12,13 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('municipalities', function (Blueprint $table) {
-            $table->id();
-            $table->string('province_code');
+            $table->ulid('id')->primary();
+            $table->foreignUlid('province_id')->constrained('provinces', 'id');
             $table->string('code')->unique();
             $table->string('name');
             $table->timestamps();
-
-            $table->foreign('province_code')->references('code')->on('provinces');
         });
     }
 

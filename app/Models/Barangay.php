@@ -2,17 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Barangay extends Model
 {
+    use HasUlids;
+
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     protected $fillable = [
+        'province_id',
+        'municipality_id',
         'code',
         'name',
-        'municipality_code',
-        'province_code'
     ];
 
     protected $hidden = [

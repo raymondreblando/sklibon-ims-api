@@ -24,9 +24,9 @@ class UserInfo extends Model
         'age',
         'phone_number',
         'birthdate',
-        'province_code',
-        'municipality_code',
-        'barangay_code',
+        'province_id',
+        'municipality_id',
+        'barangay_id',
         'addtional_address',
     ];
 
@@ -53,16 +53,16 @@ class UserInfo extends Model
 
     public function province(): BelongsTo
     {
-        return $this->belongsTo(Province::class, 'province_code', 'code');
+        return $this->belongsTo(Province::class, 'province_id', 'id');
     }
 
     public function municipality(): BelongsTo
     {
-        return $this->belongsTo(Municipality::class, 'municipality_code', 'code');
+        return $this->belongsTo(Municipality::class, 'municipality_id', 'id');
     }
 
     public function barangay(): BelongsTo
     {
-        return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
+        return $this->belongsTo(Barangay::class, 'barangay_id', 'id');
     }
 }
