@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class EloquentRequestRepository implements RequestRepository
 {
     protected array $relations = [
-        'requester.userInfo:id,firstname,lastname',
+        'requester.userInfo:id,user_id,firstname,lastname',
         'requestType:id,name',
         'approver.userInfo:id,firstname,lastname',
         'disapprover.userInfo:id,firstname,lastname'

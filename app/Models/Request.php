@@ -70,8 +70,8 @@ class Request extends Model
     {
         return $query->with(['receivable' => function (MorphTo $morphTo) {
             $morphTo->morphWith([
-                User::class => ['id', 'firstname', 'lastname'],
-                Barangay::class => ['id', 'name'],
+                User::class => ['userInfo:id,user_id,firstname,lastname'],
+                Barangay::class,
             ]);
         }]);
     }
@@ -80,8 +80,8 @@ class Request extends Model
     {
         return $this->load(['receivable' => function (MorphTo $morphTo) {
             $morphTo->morphWith([
-                User::class => ['id', 'firstname', 'lastname'],
-                Barangay::class => ['id', 'name'],
+                User::class => ['userInfo:user_id,firstname,lastname'],
+                Barangay::class,
             ]);
         }]);
     }

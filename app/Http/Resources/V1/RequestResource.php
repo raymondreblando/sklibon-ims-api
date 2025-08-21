@@ -26,6 +26,7 @@ class RequestResource extends JsonResource
             'disapprovedDate' => $this->resource->disapproved_date,
             'filedDate' => $this->resource->created_at,
             'reason' => $this->resource->reason,
+            'type' => new RequestTypeResource($this->whenLoaded('requestType')),
             'receiver' => $this->whenLoaded('receivable', function () {
                 return $this->resource->receivable instanceof User
                     ? new RequestUserResource($this->resource->receivable)
