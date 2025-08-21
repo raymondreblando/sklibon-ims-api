@@ -8,7 +8,6 @@ use App\Http\Requests\V1\RequestType\UpdateRequestTypeRequest;
 use App\Models\RequestType;
 use App\Services\V1\RequestTypeService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class RequestTypeController extends Controller
@@ -64,6 +63,8 @@ class RequestTypeController extends Controller
      */
     public function destroy(RequestType $requestType)
     {
-        //
+        Gate::authorize('delete', $requestType);
+
+        return $this->requestTypeService->delete($requestType);
     }
 }

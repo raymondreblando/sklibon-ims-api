@@ -51,4 +51,11 @@ class RequestTypeService
             'Request type updated successfully.'
         );
     }
+
+    public function delete(RequestType $requestType): JsonResponse
+    {
+        $this->requestTypeRepository->delete($requestType);
+
+        return Response::success(null, 'Request type deleted successfully.');
+    }
 }
