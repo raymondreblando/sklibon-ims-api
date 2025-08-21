@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date('disapproved_date')->nullable();
             $table->foreignUlid('disapproved_by')->nullable()->constrained('users', 'id');
             $table->text('reason')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
