@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\AuthController;
+use App\Http\Controllers\V1\ImageKitController;
 use App\Http\Controllers\V1\RefreshTokenController;
 use App\Http\Middleware\EnsureRefreshTokenIsValid;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +11,9 @@ Route::prefix('v1/auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
 
     Route::post('/logout', [AuthController::class, 'logout'])
+        ->middleware('auth:sanctum');
+
+    Route::get('/imagekit', ImageKitController::class)
         ->middleware('auth:sanctum');
 
     Route::post('/refresh-token', RefreshTokenController::class)
