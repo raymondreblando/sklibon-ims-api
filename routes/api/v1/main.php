@@ -3,6 +3,7 @@
 use App\Http\Controllers\V1\AccountController;
 use App\Http\Controllers\V1\AttachmentController;
 use App\Http\Controllers\V1\ContactController;
+use App\Http\Controllers\V1\GalleryController;
 use App\Http\Controllers\V1\HotlineController;
 use App\Http\Controllers\V1\LocationController;
 use App\Http\Controllers\V1\PositionController;
@@ -27,6 +28,7 @@ Route::prefix('v1')->group(function () {
 
         Route::resources([
             'contacts' => ContactController::class,
+            'galleries' => GalleryController::class,
             'hotlines' => HotlineController::class,
             'positions' => PositionController::class,
             'requests' => RequestController::class,

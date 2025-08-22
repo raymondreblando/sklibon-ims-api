@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Policies\GalleryPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[UsePolicy(GalleryPolicy::class)]
 class Gallery extends Model
 {
     use HasUlids, SoftDeletes;

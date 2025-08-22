@@ -6,6 +6,8 @@ use App\Repositories\AttachmentRepository;
 use App\Repositories\ContactRepository;
 use App\Repositories\Eloquent\EloquentAttachmentRepository;
 use App\Repositories\Eloquent\EloquentContactRepository;
+use App\Repositories\Eloquent\EloquentGalleryImageRepository;
+use App\Repositories\Eloquent\EloquentGalleryRepository;
 use App\Repositories\Eloquent\EloquentHotlineRepository;
 use App\Repositories\Eloquent\EloquentLocationRepository;
 use App\Repositories\Eloquent\EloquentNotificationRepository;
@@ -17,6 +19,8 @@ use App\Repositories\Eloquent\EloquentRequestTypeRepository;
 use App\Repositories\Eloquent\EloquentRoleRepository;
 use App\Repositories\Eloquent\EloquentUserInfoRepository;
 use App\Repositories\Eloquent\EloquentUserRepository;
+use App\Repositories\GalleryImageRepository;
+use App\Repositories\GalleryRepository;
 use App\Repositories\HotlineRepository;
 use App\Repositories\LocationRepository;
 use App\Repositories\NotificationRepository;
@@ -35,6 +39,8 @@ class RepositoryServiceProvider extends ServiceProvider
     public $bindings = [
         AttachmentRepository::class => EloquentAttachmentRepository::class,
         ContactRepository::class => EloquentContactRepository::class,
+        GalleryRepository::class => EloquentGalleryRepository::class,
+        GalleryImageRepository::class => EloquentGalleryImageRepository::class,
         HotlineRepository::class => EloquentHotlineRepository::class,
         LocationRepository::class => EloquentLocationRepository::class,
         NotificationRepository::class => EloquentNotificationRepository::class,
