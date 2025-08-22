@@ -9,8 +9,12 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentAttachmentRepository implements AttachmentRepository
 {
+    public function create(Report $report, array $data): Attachment
+    {
+        return $report->attachments()->create($data);
+    }
 
-    public function create(Report $report, array $data): Collection
+    public function createMany(Report $report, array $data): Collection
     {
         return $report->attachments()->createMany($data);
     }

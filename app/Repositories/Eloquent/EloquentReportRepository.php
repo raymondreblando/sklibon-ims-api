@@ -33,12 +33,17 @@ class EloquentReportRepository implements ReportRepository
         return $user->reports()->create($data);
     }
 
-    public function find(Report $report, array $relations = []): ?Report
+    public function find(Report $report, array $relations = []): Report
     {
         return $report->load($relations ?: $this->relations);
     }
 
-    public function update(Report $report, array $data): ?Report
+    public function findById(string $id): ?Report
+    {
+        return Report::findOrFail($id);
+    }
+
+    public function update(Report $report, array $data): Report
     {
         $report->update($data);
         return $report;

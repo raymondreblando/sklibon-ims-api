@@ -44,7 +44,7 @@ class ReportService
 
             $report = $this->reportRepository->create($this->user(), $reportPayload);
 
-            $attachments = $this->attachmentService->save($report, $data['attachments']);
+            $attachments = $this->attachmentService->attach($report, $data['attachments']);
 
             return Response::success(
                 new ReportResource($report->load('attachments')),

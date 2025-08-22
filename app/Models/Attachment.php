@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Policies\AttachmentPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[UsePolicy(AttachmentPolicy::class)]
 class Attachment extends Model
 {
     use HasUlids, SoftDeletes;

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\AccountController;
+use App\Http\Controllers\V1\AttachmentController;
 use App\Http\Controllers\V1\ContactController;
 use App\Http\Controllers\V1\HotlineController;
 use App\Http\Controllers\V1\LocationController;
@@ -33,5 +34,8 @@ Route::prefix('v1')->group(function () {
             'reports' => ReportController::class,
             'users' => UserController::class,
         ]);
+
+        Route::resource('attachments', AttachmentController::class)
+            ->only('store', 'destroy');
     });
 });
