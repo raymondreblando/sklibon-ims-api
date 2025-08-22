@@ -21,7 +21,7 @@ class ReportPolicy
      */
     public function view(User $user, Report $report): bool
     {
-        return $report->user->id === $user->id
+        return $report->user_id === $user->id
             || $report->barangay_id === $user->userInfo->barangay_id
             || $user->isAdmin();
     }
@@ -39,29 +39,13 @@ class ReportPolicy
      */
     public function update(User $user, Report $report): bool
     {
-        return false;
+        return $report->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Report $report): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Report $report): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Report $report): bool
     {
         return false;
     }

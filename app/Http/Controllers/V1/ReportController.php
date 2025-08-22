@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Report\StoreReportRequest;
+use App\Http\Requests\V1\Report\UpdateReportRequest;
 use App\Models\Report;
 use App\Services\V1\ReportService;
 use Illuminate\Http\JsonResponse;
@@ -50,9 +51,12 @@ class ReportController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Report $report)
+    public function update(UpdateReportRequest $request, Report $report)
     {
-        //
+        Gate::authorize('update', $report);
+
+        $data = $request->validated();
+        return $this->reportService->update($report, $data);
     }
 
     /**

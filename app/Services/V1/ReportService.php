@@ -62,4 +62,14 @@ class ReportService
             'Report retrieved successfully.'
         );
     }
+
+    public function update(Report $report, array $data): JsonResponse
+    {
+        $report = $this->reportRepository->update($report, $data);
+
+        return Response::success(
+            new ReportResource($report),
+            'Report updated successfully.'
+        );
+    }
 }
