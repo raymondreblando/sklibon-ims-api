@@ -77,4 +77,11 @@ class EventService
             );
         });
     }
+
+    public function delete(Event $event): JsonResponse
+    {
+        $this->eventRepository->delete($event);
+
+        return Response::success(null, 'Event deleted successfully.');
+    }
 }
