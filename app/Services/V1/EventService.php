@@ -4,6 +4,7 @@ namespace App\Services\V1;
 
 use App\Events\EventCreated;
 use App\Http\Resources\V1\EventResource;
+use App\Repositories\Criteria\Where;
 use App\Repositories\EventRepository;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
@@ -17,6 +18,18 @@ class EventService
     public function __construct(
         private EventRepository $eventRepository
     ){}
+
+    public function get(?string $barangayId): JsonResponse
+    {
+        if (! empty($barangayId)) {
+            $criteria = [new Where('barangay_id', $barangayId)];
+        }
+
+        return Response::success(
+            EventResource::collection($this->eventRepository->get($criteria ?? [])),
+            'Events retrieved successfully.'
+        );
+    }
 
     public function save(array $data): JsonResponse
     {
