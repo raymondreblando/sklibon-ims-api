@@ -79,6 +79,11 @@ class User extends Authenticatable
         return $this->hasMany(Gallery::class, 'user_id', 'id');
     }
 
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class, 'user_id', 'id');
+    }
+
     public function receivables(): MorphMany
     {
         return $this->morphMany(Request::class, 'receivable');

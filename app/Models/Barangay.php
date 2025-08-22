@@ -42,6 +42,11 @@ class Barangay extends Model
         return $this->hasMany(Report::class, 'barangay_id', 'id');
     }
 
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class, 'barangay_id', 'id');
+    }
+
     public function receivables(): MorphMany
     {
         return $this->morphMany(Request::class, 'receivable');
