@@ -4,6 +4,7 @@ namespace App\Services\V1;
 
 use App\Events\EventCreated;
 use App\Http\Resources\V1\EventResource;
+use App\Models\Event;
 use App\Repositories\Criteria\Where;
 use App\Repositories\EventRepository;
 use App\Traits\Auth\HasAuthUser;
@@ -43,5 +44,15 @@ class EventService
                 'Event created successfully.'
             );
         });
+    }
+
+    public function find(Event $event): JsonResponse
+    {
+        $event = $this->eventRepository->find($event);
+
+        return Response::success(
+            new EventResource($event),
+            'Event retrieved successfully.'
+        );
     }
 }

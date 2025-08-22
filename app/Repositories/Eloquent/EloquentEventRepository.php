@@ -33,12 +33,12 @@ class EloquentEventRepository implements EventRepository
         return $user->events()->create($data);
     }
 
-    public function find(Event $event): ?Event
+    public function find(Event $event, array $relations = []): Event
     {
-        return $event;
+        return $event->load($relations ?: $this->relations);
     }
 
-    public function update(Event $event, array $data): ?Event
+    public function update(Event $event, array $data): Event
     {
         $event->update($data);
         return $event;

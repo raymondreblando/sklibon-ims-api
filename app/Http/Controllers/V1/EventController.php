@@ -30,7 +30,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventRequest $request)
+    public function store(StoreEventRequest $request): JsonResponse
     {
         Gate::authorize('create', Event::class);
 
@@ -41,9 +41,11 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show(Event $event): JsonResponse
     {
-        //
+        Gate::authorize('view', $event);
+
+        return $this->eventService->find($event);
     }
 
     /**
