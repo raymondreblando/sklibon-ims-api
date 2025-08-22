@@ -40,9 +40,11 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Gallery $gallery)
+    public function show(Gallery $gallery): JsonResponse
     {
-        //
+        Gate::authorize('view', $gallery);
+
+        return $this->galleryService->find($gallery);
     }
 
     /**

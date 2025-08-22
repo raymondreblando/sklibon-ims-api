@@ -3,6 +3,7 @@
 namespace App\Services\V1;
 
 use App\Http\Resources\V1\GalleryResource;
+use App\Models\Gallery;
 use App\Repositories\GalleryRepository;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
@@ -41,5 +42,15 @@ class GalleryService
                 'Gallery created successfully.'
             );
         });
+    }
+
+    public function find(Gallery $gallery): JsonResponse
+    {
+        $gallery = $this->galleryRepository->find($gallery);
+
+        return Response::success(
+            new GalleryResource($gallery),
+            'Gallery retrieved successfully.'
+        );
     }
 }

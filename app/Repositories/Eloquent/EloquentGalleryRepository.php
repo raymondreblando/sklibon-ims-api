@@ -28,7 +28,7 @@ class EloquentGalleryRepository implements GalleryRepository
 
     public function find(Gallery $gallery, array $relations = []): Gallery
     {
-        return $gallery;
+        return $gallery->load($relations ?: $this->relations);
     }
 
     public function update(Gallery $gallery, array $data): Gallery
