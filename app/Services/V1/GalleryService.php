@@ -53,4 +53,14 @@ class GalleryService
             'Gallery retrieved successfully.'
         );
     }
+
+    public function update(Gallery $gallery, array $data): JsonResponse
+    {
+        $gallery = $this->galleryRepository->update($gallery, $data);
+
+        return Response::success(
+            new GalleryResource($gallery),
+            'Gallery updated successfully.'
+        );
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Gallery\StoreGalleryRequest;
+use App\Http\Requests\V1\Gallery\UpdateGalleryRequest;
 use App\Models\Gallery;
 use App\Services\V1\GalleryService;
 use Illuminate\Http\JsonResponse;
@@ -50,9 +51,12 @@ class GalleryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Gallery $gallery)
+    public function update(UpdateGalleryRequest $request, Gallery $gallery): JsonResponse
     {
-        //
+        Gate::authorize('update', $gallery);
+
+        $data = $request->validated();
+        return $this->galleryService->update($gallery, $data);
     }
 
     /**
