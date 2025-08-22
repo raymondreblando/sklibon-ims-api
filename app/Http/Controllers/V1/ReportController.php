@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Report\StoreReportRequest;
 use App\Models\Report;
 use App\Services\V1\ReportService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,9 +19,11 @@ class ReportController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        Gate::authorize('viewAny', Report::class);
+
+        return $this->reportService->get();
     }
 
     /**

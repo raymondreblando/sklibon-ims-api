@@ -3,6 +3,8 @@
 namespace App\Services\V1;
 
 use App\Http\Resources\V1\ReportResource;
+use App\Repositories\Criteria\OrWhere;
+use App\Repositories\Criteria\Where;
 use App\Repositories\ReportRepository;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
@@ -18,6 +20,21 @@ class ReportService
         private ReportRepository $reportRepository,
         private AttachmentService $attachmentService
     ){}
+
+    public function get(): JsonResponse
+    {
+        if (! $this->isAdmin()) {
+            $criteria = [
+                new Where('user_id', $this->user()->id),
+                new OrWhere('barangay_id', $this->getAuthUserBarangay())
+            ];
+        }
+
+        return Response::success(
+            ReportResource::collection($this->reportRepository->get($criteria ?? [])),
+            'Reports retrieved successfully.'
+        );
+    }
 
     public function save(array $data): JsonResponse
     {
