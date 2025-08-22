@@ -4,6 +4,7 @@ namespace App\Services\V1;
 
 use App\Enums\RequestStatus;
 use App\Events\RequestCreated;
+use App\Events\RequestStatusUpdated;
 use App\Http\Resources\V1\RequestResource;
 use App\Models\Request;
 use App\Models\User;
@@ -79,29 +80,18 @@ class RequestService
     public function update(Request $request, array $data): JsonResponse
     {
         return DB::transaction(function () use ($request, $data) {
-            $data['receivable_type'] = $this->getMorph($data['receivable_type']);
+            if (! empty($data['receivable_type'])) {
+                $data['receivable_type'] = $this->getMorph($data['receivable_type']);
+            }
 
             $this->requestRepository->update($request, $data);
 
             if (in_array($request->status, [
-                RequestStatus::Approved,
-                RequestStatus::Disapproved
+                RequestStatus::Approved->value,
+                RequestStatus::Disapproved->value,
+                RequestStatus::Cancelled->value,
             ])) {
-                $notifyPayload = [
-                    'type' => 'request',
-                    'notifiable_id' => $request->user_id,
-                    'notifiable_type' => $this->getMorph('user'),
-                    'data' => [
-                        'requestId' => $request->id,
-                        'user' => $this->getAuthUserName(),
-                        'request' => $request->name,
-                        'status' => $request->status
-                    ],
-                ];
-
-                $notification = $this->notificationService->save($notifyPayload);
-
-                RequestCreated::dispatch($notification);
+                RequestStatusUpdated::dispatch($request, $this->getAuthUserName());
             }
 
             return Response::success(

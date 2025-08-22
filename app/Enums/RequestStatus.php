@@ -8,5 +8,5 @@ enum RequestStatus: string
     case Approved = 'approved';
     case Disapproved = 'disapproved';
     case Completed = 'completed';
-    case Canceled = 'cancelled';
+    case Cancelled = 'cancelled';
 }
