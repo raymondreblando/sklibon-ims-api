@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Models\Barangay;
 use App\Models\Request;
 use App\Models\User;
 use App\Repositories\RequestRepository;
@@ -17,9 +16,15 @@ class EloquentRequestRepository implements RequestRepository
         'disapprover.userInfo:id,user_id,firstname,lastname'
     ];
 
-    public function get(array $relations = []): Collection
+    public function get(array $criteria = [], array $relations = []): Collection
     {
-        return Request::with($relations ?: $this->relations)
+        $query = Request::query();
+
+        foreach ($criteria as $criterion) {
+            $criterion->apply($query);
+        }
+
+        return $query->with($relations ?: $this->relations)
             ->withReceivable()
             ->orderBy('id', 'desc')
             ->get();

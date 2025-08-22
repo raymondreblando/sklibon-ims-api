@@ -2,45 +2,69 @@
 
 namespace App\Services\V1;
 
+use App\Enums\RequestStatus;
+use App\Events\RequestCreated;
+use App\Events\RequestStatusUpdated;
 use App\Http\Resources\V1\RequestResource;
 use App\Models\Request;
 use App\Models\User;
+use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\WhereIn;
 use App\Repositories\RequestRepository;
-use App\Services\UploadService;
+use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 
 class RequestService
 {
-    protected array $receivableTypes = [
+    use HasAuthUser;
+
+    protected array $morphs = [
         'user' => 'App\Models\User',
         'barangay' => 'App\Models\Barangay',
     ];
 
     public function __construct(
-        private RequestRepository $requestRepository
+        private RequestRepository $requestRepository,
+        private NotificationService $notificationService
     ){}
 
-    public function get(): JsonResponse
+    public function get(?string $action): JsonResponse
     {
+        $criteria = [];
+
+        if ($action === 'for-approval' && $this->user()) {
+            $criteria[] = new WhereIn('receivable_id', [
+                $this->getAuthUserId(),
+                $this->getAuthUserBarangay()
+            ]);
+        } elseif (! $this->isAdmin() && $this->user()) {
+            $criteria[] = new Where('user_id', $this->getAuthUserId());
+        }
+
+        $requests = $this->requestRepository->get($criteria);
+
         return Response::success(
-            RequestResource::collection($this->requestRepository->get()),
+            RequestResource::collection($requests),
             'Requests retrieved successfully.'
         );
     }
 
     public function save(User $user, array $data): JsonResponse
     {
-        $data['receivable_type'] = $this->receivableTypes[$data['receivable_type']] ?? null;
+        return DB::transaction(function () use ($user, $data) {
+            $data['receivable_type'] = $this->getMorph($data['receivable_type']);
 
-        $request = $this->requestRepository->create($user, $data);
+            $request = $this->requestRepository->create($user, $data);
 
-        return Response::success(
-            new RequestResource($request),
-            'Request created successfully.'
-        );
+            RequestCreated::dispatch($request, $this->getAuthUserName());
+
+            return Response::success(
+                new RequestResource($request),
+                'Request created successfully.'
+            );
+        });
     }
 
     public function find(Request $request): JsonResponse
@@ -55,14 +79,26 @@ class RequestService
 
     public function update(Request $request, array $data): JsonResponse
     {
-        $data['receivable_type'] = $this->receivableTypes[$data['receivable_type']] ?? null;
+        return DB::transaction(function () use ($request, $data) {
+            if (! empty($data['receivable_type'])) {
+                $data['receivable_type'] = $this->getMorph($data['receivable_type']);
+            }
 
-        $this->requestRepository->update($request, $data);
+            $this->requestRepository->update($request, $data);
 
-        return Response::success(
-            new RequestResource($request),
-            'Request updated successfully.'
-        );
+            if (in_array($request->status, [
+                RequestStatus::Approved->value,
+                RequestStatus::Disapproved->value,
+                RequestStatus::Cancelled->value,
+            ])) {
+                RequestStatusUpdated::dispatch($request, $this->getAuthUserName());
+            }
+
+            return Response::success(
+                new RequestResource($request),
+                'Request updated successfully.'
+            );
+        });
     }
 
     public function delete(Request $request): JsonResponse
@@ -70,5 +106,10 @@ class RequestService
         $this->requestRepository->delete($request);
 
         return Response::success(null, 'Request deleted successfully.');
+    }
+
+    private function getMorph(?string $type): ?string
+    {
+        return $this->morphs[$type] ?? null;
     }
 }

@@ -7,8 +7,8 @@ use App\Http\Requests\V1\Request\StoreRequestRequest;
 use App\Http\Requests\V1\Request\UpdateRequestRequest;
 use App\Models\Request;
 use App\Services\V1\RequestService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -21,11 +21,12 @@ class RequestController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(HttpRequest $request): JsonResponse
     {
         Gate::authorize('viewAny', Request::class);
 
-        return $this->requestService->get();
+        $action = $request->query('action');
+        return $this->requestService->get($action);
     }
 
     /**
@@ -57,9 +58,7 @@ class RequestController extends Controller
         Gate::authorize('update', $request);
 
         $data = $httpRequest->validated();
-        $attachment = $httpRequest->file('attachment');
-
-        return $this->requestService->update($request, $data, $attachment);
+        return $this->requestService->update($request, $data);
     }
 
     /**

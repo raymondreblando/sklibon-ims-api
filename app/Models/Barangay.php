@@ -40,4 +40,9 @@ class Barangay extends Model
     {
         return $this->morphMany(Request::class, 'receivable');
     }
+
+    public function notifications(): MorphMany
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
 }

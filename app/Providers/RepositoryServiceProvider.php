@@ -6,6 +6,7 @@ use App\Repositories\ContactRepository;
 use App\Repositories\Eloquent\EloquentContactRepository;
 use App\Repositories\Eloquent\EloquentHotlineRepository;
 use App\Repositories\Eloquent\EloquentLocationRepository;
+use App\Repositories\Eloquent\EloquentNotificationRepository;
 use App\Repositories\Eloquent\EloquentPositionRepository;
 use App\Repositories\Eloquent\EloquentRefreshTokenRepository;
 use App\Repositories\Eloquent\EloquentRequestRepository;
@@ -15,6 +16,7 @@ use App\Repositories\Eloquent\EloquentUserInfoRepository;
 use App\Repositories\Eloquent\EloquentUserRepository;
 use App\Repositories\HotlineRepository;
 use App\Repositories\LocationRepository;
+use App\Repositories\NotificationRepository;
 use App\Repositories\PositionRepository;
 use App\Repositories\RefreshTokenRepository;
 use App\Repositories\RequestRepository;
@@ -30,6 +32,7 @@ class RepositoryServiceProvider extends ServiceProvider
         ContactRepository::class => EloquentContactRepository::class,
         HotlineRepository::class => EloquentHotlineRepository::class,
         LocationRepository::class => EloquentLocationRepository::class,
+        NotificationRepository::class => EloquentNotificationRepository::class,
         PositionRepository::class => EloquentPositionRepository::class,
         RefreshTokenRepository::class => EloquentRefreshTokenRepository::class,
         RoleRepository::class => EloquentRoleRepository::class,
