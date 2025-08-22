@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\Role as RoleEnum;
 use App\Policies\UserPolicy;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -68,6 +69,11 @@ class User extends Authenticatable
         return $this->hasMany(Request::class, 'user_id', 'id');
     }
 
+    public function reports(): HasMany
+    {
+        return $this->hasMany(Report::class, 'user_id', 'id');
+    }
+
     public function receivables(): MorphMany
     {
         return $this->morphMany(Request::class, 'receivable');
@@ -76,5 +82,13 @@ class User extends Authenticatable
     public function notifications(): MorphMany
     {
         return $this->morphMany(Notification::class, 'notifiable');
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->role->role, [
+            RoleEnum::SuperAdmin->value,
+            RoleEnum::Admin->value,
+        ]);
     }
 }

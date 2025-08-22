@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Barangay extends Model
@@ -34,6 +35,11 @@ class Barangay extends Model
     public function province(): BelongsTo
     {
         return $this->belongsTo(Province::class, 'province_code', 'code');
+    }
+
+    public function reports(): HasMany
+    {
+        return $this->hasMany(Report::class, 'barangay_id', 'id');
     }
 
     public function receivables(): MorphMany

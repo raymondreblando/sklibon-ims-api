@@ -10,6 +10,8 @@ This is the backend API for the Information Management System for the SK Federat
 *   **Contact Management:** CRUD operations for managing contacts.
 *   **Request Type Management:** CRUD operations for managing request types.
 *   **Request Management:** CRUD operations for managing requests.
+*   **Report Management:** CRUD operations for managing reports.
+*   **Attachment Management:** CRUD operations for managing attachments.
 
 ## Project Setup
 
@@ -120,6 +122,19 @@ All API endpoints are prefixed with `/api/v1`.
 *   `POST /requests`: Create a new request.
 *   `PUT /requests/{id}`: Update a request.
 *   `DELETE /requests/{id}`: Delete a request.
+
+### Reports
+
+*   `GET /reports`: Get a list of all reports.
+*   `GET /reports/{id}`: Get a specific report by ID.
+*   `POST /reports`: Create a new report.
+*   `PUT /reports/{id}`: Update a report.
+*   `DELETE /reports/{id}`: Delete a report.
+
+### Attachments
+
+*   `POST /attachments`: Upload an attachment.
+*   `DELETE /attachments/{id}`: Delete an attachment.
 
 
 ## Custom Artisan Commands

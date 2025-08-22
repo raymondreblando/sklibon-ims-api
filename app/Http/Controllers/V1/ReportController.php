@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers\V1;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\Report\StoreReportRequest;
+use App\Http\Requests\V1\Report\UpdateReportRequest;
+use App\Models\Report;
+use App\Services\V1\ReportService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
+
+class ReportController extends Controller
+{
+    public function __construct(
+        private ReportService $reportService
+    ){}
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): JsonResponse
+    {
+        Gate::authorize('viewAny', Report::class);
+
+        return $this->reportService->get();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreReportRequest $request)
+    {
+        Gate::authorize('create', Report::class);
+
+        $data = $request->validated();
+        return $this->reportService->save($data);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Report $report): JsonResponse
+    {
+        Gate::authorize('view', $report);
+
+        return $this->reportService->find($report);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateReportRequest $request, Report $report)
+    {
+        Gate::authorize('update', $report);
+
+        $data = $request->validated();
+        return $this->reportService->update($report, $data);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Report $report)
+    {
+        Gate::authorize('delete', $report);
+
+        return $this->reportService->delete($report);
+    }
+}
