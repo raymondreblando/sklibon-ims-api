@@ -22,8 +22,6 @@ class GalleryController extends Controller
      */
     public function index(): JsonResponse
     {
-        Gate::authorize('viewAny', Gallery::class);
-
         return $this->galleryService->get();
     }
 

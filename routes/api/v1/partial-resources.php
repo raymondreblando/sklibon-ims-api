@@ -2,15 +2,8 @@
 
 use App\Http\Controllers\V1\AccountController;
 use App\Http\Controllers\V1\AttachmentController;
-use App\Http\Controllers\V1\ContactController;
 use App\Http\Controllers\V1\GalleryController;
-use App\Http\Controllers\V1\HotlineController;
 use App\Http\Controllers\V1\LocationController;
-use App\Http\Controllers\V1\PositionController;
-use App\Http\Controllers\V1\ReportController;
-use App\Http\Controllers\V1\RequestController;
-use App\Http\Controllers\V1\RequestTypeController;
-use App\Http\Controllers\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -26,18 +19,14 @@ Route::prefix('v1')->group(function () {
         Route::put('/account/change-password/{id}', [AccountController::class, 'changePassword']);
         Route::put('/account/change-profile-picture/{id}', [AccountController::class, 'changeProfilePicture']);
 
-        Route::resources([
-            'contacts' => ContactController::class,
-            'galleries' => GalleryController::class,
-            'hotlines' => HotlineController::class,
-            'positions' => PositionController::class,
-            'requests' => RequestController::class,
-            'request-types' => RequestTypeController::class,
-            'reports' => ReportController::class,
-            'users' => UserController::class,
-        ]);
-
         Route::resource('attachments', AttachmentController::class)
             ->only('store', 'destroy');
+
+        Route::controller(GalleryController::class)->group(function () {
+            Route::post('/galleries', 'store');
+            Route::get('/galleries/{gallery}', 'show');
+            Route::put('/galleries/{gallery}', 'update');
+            Route::delete('/galleries/{gallery}', 'destroy');
+        });
     });
 });
