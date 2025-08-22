@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Attachment extends Model
@@ -23,4 +24,9 @@ class Attachment extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function report(): BelongsTo
+    {
+        return $this->belongsTo(Report::class, 'report_id', 'id');
+    }
 }
