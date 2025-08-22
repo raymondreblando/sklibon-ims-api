@@ -20,8 +20,8 @@ return new class extends Migration
             $table->timestamp('event_date');
             $table->text('image_url');
             $table->enum('status', ['upcoming', 'ongoing', 'completed', 'cancelled'])->default('upcoming');
-            $table->decimal('latitude', 10, 7)->nullable();
-            $table->decimal('longitude', 10, 7)->nullable();
+            $table->text('latitude')->nullable();
+            $table->text('longitude')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
