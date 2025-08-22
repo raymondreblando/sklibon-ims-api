@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\ContactController;
+use App\Http\Controllers\V1\EventController;
 use App\Http\Controllers\V1\HotlineController;
 use App\Http\Controllers\V1\PositionController;
 use App\Http\Controllers\V1\ReportController;
@@ -13,6 +14,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::resources([
             'contacts' => ContactController::class,
+            'events' => EventController::class,
             'hotlines' => HotlineController::class,
             'positions' => PositionController::class,
             'requests' => RequestController::class,

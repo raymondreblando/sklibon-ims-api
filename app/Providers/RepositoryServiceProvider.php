@@ -6,6 +6,7 @@ use App\Repositories\AttachmentRepository;
 use App\Repositories\ContactRepository;
 use App\Repositories\Eloquent\EloquentAttachmentRepository;
 use App\Repositories\Eloquent\EloquentContactRepository;
+use App\Repositories\Eloquent\EloquentEventRepository;
 use App\Repositories\Eloquent\EloquentGalleryImageRepository;
 use App\Repositories\Eloquent\EloquentGalleryRepository;
 use App\Repositories\Eloquent\EloquentHotlineRepository;
@@ -19,6 +20,7 @@ use App\Repositories\Eloquent\EloquentRequestTypeRepository;
 use App\Repositories\Eloquent\EloquentRoleRepository;
 use App\Repositories\Eloquent\EloquentUserInfoRepository;
 use App\Repositories\Eloquent\EloquentUserRepository;
+use App\Repositories\EventRepository;
 use App\Repositories\GalleryImageRepository;
 use App\Repositories\GalleryRepository;
 use App\Repositories\HotlineRepository;
@@ -39,6 +41,7 @@ class RepositoryServiceProvider extends ServiceProvider
     public $bindings = [
         AttachmentRepository::class => EloquentAttachmentRepository::class,
         ContactRepository::class => EloquentContactRepository::class,
+        EventRepository::class => EloquentEventRepository::class,
         GalleryRepository::class => EloquentGalleryRepository::class,
         GalleryImageRepository::class => EloquentGalleryImageRepository::class,
         HotlineRepository::class => EloquentHotlineRepository::class,
