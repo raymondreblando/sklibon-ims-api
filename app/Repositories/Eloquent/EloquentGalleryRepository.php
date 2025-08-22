@@ -9,11 +9,16 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentGalleryRepository implements GalleryRepository
 {
-    protected array $relations = [];
+    protected array $relations = [
+        'user.userInfo:id,user_id,firstname,lastname',
+        'images:id,gallery_id,image_url'
+    ];
 
     public function get(array $criteria = [], array $relations = []): Collection
     {
-        return Gallery::all()->sortByDesc("primary");
+        return Gallery::with($relations ?: $this->relations)
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     public function create(User $user, array $data): Gallery

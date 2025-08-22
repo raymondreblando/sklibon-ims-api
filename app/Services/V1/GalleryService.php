@@ -19,6 +19,14 @@ class GalleryService
         private GalleryImageService $galleryImageService
     ){}
 
+    public function get(): JsonResponse
+    {
+        return Response::success(
+            GalleryResource::collection($this->galleryRepository->get()),
+            'Galleries retrieved successfully.'
+        );
+    }
+
     public function save(array $data): JsonResponse
     {
         return DB::transaction(function () use ($data) {

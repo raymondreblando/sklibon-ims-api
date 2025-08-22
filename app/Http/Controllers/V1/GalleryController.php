@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Gallery\StoreGalleryRequest;
 use App\Models\Gallery;
 use App\Services\V1\GalleryService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,9 +19,11 @@ class GalleryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        Gate::authorize('viewAny', Gallery::class);
+
+        return $this->galleryService->get();
     }
 
     /**
