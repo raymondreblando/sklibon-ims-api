@@ -8,7 +8,6 @@ use App\Http\Requests\V1\Report\UpdateReportRequest;
 use App\Models\Report;
 use App\Services\V1\ReportService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class ReportController extends Controller
@@ -64,6 +63,8 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        //
+        Gate::authorize('delete', $report);
+
+        return $this->reportService->delete($report);
     }
 }

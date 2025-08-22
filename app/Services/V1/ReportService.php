@@ -72,4 +72,11 @@ class ReportService
             'Report updated successfully.'
         );
     }
+
+    public function delete(Report $report): JsonResponse
+    {
+        $this->reportRepository->delete($report);
+
+        return Response::success(null, 'Report deleted successfully.');
+    }
 }

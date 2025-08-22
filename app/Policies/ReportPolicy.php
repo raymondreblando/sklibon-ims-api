@@ -47,6 +47,6 @@ class ReportPolicy
      */
     public function delete(User $user, Report $report): bool
     {
-        return false;
+        return $this->update($user, $report);
     }
 }
