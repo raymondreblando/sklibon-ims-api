@@ -3,6 +3,7 @@
 namespace App\Services\V1;
 
 use App\Http\Resources\V1\AttachmentResource;
+use App\Models\Attachment;
 use App\Models\Report;
 use App\Repositories\AttachmentRepository;
 use App\Repositories\ReportRepository;
@@ -34,5 +35,12 @@ class AttachmentService
             new AttachmentResource($attachment),
             'Attachment saved successfully.'
         );
+    }
+
+    public function delete(Attachment $attachment): JsonResponse
+    {
+        $this->attachmentRepository->delete($attachment);
+
+        return Response::success(null, 'Attachment deleted successfully.');
     }
 }

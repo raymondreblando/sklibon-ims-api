@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Attachment\StoreAttachmentRequest;
 use App\Models\Attachment;
 use App\Services\V1\AttachmentService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 
 class AttachmentController extends Controller
@@ -18,7 +18,7 @@ class AttachmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAttachmentRequest $request)
+    public function store(StoreAttachmentRequest $request): JsonResponse
     {
         Gate::authorize('create', Attachment::class);
 
@@ -29,8 +29,10 @@ class AttachmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Attachment $attachment)
+    public function destroy(Attachment $attachment): JsonResponse
     {
-        //
+        Gate::authorize('delete', $attachment);
+
+        return $this->attachmentService->delete($attachment);
     }
 }
