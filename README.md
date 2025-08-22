@@ -12,6 +12,7 @@ This is the backend API for the Information Management System for the SK Federat
 *   **Request Management:** CRUD operations for managing requests.
 *   **Report Management:** CRUD operations for managing reports.
 *   **Attachment Management:** CRUD operations for managing attachments.
+*   **Gallery Management:** CRUD operations for managing galleries.
 
 ## Project Setup
 
@@ -135,6 +136,19 @@ All API endpoints are prefixed with `/api/v1`.
 
 *   `POST /attachments`: Upload an attachment.
 *   `DELETE /attachments/{id}`: Delete an attachment.
+
+### Galleries
+
+*   `GET /galleries`: Get a list of all galleries.
+*   `GET /galleries/{id}`: Get a specific gallery by ID.
+*   `POST /galleries`: Create a new gallery.
+*   `PUT /galleries/{id}`: Update a gallery.
+*   `DELETE /galleries/{id}`: Delete a gallery.
+
+### Gallery Images
+
+*   `POST /gallery-images`: Upload a gallery image.
+*   `DELETE /gallery-images/{id}`: Delete a gallery image.
 
 
 ## Custom Artisan Commands
