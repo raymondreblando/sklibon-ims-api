@@ -22,10 +22,12 @@ class RequestPolicy
      */
     public function view(User $user, Request $request): bool
     {
-        return $request->requester()->is($user) || in_array($user->role->role, [
-            Role::SuperAdmin->value,
-            Role::Admin->value
-        ]);
+        return $request->requester()->is($user)
+            || ($request->receivable_id === $user->id || $request->receivable_id === $user->userInfo->barangay_id)
+            || in_array($user->role->role, [
+                Role::SuperAdmin->value,
+                Role::Admin->value
+            ]);
     }
 
     /**
@@ -41,7 +43,7 @@ class RequestPolicy
      */
     public function update(User $user, Request $request): bool
     {
-        return $request->requester()->is($user);
+        return $this->view($user, $request);
     }
 
     /**
