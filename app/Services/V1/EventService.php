@@ -2,7 +2,9 @@
 
 namespace App\Services\V1;
 
+use App\Enums\EventStatus;
 use App\Events\EventCreated;
+use App\Events\EventStatusUpdated;
 use App\Http\Resources\V1\EventResource;
 use App\Models\Event;
 use App\Repositories\Criteria\Where;
@@ -54,5 +56,25 @@ class EventService
             new EventResource($event),
             'Event retrieved successfully.'
         );
+    }
+
+    public function update(Event $event, array $data): JsonResponse
+    {
+        return DB::transaction(function () use ($event, $data) {
+            $event = $this->eventRepository->update($event, $data);
+
+            if (in_array($event->status, [
+                EventStatus::Ongoing->value,
+                EventStatus::Completed->value,
+                EventStatus::Cancelled->value
+            ])) {
+                EventStatusUpdated::dispatch($event);
+            }
+
+            return Response::success(
+                new EventResource($event),
+                'Event updated successfully.'
+            );
+        });
     }
 }

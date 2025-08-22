@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Event\StoreEventRequest;
+use App\Http\Requests\V1\Event\UpdateEventRequest;
 use App\Models\Event;
 use App\Services\V1\EventService;
 use Illuminate\Http\JsonResponse;
@@ -51,9 +52,12 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event): JsonResponse
     {
-        //
+        Gate::authorize('update', $event);
+
+        $data = $request->validated();
+        return $this->eventService->update($event, $data);
     }
 
     /**
