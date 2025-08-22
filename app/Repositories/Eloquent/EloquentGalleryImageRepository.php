@@ -9,11 +9,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentGalleryImageRepository implements GalleryImageRepository
 {
-    protected array $relations = [];
-
     public function create(Gallery $gallery, array $data): GalleryImage
     {
-        return GalleryImage::create($data);
+        return $gallery->images()->create($data);
     }
 
     public function createMany(Gallery $gallery, array $data): Collection

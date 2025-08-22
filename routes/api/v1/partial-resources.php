@@ -3,6 +3,7 @@
 use App\Http\Controllers\V1\AccountController;
 use App\Http\Controllers\V1\AttachmentController;
 use App\Http\Controllers\V1\GalleryController;
+use App\Http\Controllers\V1\GalleryImageController;
 use App\Http\Controllers\V1\LocationController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,8 @@ Route::prefix('v1')->group(function () {
             Route::put('/galleries/{gallery}', 'update');
             Route::delete('/galleries/{gallery}', 'destroy');
         });
+
+        Route::resource('gallery-images', GalleryImageController::class)
+            ->only('store', 'destroy');
     });
 });
