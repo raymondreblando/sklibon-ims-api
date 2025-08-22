@@ -63,4 +63,11 @@ class GalleryService
             'Gallery updated successfully.'
         );
     }
+
+    public function delete(Gallery $gallery): JsonResponse
+    {
+        $this->galleryRepository->delete($gallery);
+
+        return Response::success(null, 'Gallery deleted successfully.');
+    }
 }

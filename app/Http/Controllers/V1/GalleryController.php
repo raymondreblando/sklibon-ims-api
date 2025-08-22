@@ -62,8 +62,10 @@ class GalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Gallery $gallery)
+    public function destroy(Gallery $gallery): JsonResponse
     {
-        //
+        Gate::authorize('delete', $gallery);
+
+        return $this->galleryService->delete($gallery);
     }
 }
