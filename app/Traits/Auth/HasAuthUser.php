@@ -22,6 +22,12 @@ trait HasAuthUser
         return $this->user()?->id;
     }
 
+    protected function getAuthUserName(): string
+    {
+        $userInfo = $this->user()->userInfo;
+        return "{$userInfo->firstname} {$userInfo->lastname}";
+    }
+
     protected function isAdmin(): bool
     {
         if (! $this->user()) return false;

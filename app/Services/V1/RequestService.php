@@ -2,6 +2,8 @@
 
 namespace App\Services\V1;
 
+use App\Enums\RequestStatus;
+use App\Events\RequestCreated;
 use App\Http\Resources\V1\RequestResource;
 use App\Models\Request;
 use App\Models\User;
@@ -11,18 +13,20 @@ use App\Repositories\RequestRepository;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class RequestService
 {
     use HasAuthUser;
 
-    protected array $receivableTypes = [
+    protected array $morphs = [
         'user' => 'App\Models\User',
         'barangay' => 'App\Models\Barangay',
     ];
 
     public function __construct(
-        private RequestRepository $requestRepository
+        private RequestRepository $requestRepository,
+        private NotificationService $notificationService
     ){}
 
     public function get(?string $action): JsonResponse
@@ -48,14 +52,18 @@ class RequestService
 
     public function save(User $user, array $data): JsonResponse
     {
-        $data['receivable_type'] = $this->getReceivableType($data['receivable_type']);
+        return DB::transaction(function () use ($user, $data) {
+            $data['receivable_type'] = $this->getMorph($data['receivable_type']);
 
-        $request = $this->requestRepository->create($user, $data);
+            $request = $this->requestRepository->create($user, $data);
 
-        return Response::success(
-            new RequestResource($request),
-            'Request created successfully.'
-        );
+            RequestCreated::dispatch($request, $this->getAuthUserName());
+
+            return Response::success(
+                new RequestResource($request),
+                'Request created successfully.'
+            );
+        });
     }
 
     public function find(Request $request): JsonResponse
@@ -70,14 +78,37 @@ class RequestService
 
     public function update(Request $request, array $data): JsonResponse
     {
-        $data['receivable_type'] = $this->getReceivableType($data['receivable_type']);
+        return DB::transaction(function () use ($request, $data) {
+            $data['receivable_type'] = $this->getMorph($data['receivable_type']);
 
-        $this->requestRepository->update($request, $data);
+            $this->requestRepository->update($request, $data);
 
-        return Response::success(
-            new RequestResource($request),
-            'Request updated successfully.'
-        );
+            if (in_array($request->status, [
+                RequestStatus::Approved,
+                RequestStatus::Disapproved
+            ])) {
+                $notifyPayload = [
+                    'type' => 'request',
+                    'notifiable_id' => $request->user_id,
+                    'notifiable_type' => $this->getMorph('user'),
+                    'data' => [
+                        'requestId' => $request->id,
+                        'user' => $this->getAuthUserName(),
+                        'request' => $request->name,
+                        'status' => $request->status
+                    ],
+                ];
+
+                $notification = $this->notificationService->save($notifyPayload);
+
+                RequestCreated::dispatch($notification);
+            }
+
+            return Response::success(
+                new RequestResource($request),
+                'Request updated successfully.'
+            );
+        });
     }
 
     public function delete(Request $request): JsonResponse
@@ -87,8 +118,8 @@ class RequestService
         return Response::success(null, 'Request deleted successfully.');
     }
 
-    private function getReceivableType(?string $type): ?string
+    private function getMorph(?string $type): ?string
     {
-        return $this->receivableTypes[$type] ?? null;
+        return $this->morphs[$type] ?? null;
     }
 }
