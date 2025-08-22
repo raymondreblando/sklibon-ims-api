@@ -40,9 +40,11 @@ class ReportController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Report $report)
+    public function show(Report $report): JsonResponse
     {
-        //
+        Gate::authorize('view', $report);
+
+        return $this->reportService->find($report);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\Role as RoleEnum;
 use App\Policies\UserPolicy;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -81,5 +82,13 @@ class User extends Authenticatable
     public function notifications(): MorphMany
     {
         return $this->morphMany(Notification::class, 'notifiable');
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->role->role, [
+            RoleEnum::SuperAdmin->value,
+            RoleEnum::Admin->value,
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Services\V1;
 
 use App\Http\Resources\V1\ReportResource;
+use App\Models\Report;
 use App\Repositories\Criteria\OrWhere;
 use App\Repositories\Criteria\Where;
 use App\Repositories\ReportRepository;
@@ -50,5 +51,15 @@ class ReportService
                 'Report created successfully.'
             );
         });
+    }
+
+    public function find(Report $report): JsonResponse
+    {
+        $report = $this->reportRepository->find($report);
+
+        return Response::success(
+            new ReportResource($report),
+            'Report retrieved successfully.'
+        );
     }
 }
