@@ -216,6 +216,7 @@ return [
         'receivable_id' => 'receiver',
         'receivable_type' => 'receiver type',
         'date_needed' => 'date needed',
+        'attachments.*.attachment' => 'attachment'
     ],
 
 ];

@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->hasMany(Request::class, 'user_id', 'id');
     }
 
+    public function reports(): HasMany
+    {
+        return $this->hasMany(Report::class, 'user_id', 'id');
+    }
+
     public function receivables(): MorphMany
     {
         return $this->morphMany(Request::class, 'receivable');

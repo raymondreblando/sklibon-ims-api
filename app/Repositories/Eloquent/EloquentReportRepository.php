@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Report;
+use App\Models\User;
 use App\Repositories\ReportRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -27,9 +28,9 @@ class EloquentReportRepository implements ReportRepository
             ->get();
     }
 
-    public function create(array $data): Report
+    public function create(User $user, array $data): Report
     {
-        return Report::create($data);
+        return $user->reports()->create($data);
     }
 
     public function find(Report $report): ?Report
