@@ -8,6 +8,7 @@ use App\Repositories\Criteria\OrWhere;
 use App\Repositories\Criteria\WhereIn;
 use App\Repositories\Criteria\WithRelations;
 use App\Repositories\NotificationRepository;
+use App\Repositories\NotificationUserRepository;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -18,7 +19,8 @@ class NotificationService
     use HasAuthUser;
 
     public function __construct(
-        private NotificationRepository $notificationRepository
+        private NotificationRepository $notificationRepository,
+        private NotificationUserRepository $notificationUserRepository
     ){}
 
     public function get(): JsonResponse
@@ -43,5 +45,18 @@ class NotificationService
     public function save(array $data, $notifiable = null): Notification
     {
         return $this->notificationRepository->create($data, $notifiable);
+    }
+
+    public function update(Notification $notification): JsonResponse
+    {
+        $this->notificationUserRepository->create($this->user(), [
+            'notification_id' => $notification->id,
+            'read_at' => now()
+        ]);
+
+        return Response::success(
+            new NotificationResource($notification),
+            'Notification read successfully.'
+        );
     }
 }

@@ -14,7 +14,6 @@ class NotificationUser extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'id',
         'notification_id',
         'user_id',
         'read_at'

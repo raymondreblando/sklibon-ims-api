@@ -9,5 +9,4 @@ interface NotificationRepository
 {
     public function get(array $criteria = []): Collection;
     public function create(array $data, $notifiable = null): Notification;
-    public function update(Notification $notification, array $data): Notification;
 }

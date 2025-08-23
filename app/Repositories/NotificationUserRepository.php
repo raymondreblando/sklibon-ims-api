@@ -3,13 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\NotificationUser;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\User;
 
 interface NotificationUserRepository
 {
-    public function get(): Collection;
-    public function create(array $data): NotificationUser;
-    public function find(NotificationUser $notificationUser): ?NotificationUser;
-    public function update(NotificationUser $notificationUser, array $data): ?NotificationUser;
-    public function delete(NotificationUser $notificationUser): bool;
+    public function create(User $user, array $data): NotificationUser;
 }

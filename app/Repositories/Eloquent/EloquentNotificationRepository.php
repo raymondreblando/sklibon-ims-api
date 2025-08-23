@@ -27,10 +27,4 @@ class EloquentNotificationRepository implements NotificationRepository
 
         return Notification::create($data);
     }
-
-    public function update(Notification $notification, array $data): Notification
-    {
-        $notification->update($data);
-        return $notification;
-    }
 }
