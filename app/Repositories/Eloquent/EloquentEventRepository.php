@@ -39,6 +39,11 @@ class EloquentEventRepository implements EventRepository
         return $event->load($relations ?: $this->relations);
     }
 
+    public function findById(string $id): Event
+    {
+        return Event::findOrFail($id);
+    }
+
     public function update(Event $event, array $data): Event
     {
         $event->update($data);

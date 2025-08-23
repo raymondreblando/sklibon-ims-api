@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Repositories\AttachmentRepository;
+use App\Repositories\AttendanceRepository;
 use App\Repositories\ContactRepository;
 use App\Repositories\Eloquent\EloquentAttachmentRepository;
+use App\Repositories\Eloquent\EloquentAttendanceRepository;
 use App\Repositories\Eloquent\EloquentContactRepository;
 use App\Repositories\Eloquent\EloquentEventRepository;
 use App\Repositories\Eloquent\EloquentGalleryImageRepository;
@@ -42,6 +44,7 @@ class RepositoryServiceProvider extends ServiceProvider
 {
     public $bindings = [
         AttachmentRepository::class => EloquentAttachmentRepository::class,
+        AttendanceRepository::class => EloquentAttendanceRepository::class,
         ContactRepository::class => EloquentContactRepository::class,
         EventRepository::class => EloquentEventRepository::class,
         GalleryRepository::class => EloquentGalleryRepository::class,
