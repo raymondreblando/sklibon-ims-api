@@ -84,6 +84,11 @@ class User extends Authenticatable
         return $this->hasMany(Event::class, 'user_id', 'id');
     }
 
+    public function notificationUsers(): HasMany
+    {
+        return $this->hasMany(NotificationUser::class, 'user_id', 'id');
+    }
+
     public function receivables(): MorphMany
     {
         return $this->morphMany(Request::class, 'receivable');

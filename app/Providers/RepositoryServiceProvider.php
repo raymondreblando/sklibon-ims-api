@@ -12,6 +12,7 @@ use App\Repositories\Eloquent\EloquentGalleryRepository;
 use App\Repositories\Eloquent\EloquentHotlineRepository;
 use App\Repositories\Eloquent\EloquentLocationRepository;
 use App\Repositories\Eloquent\EloquentNotificationRepository;
+use App\Repositories\Eloquent\EloquentNotificationUserRepository;
 use App\Repositories\Eloquent\EloquentPositionRepository;
 use App\Repositories\Eloquent\EloquentRefreshTokenRepository;
 use App\Repositories\Eloquent\EloquentReportRepository;
@@ -26,6 +27,7 @@ use App\Repositories\GalleryRepository;
 use App\Repositories\HotlineRepository;
 use App\Repositories\LocationRepository;
 use App\Repositories\NotificationRepository;
+use App\Repositories\NotificationUserRepository;
 use App\Repositories\PositionRepository;
 use App\Repositories\RefreshTokenRepository;
 use App\Repositories\ReportRepository;
@@ -47,6 +49,7 @@ class RepositoryServiceProvider extends ServiceProvider
         HotlineRepository::class => EloquentHotlineRepository::class,
         LocationRepository::class => EloquentLocationRepository::class,
         NotificationRepository::class => EloquentNotificationRepository::class,
+        NotificationUserRepository::class => EloquentNotificationUserRepository::class,
         PositionRepository::class => EloquentPositionRepository::class,
         RefreshTokenRepository::class => EloquentRefreshTokenRepository::class,
         ReportRepository::class => EloquentReportRepository::class,

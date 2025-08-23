@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentNotificationRepository implements NotificationRepository
 {
-    protected array $relations = [];
-
-    public function get(array $criteria = [], array $relations = []): Collection
+    public function get(array $criteria = []): Collection
     {
-        return Notification::all()->sortByDesc("primary");
+        $query = Notification::query();
+
+        foreach ($criteria as $criterion) {
+            $criterion->apply($query);
+        }
+
+        return $query->orderBy('id', 'desc')
+            ->get(['id', 'type', 'data']);
     }
 
     public function create(array $data, $notifiable = null): Notification
@@ -23,19 +28,9 @@ class EloquentNotificationRepository implements NotificationRepository
         return Notification::create($data);
     }
 
-    public function find(Notification $notification): ?Notification
-    {
-        return $notification;
-    }
-
-    public function update(Notification $notification, array $data): ?Notification
+    public function update(Notification $notification, array $data): Notification
     {
         $notification->update($data);
         return $notification;
-    }
-
-    public function delete(Notification $notification): bool
-    {
-        return $notification->delete();
     }
 }
