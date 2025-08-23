@@ -16,7 +16,7 @@ class GalleryImageResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'image_url' => $this->resource->image_url
+            'imageUrl' => $this->resource->image_url
         ];
     }
 }
