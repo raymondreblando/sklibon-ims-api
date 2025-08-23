@@ -24,7 +24,8 @@ class EventResource extends JsonResource
             'latitude' => $this->resource->latitude,
             'longitude' => $this->resource->longitude,
             'barangay' => new BarangayResource($this->whenLoaded('barangay')),
-            'creator' => new EventCreatorResource($this->whenLoaded('user'))
+            'creator' => new MinifyUserResource($this->whenLoaded('user')),
+            'attendances' => AttendanceResource::collection($this->whenLoaded('attendances'))
         ];
     }
 }

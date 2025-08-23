@@ -19,7 +19,7 @@ class ReportResource extends JsonResource
             'subject' => $this->resource->subject,
             'description' => $this->resource->description,
             'barangay' => new BarangayResource($this->whenLoaded('barangay')),
-            'uploader' => new ReportUserInfoResource($this->whenLoaded('user.userInfo')),
+            'uploader' => new MinifyUserResource($this->whenLoaded('user')),
             'attachments' => AttachmentResource::collection($this->whenLoaded('attachments'))
         ];
     }

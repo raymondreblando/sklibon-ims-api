@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ReportUserInfoResource extends JsonResource
+class MinifyUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,8 @@ class ReportUserInfoResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'firstname' => $this->resource->firstname,
-            'lastname' => $this->resource->lastname
+            'profile' => $this->resource->profile,
+            'info' => new MinifyUserInfoResource($this->whenLoaded('userInfo')),
         ];
     }
 }
