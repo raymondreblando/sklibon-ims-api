@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GalleryImageResource extends JsonResource
+class AttendanceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,10 @@ class GalleryImageResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'imageUrl' => $this->resource->image_url
+            'timeIn' => $this->resource->time_in,
+            'timeOut' => $this->resource->time_out,
+            'user' => new MinifyUserResource($this->whenLoaded('user')),
+            'event' => new EventResource($this->whenLoaded('event'))
         ];
     }
 }

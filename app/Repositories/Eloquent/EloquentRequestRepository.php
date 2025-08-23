@@ -10,10 +10,16 @@ use Illuminate\Database\Eloquent\Collection;
 class EloquentRequestRepository implements RequestRepository
 {
     protected array $relations = [
-        'requester.userInfo:id,user_id,firstname,lastname',
+        'requester:id,profile',
+        'requester.userInfo:id,user_id,position_id,firstname,lastname',
+        'requester.userInfo.position:id,name',
         'requestType:id,name',
-        'approver.userInfo:id,user_id,firstname,lastname',
-        'disapprover.userInfo:id,user_id,firstname,lastname'
+        'approver:id,profile',
+        'approver.userInfo:id,user_id,position_id,firstname,lastname',
+        'approver.userInfo.position:id,name',
+        'disapprover:id,profile',
+        'disapprover.userInfo:id,user_id,position_id,firstname,lastname',
+        'disapprover.userInfo.position:id,name',
     ];
 
     public function get(array $criteria = [], array $relations = []): Collection

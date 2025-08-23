@@ -11,7 +11,9 @@ class EloquentReportRepository implements ReportRepository
 {
     protected array $relations = [
         'barangay:id,name',
-        'user.userInfo:id,user_id,firstname,lastname',
+        'user:id,profile',
+        'user.userInfo:id,user_id,position_id,firstname,lastname',
+        'user.userInfo.position:id,name',
         'attachments:id,report_id,attachment'
     ];
 

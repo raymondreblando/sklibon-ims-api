@@ -29,12 +29,12 @@ class RequestResource extends JsonResource
             'type' => new RequestTypeResource($this->whenLoaded('requestType')),
             'receiver' => $this->whenLoaded('receivable', function () {
                 return $this->resource->receivable instanceof User
-                    ? new RequestUserResource($this->resource->receivable)
+                    ? new MinifyUserResource($this->resource->receivable)
                     : new BarangayResource($this->resource->receivable);
             }),
-            'requester' => new RequestUserResource($this->whenLoaded('requester')),
-            'approver' => new RequestUserResource($this->whenLoaded('approver')),
-            'disapprover' => new RequestUserResource($this->whenLoaded('disapprover')),
+            'requester' => new MinifyUserResource($this->whenLoaded('requester')),
+            'approver' => new MinifyUserResource($this->whenLoaded('approver')),
+            'disapprover' => new MinifyUserResource($this->whenLoaded('disapprover')),
         ];
     }
 }

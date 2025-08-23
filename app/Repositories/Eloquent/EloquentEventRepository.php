@@ -11,7 +11,8 @@ class EloquentEventRepository implements EventRepository
 {
     protected array $relations = [
         'user:id,profile',
-        'user.userInfo:id,user_id,firstname,lastname',
+        'user.userInfo:id,user_id,position_id,firstname,lastname',
+        'user.userInfo.position:id,name',
         'barangay:id,name'
     ];
 
@@ -36,6 +37,11 @@ class EloquentEventRepository implements EventRepository
     public function find(Event $event, array $relations = []): Event
     {
         return $event->load($relations ?: $this->relations);
+    }
+
+    public function findById(string $id): Event
+    {
+        return Event::findOrFail($id);
     }
 
     public function update(Event $event, array $data): Event

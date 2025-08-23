@@ -150,6 +150,11 @@ All API endpoints are prefixed with `/api/v1`.
 *   `POST /gallery-images`: Upload a gallery image.
 *   `DELETE /gallery-images/{id}`: Delete a gallery image.
 
+### Attendances
+
+*   `GET /attendances`: Get a list of all attendances.
+*   `PUT /attendances/{eventId}`: Mark attendance for an event.
+
 ### Events
 
 *   `GET /events`: Get a list of all events.

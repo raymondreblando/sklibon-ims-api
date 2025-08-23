@@ -19,7 +19,7 @@ class GalleryResource extends JsonResource
             'title' => $this->resource->title,
             'description' => $this->resource->description,
             'createdAt' => $this->resource->created_at,
-            'uploader' => new ReportUserInfoResource($this->whenLoaded('user.userInfo')),
+            'uploader' => new MinifyUserResource($this->whenLoaded('user')),
             'images' => GalleryImageResource::collection($this->whenLoaded('images'))
         ];
     }

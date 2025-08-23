@@ -18,13 +18,16 @@ class EventResource extends JsonResource
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'description' => $this->resource->description,
-            'event_date' => $this->resource->event_date,
-            'image_url' => $this->resource->image_url,
+            'eventDate' => $this->resource->event_date,
+            'expiredDate' => $this->resource->expired_date,
+            'openAttendance' => $this->resource->open_attendance,
+            'imageUrl' => $this->resource->image_url,
             'status' => $this->resource->status,
             'latitude' => $this->resource->latitude,
             'longitude' => $this->resource->longitude,
             'barangay' => new BarangayResource($this->whenLoaded('barangay')),
-            'creator' => new EventCreatorResource($this->whenLoaded('user'))
+            'creator' => new MinifyUserResource($this->whenLoaded('user')),
+            'attendances' => AttendanceResource::collection($this->whenLoaded('attendances'))
         ];
     }
 }
