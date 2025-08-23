@@ -17,8 +17,9 @@ class CreatePrivateChatService
     public function __construct(
         private ChatRepository $chatRepository,
         private ChatPairService $chatPairService,
+        private ChatParticipantService $chatParticipantService,
         private ChatMessageService $chatMessageService,
-        private ChatMessageReadService $chatMessageReadService
+        private ChatMessageReadService $chatMessageReadService,
     ){}
 
     public function create(array $data): JsonResponse
@@ -56,6 +57,11 @@ class CreatePrivateChatService
        $this->chatPairService->save($chat, [
             'sender_id' => $senderId,
             'receiver_id' => $receiverId
+       ]);
+
+       $this->chatParticipantService->saveMultiple($chat, [
+            ['user_id' => $senderId],
+            ['user_id' => $receiverId]
        ]);
 
        $messagePayload = array_merge($data, ['user_id' => $senderId]);
