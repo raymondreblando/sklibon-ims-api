@@ -28,7 +28,7 @@ class NotificationCreated implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        if ($this->notification->type === 'announcements') {
+        if ($this->notification->type === 'announcement') {
             return [new Channel('notification.announcements')];
         }
 

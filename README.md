@@ -150,6 +150,19 @@ All API endpoints are prefixed with `/api/v1`.
 *   `POST /gallery-images`: Upload a gallery image.
 *   `DELETE /gallery-images/{id}`: Delete a gallery image.
 
+### Events
+
+*   `GET /events`: Get a list of all events.
+*   `GET /events/{id}`: Get a specific event by ID.
+*   `POST /events`: Create a new event.
+*   `PUT /events/{id}`: Update an event.
+*   `DELETE /events/{id}`: Delete an event.
+
+### Notifications
+
+*   `GET /notifications`: Get a list of all notifications.
+*   `PUT /notifications/{id}`: Update a notification.
+
 
 ## Custom Artisan Commands
 

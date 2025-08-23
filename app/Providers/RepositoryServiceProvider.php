@@ -6,11 +6,13 @@ use App\Repositories\AttachmentRepository;
 use App\Repositories\ContactRepository;
 use App\Repositories\Eloquent\EloquentAttachmentRepository;
 use App\Repositories\Eloquent\EloquentContactRepository;
+use App\Repositories\Eloquent\EloquentEventRepository;
 use App\Repositories\Eloquent\EloquentGalleryImageRepository;
 use App\Repositories\Eloquent\EloquentGalleryRepository;
 use App\Repositories\Eloquent\EloquentHotlineRepository;
 use App\Repositories\Eloquent\EloquentLocationRepository;
 use App\Repositories\Eloquent\EloquentNotificationRepository;
+use App\Repositories\Eloquent\EloquentNotificationUserRepository;
 use App\Repositories\Eloquent\EloquentPositionRepository;
 use App\Repositories\Eloquent\EloquentRefreshTokenRepository;
 use App\Repositories\Eloquent\EloquentReportRepository;
@@ -19,11 +21,13 @@ use App\Repositories\Eloquent\EloquentRequestTypeRepository;
 use App\Repositories\Eloquent\EloquentRoleRepository;
 use App\Repositories\Eloquent\EloquentUserInfoRepository;
 use App\Repositories\Eloquent\EloquentUserRepository;
+use App\Repositories\EventRepository;
 use App\Repositories\GalleryImageRepository;
 use App\Repositories\GalleryRepository;
 use App\Repositories\HotlineRepository;
 use App\Repositories\LocationRepository;
 use App\Repositories\NotificationRepository;
+use App\Repositories\NotificationUserRepository;
 use App\Repositories\PositionRepository;
 use App\Repositories\RefreshTokenRepository;
 use App\Repositories\ReportRepository;
@@ -39,11 +43,13 @@ class RepositoryServiceProvider extends ServiceProvider
     public $bindings = [
         AttachmentRepository::class => EloquentAttachmentRepository::class,
         ContactRepository::class => EloquentContactRepository::class,
+        EventRepository::class => EloquentEventRepository::class,
         GalleryRepository::class => EloquentGalleryRepository::class,
         GalleryImageRepository::class => EloquentGalleryImageRepository::class,
         HotlineRepository::class => EloquentHotlineRepository::class,
         LocationRepository::class => EloquentLocationRepository::class,
         NotificationRepository::class => EloquentNotificationRepository::class,
+        NotificationUserRepository::class => EloquentNotificationUserRepository::class,
         PositionRepository::class => EloquentPositionRepository::class,
         RefreshTokenRepository::class => EloquentRefreshTokenRepository::class,
         ReportRepository::class => EloquentReportRepository::class,
