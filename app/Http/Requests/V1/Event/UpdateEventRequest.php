@@ -26,6 +26,8 @@ class UpdateEventRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'event_date' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
+            'expired_date' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
+            'open_attendance' => ['required', 'boolean'],
             'image_url' => ['required', 'string', 'url:https'],
             'status' => ['required', 'string', 'in:upcoming,ongoing,completed,cancelled'],
             'latitude' => ['required', 'numeric'],
