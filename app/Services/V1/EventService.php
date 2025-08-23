@@ -50,7 +50,15 @@ class EventService
 
     public function find(Event $event): JsonResponse
     {
-        $event = $this->eventRepository->find($event);
+        $event = $this->eventRepository->find($event, [
+            'user:id,profile',
+            'user.userInfo:id,user_id,firstname,lastname',
+            'barangay:id,name',
+            'attendances',
+            'attendances.user:id,profile',
+            'attendances.user.userInfo:id,user_id,position_id,firstname,lastname',
+            'attendances.user.userInfo.position'
+        ]);
 
         return Response::success(
             new EventResource($event),

@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Collection;
 class EloquentGalleryRepository implements GalleryRepository
 {
     protected array $relations = [
-        'user.userInfo:id,user_id,firstname,lastname',
+        'user:id,profile',
+        'user.userInfo:id,user_id,position_id,firstname,lastname',
+        'user.userInfo.position',
         'images:id,gallery_id,image_url'
     ];
 

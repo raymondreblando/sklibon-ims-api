@@ -11,7 +11,8 @@ class EloquentEventRepository implements EventRepository
 {
     protected array $relations = [
         'user:id,profile',
-        'user.userInfo:id,user_id,firstname,lastname',
+        'user.userInfo:id,user_id,position_id,firstname,lastname',
+        'user.userInfo.position:id,name',
         'barangay:id,name'
     ];
 
