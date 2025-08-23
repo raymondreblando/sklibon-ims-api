@@ -24,6 +24,8 @@ class Event extends Model
         'name',
         'description',
         'event_date',
+        'expired_date',
+        'open_attendance',
         'image_url',
         'status',
         'latitude',
@@ -33,6 +35,12 @@ class Event extends Model
     protected $hidden = [
         'deleted_at',
         'updated_at',
+    ];
+
+    protected $casts = [
+        'event_date' => 'datetime',
+        'expired_date' => 'datetime',
+        'open_attendance' => 'bool',
     ];
 
     public function user(): BelongsTo
