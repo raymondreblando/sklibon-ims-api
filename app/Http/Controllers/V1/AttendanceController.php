@@ -12,6 +12,11 @@ class AttendanceController extends Controller
         private AttendanceService $attendanceService
     ){}
 
+    public function index(): JsonResponse
+    {
+        return $this->attendanceService->get();
+    }
+
     public function attend(string $eventId): JsonResponse
     {
         return $this->attendanceService->save($eventId);

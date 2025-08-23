@@ -38,6 +38,7 @@ Route::prefix('v1')->group(function () {
             Route::delete('/galleries/{gallery}', 'destroy');
         });
 
+        Route::get('/attendances', [AttendanceController::class, 'index']);
         Route::put('/attendances/{eventId}', [AttendanceController::class, 'attend']);
     });
 });

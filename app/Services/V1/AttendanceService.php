@@ -4,6 +4,7 @@ namespace App\Services\V1;
 
 use App\Http\Resources\V1\AttendanceResource;
 use App\Repositories\AttendanceRepository;
+use App\Repositories\Criteria\Where;
 use App\Repositories\EventRepository;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
@@ -17,6 +18,18 @@ class AttendanceService
         private AttendanceRepository $attendanceRepository,
         private EventRepository $eventRepository
     ) {}
+
+    public function get(): JsonResponse
+    {
+        $attendances = $this->attendanceRepository->get([
+            new Where('user_id', $this->getAuthUserId())
+        ]);
+
+        return Response::success(
+            AttendanceResource::collection($attendances),
+            'Attendances retrieved successfully.'
+        );
+    }
 
     public function save(string $eventId): JsonResponse
     {
