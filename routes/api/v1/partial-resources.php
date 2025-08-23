@@ -3,6 +3,7 @@
 use App\Http\Controllers\V1\AccountController;
 use App\Http\Controllers\V1\AttachmentController;
 use App\Http\Controllers\V1\AttendanceController;
+use App\Http\Controllers\V1\ChatController;
 use App\Http\Controllers\V1\GalleryController;
 use App\Http\Controllers\V1\GalleryImageController;
 use App\Http\Controllers\V1\LocationController;
@@ -40,5 +41,12 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/attendances', [AttendanceController::class, 'index']);
         Route::put('/attendances/{eventId}', [AttendanceController::class, 'attend']);
+
+        Route::prefix('chats')->group(function () {
+            Route::controller(ChatController::class)->group(function () {
+                Route::post('/private', 'storePrivateChat');
+                Route::post('/group-chat', 'storeGroupChat');
+            });
+        });
     });
 });

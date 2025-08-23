@@ -94,6 +94,11 @@ class User extends Authenticatable
         return $this->hasMany(NotificationUser::class, 'user_id', 'id');
     }
 
+    public function chats(): HasMany
+    {
+        return $this->hasMany(Chat::class, 'created_by', 'id');
+    }
+
     public function receivables(): MorphMany
     {
         return $this->morphMany(Request::class, 'receivable');

@@ -14,3 +14,11 @@ Broadcast::channel('notification.barangay.{id}', function (User $user, string $r
 Broadcast::channel('notification.announcements', function () {
     return true;
 });
+
+Broadcast::channel('chat.list.{id}', function (User $user, string $id) {
+    return $user->id === $id;
+});
+
+Broadcast::channel('chat.room.{id}', function (User $user, string $id) {
+    return $user->chats()->where('chat_id', $id)->exists();
+});

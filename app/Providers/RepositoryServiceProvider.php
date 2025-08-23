@@ -4,9 +4,19 @@ namespace App\Providers;
 
 use App\Repositories\AttachmentRepository;
 use App\Repositories\AttendanceRepository;
+use App\Repositories\ChatMessageReadRepository;
+use App\Repositories\ChatMessageRepository;
+use App\Repositories\ChatPairRepository;
+use App\Repositories\ChatParticipantRepository;
+use App\Repositories\ChatRepository;
 use App\Repositories\ContactRepository;
 use App\Repositories\Eloquent\EloquentAttachmentRepository;
 use App\Repositories\Eloquent\EloquentAttendanceRepository;
+use App\Repositories\Eloquent\EloquentChatMessageReadRepository;
+use App\Repositories\Eloquent\EloquentChatMessageRepository;
+use App\Repositories\Eloquent\EloquentChatPairRepository;
+use App\Repositories\Eloquent\EloquentChatParticipantRepository;
+use App\Repositories\Eloquent\EloquentChatRepository;
 use App\Repositories\Eloquent\EloquentContactRepository;
 use App\Repositories\Eloquent\EloquentEventRepository;
 use App\Repositories\Eloquent\EloquentGalleryImageRepository;
@@ -45,6 +55,11 @@ class RepositoryServiceProvider extends ServiceProvider
     public $bindings = [
         AttachmentRepository::class => EloquentAttachmentRepository::class,
         AttendanceRepository::class => EloquentAttendanceRepository::class,
+        ChatRepository::class => EloquentChatRepository::class,
+        ChatMessageRepository::class => EloquentChatMessageRepository::class,
+        ChatMessageReadRepository::class => EloquentChatMessageReadRepository::class,
+        ChatPairRepository::class => EloquentChatPairRepository::class,
+        ChatParticipantRepository::class => EloquentChatParticipantRepository::class,
         ContactRepository::class => EloquentContactRepository::class,
         EventRepository::class => EloquentEventRepository::class,
         GalleryRepository::class => EloquentGalleryRepository::class,
