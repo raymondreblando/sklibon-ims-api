@@ -44,6 +44,7 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('chats')->group(function () {
             Route::controller(ChatController::class)->group(function () {
+                Route::get('/', 'index');
                 Route::post('/private', 'storePrivateChat');
                 Route::post('/group-chat', 'storeGroupChat');
             });

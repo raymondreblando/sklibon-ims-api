@@ -5,12 +5,18 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Chat\StoreGroupChatRequest;
 use App\Http\Requests\V1\Chat\StorePrivateChatRequest;
+use App\Services\V1\Chat\ChatService;
 use App\Services\V1\Chat\CreateGroupChatService;
 use App\Services\V1\Chat\CreatePrivateChatService;
 use Illuminate\Http\JsonResponse;
 
 class ChatController extends Controller
 {
+    public function index(ChatService $chatService): JsonResponse
+    {
+        return $chatService->get();
+    }
+
     public function storePrivateChat(
         StorePrivateChatRequest $request,
         CreatePrivateChatService $createPrivateChatService
