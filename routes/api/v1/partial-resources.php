@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ChatParticipantController;
+use App\Http\Controllers\V1\ChatParticipantController;
 use App\Http\Controllers\V1\AccountController;
 use App\Http\Controllers\V1\AttachmentController;
 use App\Http\Controllers\V1\AttendanceController;
