@@ -59,4 +59,23 @@ class ChatService
             return $this->chatMessageService->save($chat, $data);
         });
     }
+
+    public function verifyChatRoom(string $chatId): string|Chat
+    {
+        if (empty($chatId))
+            return 'No chat room was specified.';
+
+        $chat = $this->find($chatId);
+
+        if (empty($chat))
+            return 'Chat room does not exists.';
+
+        if ($chat->type !== 'group')
+            return 'Chat room does not support participants';
+
+        if (! $chat->isParticipant($this->user()))
+            return 'Unauthorized.';
+
+        return $chat;
+    }
 }

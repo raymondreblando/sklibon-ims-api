@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\V1\Chat\StoreParticipantRequest;
 use App\Services\V1\Chat\ChatParticipantService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ChatParticipantController extends Controller
@@ -14,7 +16,7 @@ class ChatParticipantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $queries = $request->query();
         return $this->chatParticipantService->get($queries);
@@ -23,9 +25,10 @@ class ChatParticipantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreParticipantRequest $request): JsonResponse
     {
-        //
+        $data = $request->validated();
+        return $this->chatParticipantService->save($data);
     }
 
     /**

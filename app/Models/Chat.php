@@ -63,4 +63,9 @@ class Chat extends Model
             ->where('user_id', $user->id)
             ->exists();
     }
+
+    public function isChatCreator(User $user): bool
+    {
+        return $this->user()->is($user);
+    }
 }

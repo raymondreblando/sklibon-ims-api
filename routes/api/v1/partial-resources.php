@@ -43,15 +43,16 @@ Route::prefix('v1')->group(function () {
         Route::get('/attendances', [AttendanceController::class, 'index']);
         Route::put('/attendances/{eventId}', [AttendanceController::class, 'attend']);
 
-        Route::prefix('chats')->group(function () {
-            Route::controller(ChatController::class)->group(function () {
-                Route::get('/', 'index');
-                Route::post('/private', 'storePrivateChat');
-                Route::post('/group-chat', 'storeGroupChat');
-                Route::put('/{chat}', 'send');
-            });
+        Route::controller(ChatController::class)->group(function () {
+            Route::get('/chats', 'index');
+            Route::post('/chat/privates', 'storePrivateChat');
+            Route::post('/chat/group-chats', 'storeGroupChat');
+            Route::put('/chats/{chat}', 'send');
+        });
 
-            Route::get('/participants', [ChatParticipantController::class, 'index']);
+        Route::controller(ChatParticipantController::class)->group(function () {
+            Route::get('/chat/participants', 'index');
+            Route::post('/chat/participants', 'store');
         });
     });
 });
