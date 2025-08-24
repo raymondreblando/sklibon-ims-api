@@ -31,6 +31,11 @@ class ChatMessage extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function chat(): BelongsTo
+    {
+        return $this->belongsTo(Chat::class, 'chat_id', 'id');
+    }
+
     public function chatMessageRead(): HasOne
     {
         return $this->hasOne(ChatMessageRead::class, 'chat_message_id', 'id');

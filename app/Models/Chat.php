@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Policies\ChatPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[UsePolicy(ChatPolicy::class)]
 class Chat extends Model
 {
     use HasUlids, SoftDeletes;
@@ -52,5 +55,12 @@ class Chat extends Model
     public function chatMessages(): HasMany
     {
         return $this->hasMany(ChatMessage::class, 'chat_id', 'id');
+    }
+
+    public function isParticipant(User $user): bool
+    {
+        return $this->chatParticipants()
+            ->where('user_id', $user->id)
+            ->exists();
     }
 }

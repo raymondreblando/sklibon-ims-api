@@ -218,6 +218,7 @@ return [
         'date_needed' => 'date needed',
         'attachments.*.attachment' => 'attachment',
         'images.*.image_url' => 'image',
+        'receiver_id' => 'receiver',
     ],
 
 ];

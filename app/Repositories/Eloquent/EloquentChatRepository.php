@@ -37,4 +37,15 @@ class EloquentChatRepository implements ChatRepository
     {
         return $chat->load($relations ?: $this->relations);
     }
+
+    public function findById(string $id): ?Chat
+    {
+        return Chat::findOrFail($id);
+    }
+
+    public function update(Chat $chat, array $data): Chat
+    {
+        $chat->update($data);
+        return $chat;
+    }
 }

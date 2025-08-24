@@ -47,6 +47,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('/', 'index');
                 Route::post('/private', 'storePrivateChat');
                 Route::post('/group-chat', 'storeGroupChat');
+                Route::put('/{chat}', 'send');
             });
         });
     });
