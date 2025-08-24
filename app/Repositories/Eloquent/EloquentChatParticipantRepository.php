@@ -9,12 +9,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentChatParticipantRepository implements ChatParticipantRepository
 {
-    public function create(Chat $chat, array $data): Collection
-    {
-        return $chat->chatParticipants()->createMany($data);
-    }
+    protected array $relations = [
+        'user:id,profile',
+        'user.userInfo:id,user_id,position_id,firstname,lastname',
+        'user.userInfo.position:id,name'
+    ];
 
-    public function find(array $criteria = []): bool
+    public function get(array $criteria = [], array $relations = []): Collection
     {
         $query = ChatParticipant::query();
 
@@ -22,6 +23,12 @@ class EloquentChatParticipantRepository implements ChatParticipantRepository
             $criterion->apply($query);
         }
 
-        // return $query->
+        return $query->with($relations ?: $this->relations)
+            ->get();
+    }
+
+    public function create(Chat $chat, array $data): Collection
+    {
+        return $chat->chatParticipants()->createMany($data);
     }
 }

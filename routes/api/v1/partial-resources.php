@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatParticipantController;
 use App\Http\Controllers\V1\AccountController;
 use App\Http\Controllers\V1\AttachmentController;
 use App\Http\Controllers\V1\AttendanceController;
@@ -49,6 +50,8 @@ Route::prefix('v1')->group(function () {
                 Route::post('/group-chat', 'storeGroupChat');
                 Route::put('/{chat}', 'send');
             });
+
+            Route::get('/participants', [ChatParticipantController::class, 'index']);
         });
     });
 });
