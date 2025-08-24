@@ -73,5 +73,17 @@ class ChatParticipantService
         return $this->chatParticipantRepository->create($chat, $data);
     }
 
+    public function delete(string $id): JsonResponse
+    {
+        $chatParticipant = $this->chatParticipantRepository->findById($id);
+        $chat = $this->chatService->find($chatParticipant->chat_id);
 
+        if (! $chat->isChatCreator($this->user())) {
+            return Response::error('Unauthorized.', 403);
+        }
+
+        $this->chatParticipantRepository->delete($chatParticipant);
+
+        return Response::success(null, 'Chat participant removed successfully.');
+    }
 }

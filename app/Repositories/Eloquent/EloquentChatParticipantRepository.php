@@ -31,4 +31,14 @@ class EloquentChatParticipantRepository implements ChatParticipantRepository
     {
         return $chat->chatParticipants()->createMany($data);
     }
+
+    public function findById(string $id): ?ChatParticipant
+    {
+        return ChatParticipant::findOrFail($id);
+    }
+
+    public function delete(ChatParticipant $chatParticipant): bool
+    {
+        return $chatParticipant->delete();
+    }
 }

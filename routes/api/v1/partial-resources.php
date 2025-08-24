@@ -53,6 +53,7 @@ Route::prefix('v1')->group(function () {
         Route::controller(ChatParticipantController::class)->group(function () {
             Route::get('/chat/participants', 'index');
             Route::post('/chat/participants', 'store');
+            Route::delete('/chat/participants/{id}', 'destroy');
         });
     });
 });
