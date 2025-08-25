@@ -33,7 +33,7 @@ trait IssueApiTokens
 
         return Response::success([
             'user' => new UserResource($user),
-            'access_token' => $tokens['token']
+            'accessToken' => $tokens['token']
         ], $this->authMessage)->withCookie($cookie);
     }
 }

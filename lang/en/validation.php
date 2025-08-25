@@ -218,6 +218,9 @@ return [
         'date_needed' => 'date needed',
         'attachments.*.attachment' => 'attachment',
         'images.*.image_url' => 'image',
+        'receiver_id' => 'receiver',
+        'chat_id' => 'chat room',
+        'participants.*.user_id' => 'user',
     ],
 
 ];
