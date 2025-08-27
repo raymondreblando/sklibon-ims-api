@@ -21,8 +21,6 @@ class PositionController extends Controller
      */
     public function index(): JsonResponse
     {
-        Gate::authorize('viewAny', Position::class);
-
         return $this->positionService->get();
     }
 
