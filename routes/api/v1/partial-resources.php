@@ -17,6 +17,7 @@ Route::prefix('v1')->group(function () {
 
         Route::put('/account/change-password/{id}', [AccountController::class, 'changePassword']);
         Route::put('/account/change-profile-picture/{id}', [AccountController::class, 'changeProfilePicture']);
+        Route::put('/account/update-profile', [AccountController::class, 'updateProfile']);
 
         Route::resource('attachments', AttachmentController::class)
             ->only('store', 'destroy');
