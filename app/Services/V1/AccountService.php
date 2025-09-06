@@ -14,9 +14,8 @@ class AccountService
         private UserRepository $userRepository
     ){}
 
-    public function changePassword(string $id, string $password): JsonResponse
+    public function changePassword(User $user, string $password): JsonResponse
     {
-        $user = $this->userRepository->findById($id);
         $this->userRepository->update($user, ['password' => $password]);
 
         return Response::success(

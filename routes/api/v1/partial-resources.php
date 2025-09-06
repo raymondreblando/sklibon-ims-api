@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
 
-        Route::put('/account/change-password/{id}', [AccountController::class, 'changePassword']);
+        Route::put('/account/change-password', [AccountController::class, 'changePassword']);
         Route::put('/account/change-profile-picture/{id}', [AccountController::class, 'changeProfilePicture']);
         Route::put('/account/update-profile', [AccountController::class, 'updateProfile']);
 
