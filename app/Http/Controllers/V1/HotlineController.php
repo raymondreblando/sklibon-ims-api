@@ -21,8 +21,6 @@ class HotlineController extends Controller
      */
     public function index()
     {
-        Gate::authorize('viewAny', Hotline::class);
-
         return $this->hotlineService->get();
     }
 

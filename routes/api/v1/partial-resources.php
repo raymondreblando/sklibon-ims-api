@@ -8,6 +8,7 @@ use App\Http\Controllers\V1\ChatController;
 use App\Http\Controllers\V1\EventController;
 use App\Http\Controllers\V1\GalleryController;
 use App\Http\Controllers\V1\GalleryImageController;
+use App\Http\Controllers\V1\HotlineController;
 use App\Http\Controllers\V1\NotificationController;
 use App\Http\Controllers\V1\PositionController;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +17,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::put('/account/change-password', [AccountController::class, 'changePassword']);
-        Route::put('/account/change-profile-picture/{id}', [AccountController::class, 'changeProfilePicture']);
+        Route::put('/account/change-profile-picture', [AccountController::class, 'changeProfilePicture']);
         Route::put('/account/update-profile', [AccountController::class, 'updateProfile']);
 
         Route::resource('attachments', AttachmentController::class)
@@ -33,6 +34,9 @@ Route::prefix('v1')->group(function () {
 
         Route::resource('events', EventController::class)
             ->only(['store', 'show', 'update', 'destroy']);
+
+        Route::resource('hotlines', HotlineController::class)
+            ->only(['store', 'show', 'update']);
 
         Route::resource('galleries', GalleryController::class)
             ->only(['store', 'show', 'update', 'destroy']);
