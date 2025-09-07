@@ -26,10 +26,10 @@ class AccountController extends Controller
         return $this->accountService->changePassword($this->user(), $data['new_password']);
     }
 
-    public function changeProfilePicture(ChangeProfilePictureRequest $request, string $id): JsonResponse
+    public function changeProfilePicture(ChangeProfilePictureRequest $request): JsonResponse
     {
         $data = $request->validated();
-        return $this->accountService->changeProfilePicture($id, $data);
+        return $this->accountService->changeProfilePicture($this->user(), $data);
     }
 
     public function updateProfile(UpdateProfileRequest $request): JsonResponse

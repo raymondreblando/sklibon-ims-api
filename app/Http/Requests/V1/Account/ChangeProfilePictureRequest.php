@@ -11,7 +11,7 @@ class ChangeProfilePictureRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->id === $this->route('id');
+        return true;
     }
 
     /**

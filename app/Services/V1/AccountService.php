@@ -24,9 +24,8 @@ class AccountService
         );
     }
 
-    public function changeProfilePicture(string $id, array $data): JsonResponse
+    public function changeProfilePicture(User $user, array $data): JsonResponse
     {
-        $user = $this->userRepository->findById($id);
         $this->userRepository->update($user, $data);
 
         return Response::success(
