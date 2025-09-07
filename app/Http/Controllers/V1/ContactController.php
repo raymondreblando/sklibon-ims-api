@@ -21,8 +21,6 @@ class ContactController extends Controller
      */
     public function index(): JsonResponse
     {
-        Gate::authorize('viewAny', Contact::class);
-
         return $this->contactService->get();
     }
 

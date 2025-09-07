@@ -13,10 +13,7 @@ class ContactPolicy
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->role->role, [
-            Role::SuperAdmin->value,
-            Role::Admin->value,
-        ]);;
+        return true;
     }
 
     /**
