@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Enums\Role as RoleEnum;
 use App\Policies\UserPolicy;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,6 +48,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    protected function fullname(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->userInfo
+                ? "{$this->userInfo->firstname} {$this->userInfo->lastname}"
+                : null;
+        });
     }
 
     public function role(): BelongsTo
