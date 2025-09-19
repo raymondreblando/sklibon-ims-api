@@ -27,7 +27,6 @@ class Report extends Model
 
     protected $hidden = [
         'deleted_at',
-        'created_at',
         'updated_at',
     ];
 
