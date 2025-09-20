@@ -22,10 +22,10 @@ class GalleryImageService
     {
         $gallery = $this->galleryRepository->findById($data['gallery_id']);
 
-        $galleryImage = $this->galleryImageRepository->create($gallery, ['image_url' => $data['image_url']]);
+        $this->galleryImageRepository->createMany($gallery, $data['images']);
 
         return Response::success(
-            new GalleryImageResource($galleryImage),
+            null,
             'Gallery image created successfully.'
         );
     }

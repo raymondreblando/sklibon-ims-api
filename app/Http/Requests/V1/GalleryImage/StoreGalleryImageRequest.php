@@ -23,7 +23,8 @@ class StoreGalleryImageRequest extends FormRequest
     {
         return [
             'gallery_id' => ['required', 'string', 'exists:galleries,id'],
-            'image_url' => ['required', 'string', 'url:https'],
+            'images' => ['required', 'array'],
+            'images.*.image_url' => ['required', 'string', 'url:https'],
         ];
     }
 }
