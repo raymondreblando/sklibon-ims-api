@@ -20,6 +20,9 @@ class Attachment extends Model
     protected $fillable = [
         'report_id',
         'attachment',
+        'filename',
+        'file_type',
+        'file_size',
     ];
 
     protected $hidden = [

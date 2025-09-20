@@ -26,7 +26,10 @@ class StoreReportRequest extends FormRequest
             'subject' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'attachments' => ['required', 'array'],
-            'attachments.*.attachment' => ['required', 'url:https']
+            'attachments.*.attachment' => ['required', 'url:https'],
+            'attachments.*.filename' => ['required', 'string'],
+            'attachments.*.file_type' => ['required', 'string'],
+            'attachments.*.file_size' => ['required', 'numeric'],
         ];
     }
 }

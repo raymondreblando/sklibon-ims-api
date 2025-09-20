@@ -14,7 +14,7 @@ class EloquentReportRepository implements ReportRepository
         'user:id,profile',
         'user.userInfo:id,user_id,position_id,firstname,lastname',
         'user.userInfo.position:id,name',
-        'attachments:id,report_id,attachment'
+        'attachments'
     ];
 
     public function get(array $criteria = [], array $relations = []): Collection
