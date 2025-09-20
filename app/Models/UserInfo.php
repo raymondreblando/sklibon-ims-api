@@ -27,7 +27,7 @@ class UserInfo extends Model
         'province_id',
         'municipality_id',
         'barangay_id',
-        'addtional_address',
+        'additional_address',
     ];
 
     protected $hidden = [
