@@ -27,12 +27,12 @@ class AttachmentService
     public function save(array $data): JsonResponse
     {
         $report = $this->reportRepository->findById($data['report_id']);
-        $payload = Arr::except($data, ['report_id']);
+        $payload = $data['attachments'];
 
-        $attachment = $this->attachmentRepository->create($report, $payload);
+        $this->attachmentRepository->createMany($report, $payload);
 
         return Response::success(
-            new AttachmentResource($attachment),
+            null,
             'Attachment saved successfully.'
         );
     }
