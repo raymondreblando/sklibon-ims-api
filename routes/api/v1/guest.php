@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::get('/galleries', [GalleryController::class, 'index']);
+    Route::get('/galleries/{gallery}', [GalleryController::class, 'show']);
     Route::get('/positions', [PositionController::class, 'index']);
     Route::get('/events', [EventController::class, 'index']);
     Route::get('/hotlines', [HotlineController::class, 'index']);

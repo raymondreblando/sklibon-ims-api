@@ -8,7 +8,6 @@ use App\Http\Requests\V1\Gallery\UpdateGalleryRequest;
 use App\Models\Gallery;
 use App\Services\V1\GalleryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class GalleryController extends Controller
@@ -41,8 +40,6 @@ class GalleryController extends Controller
      */
     public function show(Gallery $gallery): JsonResponse
     {
-        Gate::authorize('view', $gallery);
-
         return $this->galleryService->find($gallery);
     }
 

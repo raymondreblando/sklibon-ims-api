@@ -33,6 +33,6 @@ Route::prefix('v1')->group(function () {
             ->only(['store', 'show', 'update']);
 
         Route::resource('galleries', GalleryController::class)
-            ->only(['store', 'show', 'update', 'destroy']);
+            ->only(['store', 'update', 'destroy']);
     });
 });
