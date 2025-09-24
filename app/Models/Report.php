@@ -47,7 +47,7 @@ class Report extends Model
         return $this->hasMany(Attachment::class, 'report_id', 'id');
     }
 
-    public function archivables(): MorphMany
+    public function archives(): MorphMany
     {
         return $this->morphMany(Archive::class, 'archivable');
     }
