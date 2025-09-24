@@ -99,6 +99,11 @@ class User extends Authenticatable
         return $this->hasMany(Chat::class, 'created_by', 'id');
     }
 
+    public function archives(): HasMany
+    {
+        return $this->hasMany(Archive::class, 'archived_by', 'id');
+    }
+
     public function receivables(): MorphMany
     {
         return $this->morphMany(Request::class, 'receivable');
