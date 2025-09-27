@@ -25,6 +25,11 @@ class Attendance extends Model
         'updated_at',
     ];
 
+    protected $casts = [
+        'time_in' => 'datetime',
+        'time_out' => 'datetime',
+    ];
+
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class, 'event_id', 'id');
