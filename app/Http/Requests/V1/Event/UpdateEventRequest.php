@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1\Event;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateEventRequest extends FormRequest
 {
@@ -21,17 +22,57 @@ class UpdateEventRequest extends FormRequest
      */
     public function rules(): array
     {
+        $requiredIfEventIsActive = Rule::requiredIf(
+            fn () => in_array($this->status, ['upcoming', 'ongoing'])
+        );
+
         return [
-            'barangay_id' => ['required', 'string', 'exists:barangays,id'],
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'event_date' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
-            'expired_date' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
-            'open_attendance' => ['required', 'boolean'],
-            'image_url' => ['required', 'string', 'url:https'],
-            'status' => ['required', 'string', 'in:upcoming,ongoing,completed,cancelled'],
-            'latitude' => ['required', 'numeric'],
-            'longitude' => ['required', 'numeric'],
+            'barangay_id' => [
+                $requiredIfEventIsActive,
+                'string',
+                'exists:barangays,id'
+            ],
+            'name' => [
+                $requiredIfEventIsActive,
+                'string',
+                'max:255'
+            ],
+            'description' => [
+                $requiredIfEventIsActive,
+                'string'
+            ],
+            'event_date' => [
+                $requiredIfEventIsActive,
+                'date',
+                'date_format:Y-m-d H:i:s'
+            ],
+            'expired_date' => [
+                $requiredIfEventIsActive,
+                'date',
+                'date_format:Y-m-d H:i:s'
+            ],
+            'open_attendance' => [
+                $requiredIfEventIsActive,
+                'boolean'
+            ],
+            'image_url' => [
+                $requiredIfEventIsActive,
+                'string',
+                'url:https'
+            ],
+            'status' => [
+                'required',
+                'string',
+                'in:upcoming,ongoing,completed,cancelled,archived'
+            ],
+            'latitude' => [
+                $requiredIfEventIsActive,
+                'numeric'
+            ],
+            'longitude' => [
+                $requiredIfEventIsActive,
+                'numeric'
+            ],
         ];
     }
 }
