@@ -16,7 +16,7 @@ class EloquentArchiveRepository implements ArchiveRepository
 
     public function get(array $relations = []): Collection
     {
-        return Archive::with($relations ?? $this->relations)
+        return Archive::with($relations ?: $this->relations)
             ->withArchivable()
             ->orderBy('id', 'desc')
             ->get();

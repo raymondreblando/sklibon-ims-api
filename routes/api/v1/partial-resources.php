@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\ArchiveController;
 use App\Http\Controllers\V1\ChatParticipantController;
 use App\Http\Controllers\V1\AccountController;
 use App\Http\Controllers\V1\AttachmentController;
@@ -20,10 +21,14 @@ Route::prefix('v1')->group(function () {
             Route::put('/account/update-profile', 'updateProfile');
         });
 
-        Route::controller(AttachmentController::class)->group(function () {
-            Route::post('/attachments', 'store');
-            Route::delete('/attachments/{attachment}', 'destroy');
-        });
+        Route::put('/account/change-password/{id}', [AccountController::class, 'changePassword']);
+        Route::put('/account/change-profile-picture/{id}', [AccountController::class, 'changeProfilePicture']);
+
+        Route::resource('archives', ArchiveController::class)
+            ->only('index', 'destroy');
+
+        Route::resource('attachments', AttachmentController::class)
+            ->only('store', 'destroy');
 
         Route::controller(GalleryImageController::class)->group(function () {
             Route::post('/gallery-images', 'store');

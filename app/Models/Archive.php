@@ -22,6 +22,11 @@ class Archive extends Model
         'archived_by'
     ];
 
+    protected $hidden = [
+        'deleted_at',
+        'updated_at',
+    ];
+
     public function archivable(): MorphTo
     {
         return $this->morphTo();
