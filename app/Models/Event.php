@@ -27,6 +27,7 @@ class Event extends Model
         'expired_date',
         'open_attendance',
         'image_url',
+        'venue',
         'status',
         'latitude',
         'longitude',

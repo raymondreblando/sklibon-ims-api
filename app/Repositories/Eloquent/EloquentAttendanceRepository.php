@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 class EloquentAttendanceRepository implements AttendanceRepository
 {
     protected array $relations = [
-        'event'
+        'user:id,profile',
+        'user.userInfo:id,user_id,position_id,firstname,lastname',
+        'user.userInfo.position:id,name',
+        'event',
     ];
 
     public function get(array $criteria = [], array $relations = []): Collection

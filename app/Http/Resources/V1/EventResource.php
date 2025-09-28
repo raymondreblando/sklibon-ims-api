@@ -22,6 +22,7 @@ class EventResource extends JsonResource
             'expiredDate' => $this->resource->expired_date,
             'openAttendance' => $this->resource->open_attendance,
             'imageUrl' => $this->resource->image_url,
+            'venue' => $this->resource->venue,
             'status' => $this->resource->status,
             'latitude' => $this->resource->latitude,
             'longitude' => $this->resource->longitude,

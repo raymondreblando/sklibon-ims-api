@@ -13,7 +13,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role->role === Role::SuperAdmin->value;
+        return true;
     }
 
     /**

@@ -22,8 +22,6 @@ class EventController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        Gate::authorize('viewAny', Event::class);
-
         $barangayId = $request->query('barangay-id');
         return $this->eventService->get($barangayId);
     }

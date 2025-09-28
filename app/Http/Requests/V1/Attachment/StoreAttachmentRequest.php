@@ -23,7 +23,11 @@ class StoreAttachmentRequest extends FormRequest
     {
         return [
             'report_id' => ['required', 'string', 'exists:reports,id'],
-            'attachment' => ['required', 'url:https'],
+            'attachments' => ['required', 'array'],
+            'attachments.*.attachment' => ['required', 'url:https'],
+            'attachments.*.filename' => ['required', 'string'],
+            'attachments.*.file_type' => ['required', 'string'],
+            'attachments.*.file_size' => ['required', 'numeric']
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
-use App\Http\Resources\RoleResource;
+use App\Http\Resources\V1\RoleResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,6 +18,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'username' => $this->resource->username,
+            'fullname' => $this->resource->fullname,
             'email' => $this->resource->email,
             'status' => $this->resource->status,
             'profile' => $this->resource->profile,

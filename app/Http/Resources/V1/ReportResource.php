@@ -18,6 +18,7 @@ class ReportResource extends JsonResource
             'id' => $this->resource->id,
             'subject' => $this->resource->subject,
             'description' => $this->resource->description,
+            'createdAt' => $this->resource->created_at,
             'barangay' => new BarangayResource($this->whenLoaded('barangay')),
             'uploader' => new MinifyUserResource($this->whenLoaded('user')),
             'attachments' => AttachmentResource::collection($this->whenLoaded('attachments'))

@@ -21,9 +21,12 @@ class AttendanceService
 
     public function get(): JsonResponse
     {
-        $attendances = $this->attendanceRepository->get([
-            new Where('user_id', $this->getAuthUserId())
-        ]);
+        $criteria = [];
+
+        if (! $this->isAdmin())
+            $criteria[] = new Where('user_id', $this->getAuthUserId());
+
+        $attendances = $this->attendanceRepository->get($criteria);
 
         return Response::success(
             AttendanceResource::collection($attendances),
