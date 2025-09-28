@@ -29,6 +29,7 @@ class StoreEventRequest extends FormRequest
             'event_date' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
             'expired_date' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
             'image_url' => ['required', 'string', 'url:https'],
+            'venue' => ['required', 'string'],
             'latitude' => ['required', 'numeric'],
             'longitude' => ['required', 'numeric'],
         ];

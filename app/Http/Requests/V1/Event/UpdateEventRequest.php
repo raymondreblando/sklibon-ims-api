@@ -60,6 +60,10 @@ class UpdateEventRequest extends FormRequest
                 'string',
                 'url:https'
             ],
+            'venue' => [
+                $requiredIfEventIsActive,
+                'string'
+            ],
             'status' => [
                 'required',
                 'string',
