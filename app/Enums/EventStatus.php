@@ -8,4 +8,5 @@ enum EventStatus : string
     case Ongoing = 'ongoing';
     case Completed = 'completed';
     case Cancelled = 'cancelled';
+    case Archived = 'archived';
 }

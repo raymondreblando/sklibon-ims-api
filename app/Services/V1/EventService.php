@@ -79,6 +79,12 @@ class EventService
                 EventStatusUpdated::dispatch($event);
             }
 
+            if ($event->status === EventStatus::Archived->value) {
+                $event->archivable()->create([
+                    'archived_by' => $this->getAuthUserId()
+                ]);
+            }
+
             return Response::success(
                 new EventResource($event),
                 'Event updated successfully.'
