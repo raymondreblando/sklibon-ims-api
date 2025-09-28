@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Enums\EventStatus;
 use App\Models\Event;
 use App\Models\User;
 use App\Repositories\EventRepository;
@@ -25,6 +26,7 @@ class EloquentEventRepository implements EventRepository
         }
 
         return $query->with($relations ?: $this->relations)
+            ->whereNot('status', EventStatus::Archived->value)
             ->orderBy('id', 'desc')
             ->get();
     }
