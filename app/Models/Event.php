@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[UsePolicy(EventPolicy::class)]
@@ -57,5 +58,10 @@ class Event extends Model
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class, 'event_id', 'id');
+    }
+
+    public function archivable(): MorphMany
+    {
+        return $this->morphMany(Archive::class, 'archivable');
     }
 }
