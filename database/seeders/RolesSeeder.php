@@ -55,7 +55,7 @@ class RolesSeeder extends Seeder
                 'province_id' => $provinceId,
                 'municipality_id' => $municipalityId,
                 'barangay_id' => $barangayId,
-                'addtional_address' => '123 Main St, City',
+                'additional_address' => '123 Main St, City',
             ]);
 
             DB::commit();
