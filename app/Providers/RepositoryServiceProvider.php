@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\ArchiveRepository;
 use App\Repositories\AttachmentRepository;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\ChatMessageReadRepository;
@@ -10,6 +11,7 @@ use App\Repositories\ChatPairRepository;
 use App\Repositories\ChatParticipantRepository;
 use App\Repositories\ChatRepository;
 use App\Repositories\ContactRepository;
+use App\Repositories\Eloquent\EloquentArchiveRepository;
 use App\Repositories\Eloquent\EloquentAttachmentRepository;
 use App\Repositories\Eloquent\EloquentAttendanceRepository;
 use App\Repositories\Eloquent\EloquentChatMessageReadRepository;
@@ -53,6 +55,7 @@ use Illuminate\Support\ServiceProvider;
 class RepositoryServiceProvider extends ServiceProvider
 {
     public $bindings = [
+        ArchiveRepository::class => EloquentArchiveRepository::class,
         AttachmentRepository::class => EloquentAttachmentRepository::class,
         AttendanceRepository::class => EloquentAttendanceRepository::class,
         ChatRepository::class => EloquentChatRepository::class,

@@ -60,7 +60,7 @@ class Event extends Model
         return $this->hasMany(Attendance::class, 'event_id', 'id');
     }
 
-    public function archivable(): MorphMany
+    public function archives(): MorphMany
     {
         return $this->morphMany(Archive::class, 'archivable');
     }
