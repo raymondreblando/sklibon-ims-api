@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Policies\ArchivePolicy;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[UsePolicy(ArchivePolicy::class)]
 class Archive extends Model
 {
     use HasUlids, SoftDeletes;
@@ -25,6 +28,10 @@ class Archive extends Model
     protected $hidden = [
         'deleted_at',
         'updated_at',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime'
     ];
 
     public function archivable(): MorphTo
