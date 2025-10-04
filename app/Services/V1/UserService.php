@@ -3,11 +3,13 @@
 namespace App\Services\V1;
 
 use App\Enums\Role;
+use App\Enums\UserStatus;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserInfoRepository;
 use App\Repositories\UserRepository;
+use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +17,8 @@ use Illuminate\Support\Facades\DB;
 
 class UserService
 {
+    use HasAuthUser;
+
     public function __construct(
         private UserRepository $userRepository,
         private UserInfoRepository $userInfoRepository,
@@ -33,6 +37,9 @@ class UserService
     {
         return DB::transaction(function () use ($data) {
             $accountPayload = $this->assignRole($data['account']);
+
+            if ($this->user() && $this->isAdmin())
+                $accountPayload['status'] = UserStatus::Verified->value;
 
             $user = $this->userRepository->create($accountPayload);
             $this->userInfoRepository->create($user, $data['info']);
