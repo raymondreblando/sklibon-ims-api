@@ -80,7 +80,7 @@ class EventService
             }
 
             if ($event->status === EventStatus::Archived->value) {
-                $event->archivable()->create([
+                $event->archives()->create([
                     'archived_by' => $this->getAuthUserId()
                 ]);
             }
