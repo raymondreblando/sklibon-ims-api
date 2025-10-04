@@ -22,9 +22,10 @@ class UpdateReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'barangay_id' => ['required', 'string', 'exists:barangays,id'],
-            'subject' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string']
+            'barangay_id' => ['required_if:status,active', 'string', 'exists:barangays,id'],
+            'subject' => ['required_if:status,active', 'string', 'max:255'],
+            'description' => ['required_if:status,active', 'string'],
+            'status' => ['nullable', 'in:active,archived']
         ];
     }
 }

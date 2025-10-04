@@ -2,6 +2,7 @@
 
 namespace App\Services\V1;
 
+use App\Enums\ReportStatus;
 use App\Http\Resources\V1\ReportResource;
 use App\Models\Report;
 use App\Repositories\ReportRepository;
@@ -57,6 +58,9 @@ class ReportService
     public function update(Report $report, array $data): JsonResponse
     {
         $report = $this->reportRepository->update($report, $data);
+
+        if ($report->status === ReportStatus::Archived->value)
+            $report->archives()->create(['archived_by' => $this->getAuthUserId()]);
 
         return Response::success(
             new ReportResource($report),
