@@ -63,7 +63,9 @@ class UserService
     {
         return DB::transaction(function () use ($user, $data) {
             $this->userRepository->update($user, $data['account']);
-            $this->userInfoRepository->update($user, $data['info']);
+
+            if (isset($data['info']))
+                $this->userInfoRepository->update($user, $data['info']);
 
             return Response::success(
                 new UserResource($this->userRepository->find($user)),

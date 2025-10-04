@@ -23,7 +23,7 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'action' => ['in:update,deactivated,blocked'],
+            'action' => ['in:update,status'],
             'account.username' => [
                 'required_if:action,update',
                 'string',
@@ -39,7 +39,7 @@ class UpdateUserRequest extends FormRequest
             ],
             'account.password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'account.role_id' => ['nullable', 'string', 'exists:roles,id'],
-            'account.status' => ['required', 'string', 'in:active,deactivated,blocked'],
+            'account.status' => ['required', 'string', 'in:active,verified,deactivated,blocked'],
             'info' => ['array:firstname,middlename,lastname,gender,age,phone_number,birthdate,position_id,province_id,municipality_id,barangay_id,additional_address'],
             'info.firstname' => ['required_if:action,update', 'string', 'max:100'],
             'info.middlename' => ['nullable', 'string', 'max:100'],
