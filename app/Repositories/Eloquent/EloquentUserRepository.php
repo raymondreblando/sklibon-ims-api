@@ -17,11 +17,15 @@ class EloquentUserRepository implements UserRepository
         'userInfo.barangay:id,name',
     ];
 
-    public function get(string $userId, array $relations = []): Collection
+    public function get(array $criteria = [], array $relations = []): Collection
     {
-        return User::with($relations ?: $this->relations)
-            ->whereNot('id', $userId)
-            ->orderBy('id', 'desc')
+        $query = User::query();
+
+        foreach ($criteria as $criterion) {
+            $criterion->apply($query);
+        }
+
+        return $query->with($relations ?: $this->relations)
             ->get();
     }
 

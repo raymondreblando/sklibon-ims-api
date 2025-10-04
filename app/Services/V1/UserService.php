@@ -6,13 +6,14 @@ use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
+use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\WhereNot;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserInfoRepository;
 use App\Repositories\UserRepository;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserService
@@ -27,8 +28,13 @@ class UserService
 
     public function get(): JsonResponse
     {
+        $criteria = [
+            new WhereNot('id', $this->getAuthUserId()),
+            new OrderBy('id', 'desc')
+        ];
+
         return Response::success(
-            UserResource::collection($this->userRepository->get(Auth::user()->id)),
+            UserResource::collection($this->userRepository->get($criteria)),
             'Users retrieved successfully.'
         );
     }
