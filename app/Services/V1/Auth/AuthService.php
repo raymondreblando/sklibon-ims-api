@@ -2,6 +2,7 @@
 
 namespace App\Services\V1\Auth;
 
+use App\Enums\UserStatus;
 use App\Exceptions\InvalidUserCredentialsException;
 use App\Models\User;
 use App\Repositories\UserRepository;
@@ -10,6 +11,7 @@ use App\Traits\Auth\IssueApiTokens;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthService
 {
@@ -30,25 +32,33 @@ class AuthService
 
     public function authenticate(array $data, ?string $clientType): JsonResponse
     {
-        $credentials = array_merge($data, ['status' => 'active']);
+        return DB::transaction(function () use ($data, $clientType) {
+            $credentials = array_merge($data, ['status' => UserStatus::Verified->value]);
 
-        if (! Auth::attempt($credentials))
-            throw new InvalidUserCredentialsException();
+            if (! Auth::attempt($credentials))
+                throw new InvalidUserCredentialsException();
 
-        $user = $this->userRepository->find(Auth::user());
+            $user = $this->userRepository->find(Auth::user());
+            $this->userRepository->update($user, ['is_online' => true]);
 
-        $user->tokens()->delete();
-        $tokens = $this->generateUserToken($user);
+            $user->tokens()->delete();
+            $tokens = $this->generateUserToken($user);
 
-        return $this->issueApiToken($user, $tokens, $clientType);
+            return $this->issueApiToken($user, $tokens, $clientType);
+        });
     }
 
     public function logout(): JsonResponse
     {
-        $user = Auth::user();
-        $user->tokens()->delete();
-        $user->refreshTokens()->delete();
+        return DB:: transaction(function () {
+            $user = Auth::user();
 
-        return Response::success(null, 'Logout successful.');
+            $this->userRepository->update($user, ['is_online' => false]);
+
+            $user->tokens()->delete();
+            $user->refreshTokens()->delete();
+
+            return Response::success(null, 'Logout successful.');
+        });
     }
 }

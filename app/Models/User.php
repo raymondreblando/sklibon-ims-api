@@ -32,6 +32,7 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
+        'is_online',
         'profile',
     ];
 
@@ -47,6 +48,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_online' => 'boolean',
         ];
     }
 
