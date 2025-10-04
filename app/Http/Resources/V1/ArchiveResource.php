@@ -27,7 +27,7 @@ class ArchiveResource extends JsonResource
                     ? new EventResource($archivable)
                     : new ReportResource($archivable);
             }),
-            'achivedBy' => new MinifyUserResource($this->whenLoaded('user')),
+            'archivedBy' => new MinifyUserResource($this->whenLoaded('user')),
         ];
     }
 }
