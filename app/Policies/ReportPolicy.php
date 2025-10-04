@@ -21,9 +21,7 @@ class ReportPolicy
      */
     public function view(User $user, Report $report): bool
     {
-        return $report->user_id === $user->id
-            || $report->barangay_id === $user->userInfo->barangay_id
-            || $user->isAdmin();
+        return true;
     }
 
     /**
