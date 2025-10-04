@@ -17,7 +17,7 @@ class ArchiveResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'archivableType' => $this->resource->archivable_type,
+            'archivableType' => $this->resource->archivable_type === 'App\Models\Event' ? 'event' : 'report',
             'archivableId' => $this->resource->archivable_id,
             'createdAt' => $this->resource->created_at,
             'archivable' => $this->whenLoaded('archivable', function () {
