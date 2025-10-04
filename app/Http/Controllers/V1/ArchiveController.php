@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Archive;
 use App\Services\V1\ArchiveService;
 use Illuminate\Http\JsonResponse;
 
@@ -17,8 +18,8 @@ class ArchiveController extends Controller
         return $this->archiveService->get();
     }
 
-    public function destroy(string $id)
+    public function destroy(Archive $archive): JsonResponse
     {
-        //
+        return $this->archiveService->delete($archive);
     }
 }
