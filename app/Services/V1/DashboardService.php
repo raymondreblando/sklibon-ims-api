@@ -179,6 +179,7 @@ class DashboardService
             new Where('status', UserStatus::Verified->value)
         ];
 
+        $totalAttendance = 0;
         $totalMembers = (int) $this->userRepository->get($criteria)->value('total');
 
         $criteria = [
@@ -189,15 +190,15 @@ class DashboardService
 
         $event = $this->eventRepository->get($criteria)->first();
 
-        $criteria = [
-            new SelectRaw('COUNT(*) as total'),
-            new WhereNotNull(['time_in', 'time_out'])
-        ];
+        if ($event) {
+            $criteria = [
+                new SelectRaw('COUNT(*) as total'),
+                new Where('event_id', $event->id),
+                new WhereNotNull(['time_in', 'time_out'])
+            ];
 
-        if (!empty($event))
-            $criteria[] = new Where('event_id', $event->id);
-
-        $totalAttendance = (int) $this->attendanceRepository->get($criteria)->value('total');
+            $totalAttendance = (int) $this->attendanceRepository->get($criteria)->value('total');
+        }
 
         return collect([
             [
