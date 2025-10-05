@@ -6,6 +6,7 @@ use App\Models\Request;
 use App\Models\User;
 use App\Repositories\RequestRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as CollectionSupport;
 
 class EloquentRequestRepository implements RequestRepository
 {
@@ -34,6 +35,17 @@ class EloquentRequestRepository implements RequestRepository
             ->withReceivable()
             ->orderBy('id', 'desc')
             ->get();
+    }
+
+    public function getSummary(string $key, string $value, array $criteria = []): CollectionSupport
+    {
+        $query = Request::query();
+
+        foreach ($criteria as $criterion) {
+            $criterion->apply($query);
+        }
+
+        return $query->pluck($value, $key);
     }
 
     public function create(User $user, array $data): Request

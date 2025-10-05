@@ -6,6 +6,7 @@ use App\Http\Controllers\V1\AccountController;
 use App\Http\Controllers\V1\AttachmentController;
 use App\Http\Controllers\V1\AttendanceController;
 use App\Http\Controllers\V1\ChatController;
+use App\Http\Controllers\V1\DashboardController;
 use App\Http\Controllers\V1\GalleryImageController;
 use App\Http\Controllers\V1\NotificationController;
 use App\Http\Controllers\V1\RoleController;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/roles', RoleController::class);
+        Route::get('/dashboard/statistics', DashboardController::class);
 
         Route::controller(AccountController::class)->group(function () {
             Route::put('/account/change-password', 'changePassword');
