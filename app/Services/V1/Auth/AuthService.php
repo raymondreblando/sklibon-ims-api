@@ -41,7 +41,8 @@ class AuthService
             $user = $this->userRepository->find(Auth::user());
             $this->userRepository->update($user, ['is_online' => true]);
 
-            $user->tokens()->delete();
+            // Comment Temporarily
+            // $user->tokens()->delete();
             $tokens = $this->generateUserToken($user);
 
             return $this->issueApiToken($user, $tokens, $clientType);
@@ -55,7 +56,8 @@ class AuthService
 
             $this->userRepository->update($user, ['is_online' => false]);
 
-            $user->tokens()->delete();
+            // Comment Temporarily
+            // $user->tokens()->delete();
             $user->refreshTokens()->delete();
 
             return Response::success(null, 'Logout successful.');
