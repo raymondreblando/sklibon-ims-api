@@ -27,9 +27,9 @@ class SendNewRequestNotification
             'notifiable_id' => $request->receivable_id,
             'notifiable_type' => $request->receivable_type,
             'data' => [
-                'requestId' => $request->id,
+                'id' => $request->id,
                 'user' => $event->userName,
-                'request' => $request->name,
+                'name' => $request->name,
                 'status' => $request->status
             ],
         ];

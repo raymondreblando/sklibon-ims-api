@@ -27,9 +27,9 @@ class SendRequestStatusUpdateNotification
             'notifiable_id' => $request->user_id,
             'notifiable_type' => 'App\Models\User',
             'data' => [
-                'requestId' => $request->id,
+                'id' => $request->id,
                 'user' => $event->userName,
-                'request' => $request->name,
+                'name' => $request->name,
                 'status' => $request->status
             ],
         ];

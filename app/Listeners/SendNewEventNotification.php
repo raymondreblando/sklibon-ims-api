@@ -27,8 +27,8 @@ class SendNewEventNotification
             'notifiable_id' => $skEvent->id,
             'notifiable_type' => 'App\Models\Event',
             'data' => [
-                'eventId' => $skEvent->id,
-                'eventName' => $skEvent->name,
+                'id' => $skEvent->id,
+                'name' => $skEvent->name,
                 'status' => $skEvent->status
             ],
         ];
