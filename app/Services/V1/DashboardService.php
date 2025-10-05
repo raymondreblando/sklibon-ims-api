@@ -191,7 +191,7 @@ class DashboardService
 
         $criteria = [
             new SelectRaw('COUNT(*) as total'),
-            new Where('event_id', $event->id),
+            $event ? new Where('event_id', $event->id) : "",
             new WhereNotNull(['time_in', 'time_out'])
         ];
 
