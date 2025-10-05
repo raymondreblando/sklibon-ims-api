@@ -3,6 +3,7 @@
 use App\Http\Controllers\V1\ContactController;
 use App\Http\Controllers\V1\EventController;
 use App\Http\Controllers\V1\GalleryController;
+use App\Http\Controllers\V1\GalleryImageController;
 use App\Http\Controllers\V1\HotlineController;
 use App\Http\Controllers\V1\LocationController;
 use App\Http\Controllers\V1\PositionController;
@@ -15,6 +16,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/events', [EventController::class, 'index']);
     Route::get('/hotlines', [HotlineController::class, 'index']);
     Route::get('/contacts', [ContactController::class, 'index']);
+    Route::get('/gallery-images', [GalleryImageController::class, 'index']);
 
     Route::prefix('locations')->group(function () {
         Route::controller(LocationController::class)->group(function () {
