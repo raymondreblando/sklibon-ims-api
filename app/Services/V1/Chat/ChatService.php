@@ -5,6 +5,7 @@ namespace App\Services\V1\Chat;
 use App\Http\Resources\V1\ChatResource;
 use App\Models\Chat;
 use App\Repositories\ChatRepository;
+use App\Repositories\Criteria\WhereHas;
 use App\Repositories\Criteria\WithRelations;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
@@ -23,10 +24,15 @@ class ChatService
 
     public function get(): JsonResponse
     {
+        $userId = $this->getAuthUserId();
+
         $criteria = [
+            new WhereHas('chatParticipants', function (Builder $query) use ($userId) {
+                $query->where('user_id', $userId);
+            }),
             new WithRelations([
-                'chatParticipants' => function (Builder $query) {
-                    $query->whereNot('user_id', $this->getAuthUserId())
+                'chatParticipants' => function (Builder $query) use ($userId) {
+                    $query->whereNot('user_id', $userId)
                         ->limit(1)
                         ->with([
                             'user:id,profile',
@@ -40,6 +46,11 @@ class ChatService
             ChatResource::collection($this->chatRepository->get($criteria)),
             'Chats retrieved successfully.'
         );
+    }
+
+    public function getMessages(Chat $chat)
+    {
+        
     }
 
     public function find(string $id): ?Chat
