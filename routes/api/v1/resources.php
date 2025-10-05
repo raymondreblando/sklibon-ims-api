@@ -27,7 +27,7 @@ Route::prefix('v1')->group(function () {
             ->only(['store', 'show', 'update', 'destroy']);
 
         Route::resource('events', EventController::class)
-            ->only(['store', 'show', 'update', 'destroy']);
+            ->only(['store', 'update', 'destroy']);
 
         Route::resource('hotlines', HotlineController::class)
             ->only(['store', 'show', 'update']);

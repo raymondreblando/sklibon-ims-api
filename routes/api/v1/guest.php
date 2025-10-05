@@ -14,6 +14,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/galleries/{gallery}', [GalleryController::class, 'show']);
     Route::get('/positions', [PositionController::class, 'index']);
     Route::get('/events', [EventController::class, 'index']);
+    Route::get('/events/{event}', [EventController::class, 'show']);
     Route::get('/hotlines', [HotlineController::class, 'index']);
     Route::get('/contacts', [ContactController::class, 'index']);
     Route::get('/gallery-images', [GalleryImageController::class, 'index']);
