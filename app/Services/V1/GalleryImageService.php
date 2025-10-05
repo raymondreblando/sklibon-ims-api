@@ -5,6 +5,8 @@ namespace App\Services\V1;
 use App\Http\Resources\V1\GalleryImageResource;
 use App\Models\Gallery;
 use App\Models\GalleryImage;
+use App\Repositories\Criteria\Limit;
+use App\Repositories\Criteria\OrderBy;
 use App\Repositories\GalleryImageRepository;
 use App\Repositories\GalleryRepository;
 use App\Utils\Response;
@@ -17,6 +19,19 @@ class GalleryImageService
         private GalleryImageRepository $galleryImageRepository,
         private GalleryRepository $galleryRepository
     ){}
+
+    public function get(): JsonResponse
+    {
+        $criteria = [
+            new OrderBy('id', 'desc'),
+            new Limit(7)
+        ];
+
+        return Response::success(
+            GalleryImageResource::collection($this->galleryImageRepository->get($criteria)),
+            "Gallery images retrieved successfully."
+        );
+    }
 
     public function save(array $data): JsonResponse
     {

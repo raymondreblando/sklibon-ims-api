@@ -42,8 +42,6 @@ class EventController extends Controller
      */
     public function show(Event $event): JsonResponse
     {
-        Gate::authorize('view', $event);
-
         return $this->eventService->find($event);
     }
 

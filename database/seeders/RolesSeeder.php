@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\Role as RoleEnum;
+use App\Enums\UserStatus;
 use App\Models\Barangay;
 use App\Models\Municipality;
 use App\Models\Province;
@@ -38,7 +39,8 @@ class RolesSeeder extends Seeder
                 'role_id' => $superAdminRole,
                 'username' => 'sksuperadmin',
                 'email' => 'sksuperadmin@gmail.com',
-                'password' => env('SUPERADMIN_PASS')
+                'password' => env('SUPERADMIN_PASS'),
+                'status' => UserStatus::Verified->value
             ]);
 
             $provinceId = Province::where('name', 'Albay')->value('id');

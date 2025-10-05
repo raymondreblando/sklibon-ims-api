@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as CollectionSupport;
 
 class EloquentUserRepository implements UserRepository
 {
@@ -17,12 +18,27 @@ class EloquentUserRepository implements UserRepository
         'userInfo.barangay:id,name',
     ];
 
-    public function get(string $userId, array $relations = []): Collection
+    public function get(array $criteria = [], array $relations = []): Collection
     {
-        return User::with($relations ?: $this->relations)
-            ->whereNot('id', $userId)
-            ->orderBy('id', 'desc')
+        $query = User::query();
+
+        foreach ($criteria as $criterion) {
+            $criterion->apply($query);
+        }
+
+        return $query->with($relations ?: $this->relations)
             ->get();
+    }
+
+    public function getSummary(string $key, string $value, array $criteria = []): CollectionSupport
+    {
+        $query = User::query();
+
+        foreach ($criteria as $criterion) {
+            $criterion->apply($query);
+        }
+
+        return $query->pluck($value, $key);
     }
 
     public function create(array $data): User

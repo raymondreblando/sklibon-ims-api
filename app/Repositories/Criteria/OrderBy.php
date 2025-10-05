@@ -4,16 +4,15 @@ namespace App\Repositories\Criteria;
 
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
-class Where implements Criteria
+class OrderBy implements Criteria
 {
     public function __construct(
         private string $column,
-        private $value,
-        private string $operator = '='
-    ) {}
+        private string $direction = 'asc'
+    ){}
 
     public function apply(Builder $query): void
     {
-        $query->where($this->column, $this->operator, $this->value);
+        $query->orderBy($this->column, $this->direction);
     }
 }

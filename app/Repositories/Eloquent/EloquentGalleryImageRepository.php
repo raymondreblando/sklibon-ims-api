@@ -9,6 +9,17 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentGalleryImageRepository implements GalleryImageRepository
 {
+    public function get(array $criteria = []): Collection
+    {
+        $query = GalleryImage::query();
+
+        foreach ($criteria as $criterion) {
+            $criterion->apply($query);
+        }
+
+        return $query->get();
+    }
+
     public function create(Gallery $gallery, array $data): GalleryImage
     {
         return $gallery->images()->create($data);

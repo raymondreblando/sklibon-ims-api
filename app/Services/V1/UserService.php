@@ -3,18 +3,23 @@
 namespace App\Services\V1;
 
 use App\Enums\Role;
+use App\Enums\UserStatus;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
+use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\WhereNot;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserInfoRepository;
 use App\Repositories\UserRepository;
+use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserService
 {
+    use HasAuthUser;
+
     public function __construct(
         private UserRepository $userRepository,
         private UserInfoRepository $userInfoRepository,
@@ -23,8 +28,13 @@ class UserService
 
     public function get(): JsonResponse
     {
+        $criteria = [
+            new WhereNot('id', $this->getAuthUserId()),
+            new OrderBy('id', 'desc')
+        ];
+
         return Response::success(
-            UserResource::collection($this->userRepository->get(Auth::user()->id)),
+            UserResource::collection($this->userRepository->get($criteria)),
             'Users retrieved successfully.'
         );
     }
@@ -33,6 +43,9 @@ class UserService
     {
         return DB::transaction(function () use ($data) {
             $accountPayload = $this->assignRole($data['account']);
+
+            if ($this->user() && $this->isAdmin())
+                $accountPayload['status'] = UserStatus::Verified->value;
 
             $user = $this->userRepository->create($accountPayload);
             $this->userInfoRepository->create($user, $data['info']);
@@ -56,7 +69,9 @@ class UserService
     {
         return DB::transaction(function () use ($user, $data) {
             $this->userRepository->update($user, $data['account']);
-            $this->userInfoRepository->update($user, $data['info']);
+
+            if (isset($data['info']))
+                $this->userInfoRepository->update($user, $data['info']);
 
             return Response::success(
                 new UserResource($this->userRepository->find($user)),

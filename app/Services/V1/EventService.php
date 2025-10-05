@@ -7,7 +7,9 @@ use App\Events\EventCreated;
 use App\Events\EventStatusUpdated;
 use App\Http\Resources\V1\EventResource;
 use App\Models\Event;
+use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
+use App\Repositories\Criteria\WhereNot;
 use App\Repositories\EventRepository;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
@@ -24,8 +26,13 @@ class EventService
 
     public function get(?string $barangayId): JsonResponse
     {
+        $criteria = [
+            new WhereNot('status', EventStatus::Archived->value),
+            new OrderBy('id', 'desc')
+        ];
+
         if (! empty($barangayId)) {
-            $criteria = [new Where('barangay_id', $barangayId)];
+            $criteria[] = new Where('barangay_id', $barangayId);
         }
 
         return Response::success(
@@ -80,7 +87,7 @@ class EventService
             }
 
             if ($event->status === EventStatus::Archived->value) {
-                $event->archivable()->create([
+                $event->archives()->create([
                     'archived_by' => $this->getAuthUserId()
                 ]);
             }

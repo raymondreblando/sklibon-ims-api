@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Enums\ReportStatus;
 use App\Models\Report;
 use App\Models\User;
 use App\Repositories\ReportRepository;
@@ -26,6 +27,7 @@ class EloquentReportRepository implements ReportRepository
         }
 
         return $query->with($relations ?: $this->relations)
+            ->where('status', ReportStatus::Active->value)
             ->orderBy('id', 'desc')
             ->get();
     }

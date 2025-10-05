@@ -7,7 +7,6 @@ use App\Http\Requests\V1\GalleryImage\StoreGalleryImageRequest;
 use App\Models\GalleryImage;
 use App\Services\V1\GalleryImageService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class GalleryImageController extends Controller
@@ -15,6 +14,11 @@ class GalleryImageController extends Controller
     public function __construct(
         private GalleryImageService $galleryImageService
     ) {}
+
+    public function index(): JsonResponse
+    {
+        return $this->galleryImageService->get();
+    }
 
     /**
      * Store a newly created resource in storage.
