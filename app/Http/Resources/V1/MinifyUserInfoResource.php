@@ -17,7 +17,8 @@ class MinifyUserInfoResource extends JsonResource
         return [
             'firstname' => $this->resource->firstname,
             'lastname' => $this->resource->lastname,
-            'position' => new MinifyPositionResource($this->whenLoaded('position'))
+            'position' => new MinifyPositionResource($this->whenLoaded('position')),
+            'barangay' => new BarangayResource($this->whenLoaded('barangay')),
         ];
     }
 }
