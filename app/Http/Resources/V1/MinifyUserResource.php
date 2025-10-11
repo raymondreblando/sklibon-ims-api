@@ -17,6 +17,7 @@ class MinifyUserResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'profile' => $this->resource->profile,
+            'isOnline' => $this->resource->is_online,
             'info' => new MinifyUserInfoResource($this->whenLoaded('userInfo')),
         ];
     }
