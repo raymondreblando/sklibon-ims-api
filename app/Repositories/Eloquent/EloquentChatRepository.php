@@ -33,9 +33,15 @@ class EloquentChatRepository implements ChatRepository
         return $user->chats()->create($data);
     }
 
-    public function find(Chat $chat, array $relations = []): Chat
+    public function find(Chat $chat, array $criteria = []): Chat
     {
-        return $chat->load($relations ?: $this->relations);
+        $query = $chat->query();
+
+        foreach ($criteria as $criterion) {
+            $criterion->apply($query);
+        }
+
+        return $query->first();
     }
 
     public function findById(string $id): ?Chat
