@@ -5,6 +5,7 @@ namespace App\Services\V1\Chat;
 use App\Events\PrivateChatCreated;
 use App\Models\Chat;
 use App\Repositories\ChatRepository;
+use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WithRelations;
 use App\Traits\Auth\HasAuthUser;
 use App\Utils\Response;
@@ -43,6 +44,7 @@ class CreatePrivateChatService
             $this->setupNewPrivateChat($chat, $data);
 
             $criteria = [
+                new Where('id', $chat->id),
                 new WithRelations([
                     'chatPair.sender:id,profile',
                     'chatPair.sender.userInfo:id,user_id,firstname,lastname',
@@ -51,7 +53,7 @@ class CreatePrivateChatService
                 ])
             ];
 
-            $chatWithRelations = $this->chatRepository->find($chat, $criteria);
+            $chatWithRelations = $this->chatRepository->find($criteria);
 
             PrivateChatCreated::dispatch($chatWithRelations);
             return Response::success(['chatId' => $chat->id]);

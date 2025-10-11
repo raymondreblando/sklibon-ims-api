@@ -40,4 +40,9 @@ class GroupChatCreated implements ShouldBroadcast
 
         return $rooms;
     }
+
+    public function broadcastAs()
+    {
+        return 'group.created';
+    }
 }

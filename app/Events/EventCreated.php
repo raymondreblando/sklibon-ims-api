@@ -17,4 +17,9 @@ class EventCreated
     public function __construct(
         public Event $event
     ){}
+
+    public function broadcastAs()
+    {
+        return 'event.created';
+    }
 }

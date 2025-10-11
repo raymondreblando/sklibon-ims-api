@@ -33,4 +33,9 @@ class MessageSent implements ShouldBroadcast
             new PrivateChannel("chat.room.{$chatId}"),
         ];
     }
+
+    public function broadcastAs()
+    {
+        return 'message.sent';
+    }
 }

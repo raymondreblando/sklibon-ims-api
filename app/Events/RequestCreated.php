@@ -18,4 +18,9 @@ class RequestCreated
         public Request $request,
         public string $userName
     ){}
+
+    public function broadcastAs()
+    {
+        return 'request.created';
+    }
 }

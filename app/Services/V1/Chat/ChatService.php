@@ -70,7 +70,7 @@ class ChatService
         ];
 
         return Response::success(
-            new MessageResource($this->chatRepository->find($chat, $criteria)),
+            new MessageResource($this->chatRepository->find($criteria)),
             'Chat messages retrieved successfully.'
         );
     }

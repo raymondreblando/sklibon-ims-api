@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ParticipantAdded 
+class ParticipantAdded
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -38,5 +38,10 @@ class ParticipantAdded
         }
 
         return $rooms;
+    }
+
+    public function broadcastAs()
+    {
+        return 'participant.added';
     }
 }

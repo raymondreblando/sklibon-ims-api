@@ -54,4 +54,9 @@ class NotificationCreated implements ShouldBroadcast
             'created_at' => $this->notification->created_at
         ];
     }
+
+    public function broadcastAs()
+    {
+        return 'notification.created';
+    }
 }
