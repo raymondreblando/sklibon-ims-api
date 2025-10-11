@@ -60,10 +60,11 @@ class ChatParticipantService
         }
 
         $participants = $this->chatParticipantRepository->create($result, $data['participants']);
+        $participants->load('user');
         ParticipantAdded::dispatch($participants);
 
         return Response::success(
-            ChatParticipantResource::collection($participants->load('user')),
+            ChatParticipantResource::collection($participants),
             'Participants added successfully'
         );
     }

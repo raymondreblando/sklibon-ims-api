@@ -11,9 +11,11 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ParticipantAdded
+class ParticipantAdded implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $tries = 5;
 
     /**
      * Create a new event instance.
@@ -29,15 +31,9 @@ class ParticipantAdded
      */
     public function broadcastOn(): array
     {
-        $participants = $this->participants->toArray();
-
-        $rooms = [];
-
-        foreach ($participants as $participant) {
-            $rooms[] = new PrivateChannel("chat.list.{$participant->user_id}");
-        }
-
-        return $rooms;
+        return $this->participants->map(function ($participant) {
+            return new PrivateChannel("chat.list.{$participant->user->id}");
+        })->all();
     }
 
     public function broadcastAs()
