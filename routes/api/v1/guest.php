@@ -7,6 +7,7 @@ use App\Http\Controllers\V1\GalleryImageController;
 use App\Http\Controllers\V1\HotlineController;
 use App\Http\Controllers\V1\LocationController;
 use App\Http\Controllers\V1\PositionController;
+use App\Http\Controllers\V1\SkBarangayController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -18,6 +19,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/hotlines', [HotlineController::class, 'index']);
     Route::get('/contacts', [ContactController::class, 'index']);
     Route::get('/gallery-images', [GalleryImageController::class, 'index']);
+
+    Route::get('/sk-officials/{barangayCode}', SkBarangayController::class);
 
     Route::prefix('locations')->group(function () {
         Route::controller(LocationController::class)->group(function () {
