@@ -22,7 +22,7 @@ class EventController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $barangayId = $request->query('barangay-id');
+        $barangayId = $request->query('barangay');
         return $this->eventService->get($barangayId);
     }
 
