@@ -65,6 +65,7 @@ All API endpoints are prefixed with `/api/v1`.
 *   `POST /auth/login`: User login
 *   `POST /auth/logout`: User logout
 *   `POST /auth/refresh-token`: Refresh an expired access token
+*   `GET /auth/imagekit`: Get ImageKit authentication parameters
 
 ### Positions
 
@@ -82,10 +83,19 @@ All API endpoints are prefixed with `/api/v1`.
 *   `PUT /users/{id}`: Update a user.
 *   `DELETE /users/{id}`: Delete a user.
 
+### Roles
+*   `GET /roles`: Get a list of all roles.
+
+### Dashboard
+*   `GET /dashboard/statistics`: Get dashboard statistics.
+
 ### Account
 
 *   `PUT /account/change-password`: Change the user's password.
-*   `POST /account/change-profile-picture`: Change the user's profile picture.
+*   `PUT /account/change-profile-picture`: Change the user's profile picture.
+*   `PUT /account/update-profile`: Update the user's profile.
+*   `PUT /account/change-password/{id}`: Change a specific user's password.
+*   `PUT /account/change-profile-picture/{id}`: Change a specific user's profile picture.
 
 ### Locations
 
@@ -132,6 +142,10 @@ All API endpoints are prefixed with `/api/v1`.
 *   `PUT /reports/{id}`: Update a report.
 *   `DELETE /reports/{id}`: Delete a report.
 
+### Archives
+*   `GET /archives`: Get a list of all archives.
+*   `DELETE /archives/{id}`: Delete an archive.
+
 ### Attachments
 
 *   `POST /attachments`: Upload an attachment.
@@ -167,6 +181,18 @@ All API endpoints are prefixed with `/api/v1`.
 
 *   `GET /notifications`: Get a list of all notifications.
 *   `PUT /notifications/{id}`: Update a notification.
+
+### Chats
+*   `GET /chats`: Get a list of all chats.
+*   `POST /chat/privates`: Create a private chat.
+*   `POST /chat/group-chats`: Create a group chat.
+*   `PUT /chats/{chat}`: Send a message to a chat.
+*   `GET /chats/{chat}`: Get all messages from a chat.
+
+### Chat Members
+*   `GET /chat/members`: Get a list of all chat members.
+*   `POST /chat/members`: Add a member to a chat.
+*   `DELETE /chat/members/{id}`: Remove a member from a chat.
 
 
 ## Custom Artisan Commands
