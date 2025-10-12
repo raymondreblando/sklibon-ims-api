@@ -60,7 +60,6 @@ class ChatService
                 'chatMessages.user.userInfo:id,user_id,firstname,lastname',
                 'chatParticipants' => function (Builder $query) {
                     $query->whereNot('user_id', $this->getAuthUserId())
-                        ->limit(1)
                         ->with([
                             'user:id,profile,is_online',
                             'user.userInfo:id,user_id,firstname,lastname'

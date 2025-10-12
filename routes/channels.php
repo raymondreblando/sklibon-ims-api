@@ -21,8 +21,5 @@ Broadcast::channel('chat.list.{id}', function (User $user, string $id) {
 });
 
 Broadcast::channel('chat.room.{chat}', function (User $user, Chat $chat) {
-    return $chat->chatPair()
-        ->where('sender_id', $user->id)
-        ->orWhere('receiver_id', $user->id)
-        ->exists();
+    return $chat->chatParticipants()->where('user_id', $user->id)->exists();
 });

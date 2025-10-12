@@ -23,7 +23,7 @@ class ChatParticipantService
 
     public function get(array $queryParams): JsonResponse
     {
-        $chatId = $queryParams['chat-id'] ?? '';
+        $chatId = $queryParams['chatid'] ?? '';
 
         $result = $this->chatService->verifyChatRoom($chatId);
 

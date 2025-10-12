@@ -13,6 +13,8 @@ class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $tries = 5;
+    
     /**
      * Create a new event instance.
      */
