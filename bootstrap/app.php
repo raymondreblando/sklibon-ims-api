@@ -29,6 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->call(new ExpiredEvents)->everyTenMinutes();
+        $schedule->command('queue:work --stop-when-empty')->everyMinute();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(
