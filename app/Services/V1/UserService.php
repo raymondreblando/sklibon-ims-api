@@ -7,6 +7,7 @@ use App\Enums\UserStatus;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereNot;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserInfoRepository;
@@ -32,6 +33,10 @@ class UserService
             new WhereNot('id', $this->getAuthUserId()),
             new OrderBy('id', 'desc')
         ];
+
+        if (! $this->isAdmin()) {
+            $criteria[] = new Where('status', UserStatus::Verified->value);
+        }
 
         return Response::success(
             UserResource::collection($this->userRepository->get($criteria)),

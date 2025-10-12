@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -19,6 +20,6 @@ Broadcast::channel('chat.list.{id}', function (User $user, string $id) {
     return $user->id === $id;
 });
 
-Broadcast::channel('chat.room.{id}', function (User $user, string $id) {
-    return $user->chats()->where('chat_id', $id)->exists();
+Broadcast::channel('chat.room.{chat}', function (User $user, Chat $chat) {
+    return $chat->chatParticipants()->where('user_id', $user->id)->exists();
 });

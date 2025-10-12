@@ -12,8 +12,9 @@ class EloquentRequestRepository implements RequestRepository
 {
     protected array $relations = [
         'requester:id,profile',
-        'requester.userInfo:id,user_id,position_id,firstname,lastname',
+        'requester.userInfo:id,user_id,position_id,barangay_id,firstname,lastname',
         'requester.userInfo.position:id,name',
+        'requester.userInfo.barangay:id,name',
         'requestType:id,name',
         'approver:id,profile',
         'approver.userInfo:id,user_id,position_id,firstname,lastname',

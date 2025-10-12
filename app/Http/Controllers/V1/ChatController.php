@@ -46,4 +46,9 @@ class ChatController extends Controller
         $data = $request->validated();
         return $chatService->update($chat, $data);
     }
+
+    public function messages(Chat $chat, ChatService $chatService) : JsonResponse
+    {
+        return $chatService->getMessages($chat);
+    }
 }

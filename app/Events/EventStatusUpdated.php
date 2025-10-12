@@ -17,4 +17,9 @@ class EventStatusUpdated
     public function __construct(
         public Event $event
     ){}
+
+    public function broadcastAs()
+    {
+        return 'event.updated';
+    }
 }

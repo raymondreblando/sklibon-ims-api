@@ -34,4 +34,9 @@ class RequestStatusUpdated
             new PrivateChannel('channel-name'),
         ];
     }
+
+    public function broadcastAs()
+    {
+        return 'request.updated';
+    }
 }

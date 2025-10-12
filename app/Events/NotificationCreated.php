@@ -14,6 +14,8 @@ class NotificationCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $tries = 5;
+
     /**
      * Create a new event instance.
      */
@@ -53,5 +55,10 @@ class NotificationCreated implements ShouldBroadcast
             'data' => $this->notification->data,
             'created_at' => $this->notification->created_at
         ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'notification.created';
     }
 }

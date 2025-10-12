@@ -48,22 +48,22 @@ class Request extends Model
 
     public function requester(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')->withTrashed();
     }
 
     public function requestType(): BelongsTo
     {
-        return $this->belongsTo(RequestType::class, 'request_type_id', 'id');
+        return $this->belongsTo(RequestType::class, 'request_type_id', 'id')->withTrashed();
     }
 
     public function approver(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'approved_by', 'id');
+        return $this->belongsTo(User::class, 'approved_by', 'id')->withTrashed();
     }
 
     public function disapprover(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'disapproved_by', 'id');
+        return $this->belongsTo(User::class, 'disapproved_by', 'id')->withTrashed();
     }
 
     public function scopeWithReceivable(Builder $query): Builder
@@ -72,7 +72,7 @@ class Request extends Model
             $morphTo->morphWith([
                 User::class => ['userInfo:id,user_id,firstname,lastname'],
                 Barangay::class,
-            ]);
+            ])->withTrashed();
         }]);
     }
 
@@ -82,7 +82,7 @@ class Request extends Model
             $morphTo->morphWith([
                 User::class => ['userInfo:id,user_id,firstname,lastname'],
                 Barangay::class,
-            ]);
+            ])->withTrashed();
         }]);
     }
 }

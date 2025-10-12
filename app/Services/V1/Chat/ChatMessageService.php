@@ -26,7 +26,9 @@ class ChatMessageService
                 'message' => $data['message']
             ]);
 
-            $this->chatMessageReadService->save($message, ['user_id' => $data['receiver_id']]);
+            if ($chat->type === 'private') {
+                $this->chatMessageReadService->save($message, ['user_id' => $data['receiver_id']]);
+            }
 
             MessageSent::dispatch($message);
 

@@ -17,7 +17,10 @@ class ChatMessageResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'chatId' => $this->resource->chat_id,
+            'userId' => $this->resource->user_id,
             'message' => $this->resource->message,
+            'attachment' => $this->resource->attachment,
+            'user' => new MinifyUserResource($this->whenLoaded('user')),
         ];
     }
 }

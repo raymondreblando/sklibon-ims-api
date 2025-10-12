@@ -6,6 +6,7 @@ use App\Enums\EventStatus;
 use App\Events\EventCreated;
 use App\Events\EventStatusUpdated;
 use App\Http\Resources\V1\EventResource;
+use App\Models\Barangay;
 use App\Models\Event;
 use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\Where;
@@ -24,15 +25,17 @@ class EventService
         private EventRepository $eventRepository
     ){}
 
-    public function get(?string $barangayId): JsonResponse
+    public function get(?string $barangayCode): JsonResponse
     {
         $criteria = [
             new WhereNot('status', EventStatus::Archived->value),
             new OrderBy('id', 'desc')
         ];
 
-        if (! empty($barangayId)) {
+        if (! empty($barangayCode)) {
+            $barangayId = Barangay::where('code', $barangayCode)->value('id');
             $criteria[] = new Where('barangay_id', $barangayId);
+            $criteria[] = new Where('status', EventStatus::Upcoming->value);
         }
 
         return Response::success(

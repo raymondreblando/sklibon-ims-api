@@ -52,12 +52,13 @@ Route::prefix('v1')->group(function () {
             Route::post('/chat/privates', 'storePrivateChat');
             Route::post('/chat/group-chats', 'storeGroupChat');
             Route::put('/chats/{chat}', 'send');
+            Route::get('/chats/{chat}', 'messages');
         });
 
         Route::controller(ChatParticipantController::class)->group(function () {
-            Route::get('/chat/participants', 'index');
-            Route::post('/chat/participants', 'store');
-            Route::delete('/chat/participants/{id}', 'destroy');
+            Route::get('/chat/members', 'index');
+            Route::post('/chat/members', 'store');
+            Route::delete('/chat/members/{id}', 'destroy');
         });
     });
 });

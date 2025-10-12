@@ -13,6 +13,8 @@ class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $tries = 5;
+    
     /**
      * Create a new event instance.
      */
@@ -32,5 +34,10 @@ class MessageSent implements ShouldBroadcast
         return [
             new PrivateChannel("chat.room.{$chatId}"),
         ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'message.sent';
     }
 }
