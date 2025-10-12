@@ -2,8 +2,10 @@
 
 use App\Exceptions\InvalidRefreshTokenException;
 use App\Exceptions\InvalidUserCredentialsException;
+use App\Schedules\ExpiredEvents;
 use App\Utils\Response;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
@@ -24,6 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
+    })
+    ->withSchedule(function (Schedule $schedule) {
+        $schedule->call(new ExpiredEvents)->everyTenMinutes();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(
