@@ -20,6 +20,11 @@ class ChatController extends Controller
         return $chatService->get();
     }
 
+    public function getMessageCount(ChatService $chatService): JsonResponse
+    {
+        return $chatService->getMessagesCount();
+    }
+
     public function storePrivateChat(
         StorePrivateChatRequest $request,
         CreatePrivateChatService $createPrivateChatService
