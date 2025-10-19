@@ -79,6 +79,30 @@ class ChatService
         return $this->chatRepository->findById($id);
     }
 
+    public function getMessagesCount(): JsonResponse
+    {
+        $userId = $this->getAuthUserId();
+
+        $criteria = [
+            new WhereHas('chatPair', function (Builder $query) use ($userId) {
+                $query->where('sender_id', $userId)
+                    ->orWhere('receiver_id', $userId);
+            })
+        ];
+
+        $chats = $this->chatRepository->get($criteria);
+        $chats->loadCount('chatMessages');
+
+        $count = $chats->reduce(function (?int $carry, $item) {
+            return $carry + $item->chat_messages_count;
+        });
+
+        return Response::success(
+            ['count' => $count],
+            "Message count retrieved successfully."
+        );
+    }
+
     public function update(Chat $chat, array $data): JsonResponse
     {
         return DB::transaction(function () use ($chat, $data) {

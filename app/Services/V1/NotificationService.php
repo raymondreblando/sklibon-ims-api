@@ -3,8 +3,11 @@
 namespace App\Services\V1;
 
 use App\Http\Resources\V1\NotificationResource;
+use App\Models\Barangay;
 use App\Models\Notification;
+use App\Models\User;
 use App\Repositories\Criteria\OrWhere;
+use App\Repositories\Criteria\WhereHasMorph;
 use App\Repositories\Criteria\WhereIn;
 use App\Repositories\Criteria\WithRelations;
 use App\Repositories\NotificationRepository;
@@ -26,10 +29,17 @@ class NotificationService
     public function get(): JsonResponse
     {
         $criteria = [
-            new WhereIn('notifiable_id', [
-                $this->getAuthUserId(),
-                $this->getAuthUserBarangay()
-            ]),
+            new WhereHasMorph(
+                'notifiable',
+                [User::class, Barangay::class],
+                function (Builder $query, string $type) {
+                    $id = $type === User::class
+                        ? $this->getAuthUserId()
+                        : $this->getAuthUserBarangay();
+
+                    $query->where('id', $id);
+                }
+            ),
             new OrWhere('type', 'announcement'),
             new WithRelations([
                 'notificationUser' => fn (Builder $query) => $query->where('user_id', $this->getAuthUserId())
