@@ -10,6 +10,7 @@ use App\Repositories\AttendanceRepository;
 use App\Repositories\Criteria\GroupBy;
 use App\Repositories\Criteria\Limit;
 use App\Repositories\Criteria\OrderBy;
+use App\Repositories\Criteria\OrderByEvent;
 use App\Repositories\Criteria\SelectRaw;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
@@ -227,6 +228,7 @@ class DashboardService
         }
 
         $criteria = array_merge($criteria, [
+            new OrderByEvent(),
             new Limit(4)
         ]);
 
