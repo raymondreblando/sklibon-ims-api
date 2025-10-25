@@ -13,7 +13,7 @@ use App\Repositories\Criteria\OrderBy;
 use App\Repositories\Criteria\SelectRaw;
 use App\Repositories\Criteria\Where;
 use App\Repositories\Criteria\WhereBetween;
-use App\Repositories\Criteria\WhereNot;
+use App\Repositories\Criteria\WhereNotIn;
 use App\Repositories\Criteria\WhereNotNull;
 use App\Repositories\EventRepository;
 use App\Repositories\RequestRepository;
@@ -81,7 +81,11 @@ class DashboardService
         $currentDate = now()->format('Y-m-d h:i:s');
 
         $criteria = [
-            new WhereNot('status', EventStatus::Archived->value),
+            new WhereNotIn('status', [
+                EventStatus::Completed->value,
+                EventStatus::Ongoing->value,
+                EventStatus::Archived->value,
+            ]),
             new Where('event_date', $currentDate, '>'),
             new OrderBy('event_date'),
             new Limit(5)
