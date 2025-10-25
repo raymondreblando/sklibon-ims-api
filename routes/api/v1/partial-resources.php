@@ -8,6 +8,7 @@ use App\Http\Controllers\V1\AttendanceController;
 use App\Http\Controllers\V1\ChatController;
 use App\Http\Controllers\V1\DashboardController;
 use App\Http\Controllers\V1\GalleryImageController;
+use App\Http\Controllers\V1\GenerateReportController;
 use App\Http\Controllers\V1\NotificationController;
 use App\Http\Controllers\V1\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,12 @@ Route::prefix('v1')->group(function () {
             Route::get('/chat/members', 'index');
             Route::post('/chat/members', 'store');
             Route::delete('/chat/members/{id}', 'destroy');
+        });
+
+        Route::prefix('/generate-reports')->group(function () {
+            Route::controller(GenerateReportController::class)->group(function () {
+                Route::get('/attendance', 'attendanceReport');
+            });
         });
     });
 });
