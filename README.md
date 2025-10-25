@@ -20,7 +20,7 @@ The SK Libon Information Management System API is the backend for a comprehensiv
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/sklibon-ims-api.git
+    git clone https://github.com/raymondreblando/sklibon-ims-api.git
     cd sklibon-ims-api
     ```
 
