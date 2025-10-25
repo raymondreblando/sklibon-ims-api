@@ -24,7 +24,7 @@ class AttendanceService
         $criteria = [];
 
         if (! $this->isAdmin())
-            $criteria[] = new Where('user_id', $this->getAuthUserId());
+            $criteria[] = new Where('attendances.user_id', $this->getAuthUserId());
 
         $attendances = $this->attendanceRepository->get($criteria);
 
