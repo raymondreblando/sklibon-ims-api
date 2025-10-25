@@ -21,10 +21,13 @@
         th, td {
             border: 1px solid #ccc;
             padding: 8px;
-            font-size: 14px;
         }
         th {
             background: #f8f8f8;
+            font-size: 13px;
+        }
+        td {
+            font-size: 11px;
         }
         .header {
             display: inline;
@@ -51,10 +54,11 @@
                     <th>Attendee</th>
                     <th>Position</th>
                     <th>Barangay</th>
+                    <th>Time In</th>
+                    <th>Time Out</th>
 
                     @if ($withTime)
-                        <th>Time In</th>
-                        <th>Time Out</th>
+                        <th>Minute Count</th>
                     @endif
                 </tr>
             </thead>
@@ -65,10 +69,22 @@
                         <td>{{ $attendance->user->userInfo->firstname }} {{ $attendance->user->userInfo->lastname }}</td>
                         <td>{{ $attendance->user->userInfo->position->name }}</td>
                         <td>{{ $attendance->user->userInfo->barangay->name }}</td>
+                        <td>{{ $attendance->time_in ? $attendance->time_in->format('h:i:s A') : '-' }}</td>
+                        <td>{{ $attendance->time_out ? $attendance->time_out->format('h:i:s A') : '-' }}</td>
 
                         @if ($withTime)
-                            <td>{{ $attendance->time_in ? $attendance->time_in->format('h:i:s A') : '-' }}</td>
-                            <td>{{ $attendance->time_out ? $attendance->time_out->format('h:i:s A') : '-' }}</td>
+                            <td>
+                                @if ($attendance->time_in && $attendance->time_out)
+                                    @php
+                                        $diff = $attendance->time_in->diff($attendance->time_out);
+                                    @endphp
+                                    {{ $diff->h ? $diff->h . 'hr ' : '' }}
+                                    {{ $diff->i ? $diff->i . 'mins ' : '' }}
+                                    {{ (!$diff->h && !$diff->i) ? $diff->s . 'secs' : '' }}
+                                @else
+                                    -
+                                @endif
+                            </td>
                         @endif
                     </tr>
                 @endforeach
