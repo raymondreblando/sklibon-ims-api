@@ -1,18 +1,20 @@
 # SK Libon Information Management System API
 
-This is the backend API for the Information Management System for the SK Federation of Libon, Albay.
+The SK Libon Information Management System API is the backend for a comprehensive platform designed to streamline the operations of the Sangguniang Kabataan (SK) Federation of Libon, Albay. This system provides a centralized database and a set of tools to manage information, communication, and activities within the SK organization.
 
 ## Features
 
-*   **Authentication:** User authentication and authorization using Laravel Sanctum.
+*   **Authentication:** Secure user authentication and authorization using Laravel Sanctum, with support for refresh tokens.
+*   **User Management:** CRUD operations for users, with role-based access control (Super Admin, Admin, User).
 *   **Position Management:** CRUD operations for managing positions within the organization.
-*   **Hotline Management:** CRUD operations for managing hotlines.
-*   **Contact Management:** CRUD operations for managing contacts.
-*   **Request Type Management:** CRUD operations for managing request types.
-*   **Request Management:** CRUD operations for managing requests.
-*   **Report Management:** CRUD operations for managing reports.
-*   **Attachment Management:** CRUD operations for managing attachments.
-*   **Gallery Management:** CRUD operations for managing galleries.
+*   **Event Management:** Create, manage, and track attendance for events and activities.
+*   **Request Management:** A system for managing and tracking requests from constituents, with different request types.
+*   **Report Generation:** Generate reports, such as attendance reports for events.
+*   **Communication Tools:** Real-time chat functionality (private and group chats) and a notification system.
+*   **Information Management:** Manage hotlines, contacts, and a gallery for photos.
+*   **Location-Based Services:** Access to a database of provinces, municipalities, and barangays.
+*   **File Management:** Upload and manage attachments for various resources.
+*   **Dashboard:** A dashboard providing statistical insights into the system's data.
 
 ## Project Setup
 
@@ -184,6 +186,7 @@ All API endpoints are prefixed with `/api/v1`.
 
 ### Chats
 *   `GET /chats`: Get a list of all chats.
+*   `GET /chats/count`: Get the number of unread messages.
 *   `POST /chat/privates`: Create a private chat.
 *   `POST /chat/group-chats`: Create a group chat.
 *   `PUT /chats/{chat}`: Send a message to a chat.
@@ -194,6 +197,11 @@ All API endpoints are prefixed with `/api/v1`.
 *   `POST /chat/members`: Add a member to a chat.
 *   `DELETE /chat/members/{id}`: Remove a member from a chat.
 
+### SK Officials
+*   `GET /sk-officials/{barangayCode}`: Get a list of all SK officials in a barangay.
+
+### Generate Reports
+*   `GET /generate-reports/attendance`: Generate an attendance report.
 
 ## Custom Artisan Commands
 
