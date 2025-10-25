@@ -2,6 +2,7 @@
 
 namespace App\Services\V1;
 
+use App\Enums\EventStatus;
 use App\Http\Resources\V1\AttendanceResource;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\Criteria\Where;
@@ -37,6 +38,13 @@ class AttendanceService
     public function save(string $eventId): JsonResponse
     {
         $event = $this->eventRepository->findById($eventId);
+
+        if (in_array($event->status, [
+            EventStatus::Completed->value,
+            EventStatus::Archived->value
+        ])) {
+            return Response::error('This event has already ended. Time-in and time-out are no longer available.');
+        }
 
         if (now()->lt($event->event_date)) {
             return Response::error('Attendance for this event has not opened yet.');
