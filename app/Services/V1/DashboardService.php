@@ -227,7 +227,6 @@ class DashboardService
         }
 
         $criteria = array_merge($criteria, [
-            new OrderBy('id', 'desc'),
             new Limit(4)
         ]);
 

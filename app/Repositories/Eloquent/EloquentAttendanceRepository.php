@@ -24,6 +24,11 @@ class EloquentAttendanceRepository implements AttendanceRepository
             $criterion->apply($query);
         }
 
+        $query->join('events', 'attendances.event_id', '=', 'events.id')
+            ->orderBy('events.event_date', 'desc')
+            ->orderBy('attendances.id', 'desc')
+            ->select('attendances.*');
+
         return $query->with($relations ?: $this->relations)
             ->get();
     }
