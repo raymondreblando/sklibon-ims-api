@@ -197,8 +197,8 @@ class DashboardService
         if ($event) {
             $criteria = [
                 new SelectRaw('COUNT(*) as total'),
-                new Where('event_id', $event->id),
-                new WhereNotNull(['time_in', 'time_out'])
+                new Where('attendances.event_id', $event->id),
+                new WhereNotNull(['attendances.time_in', 'attendances.time_out'])
             ];
 
             $totalAttendance = (int) $this->attendanceRepository->get($criteria)->value('total');
