@@ -27,7 +27,6 @@ The SK Libon Information Management System API is the backend for a comprehensiv
 2.  **Install dependencies:**
     ```bash
     composer install
-    npm install
     ```
 
 3.  **Set up your environment:**
